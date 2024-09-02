@@ -1,11 +1,12 @@
 class Transportadora:
     _transportadoras = [] #No se utiliza
 
-    def __init__(self, nombre, dinero, conductores, pasajeros, vehiculos,
+    def __init__(self, nombre, dinero, conductores, conductoresRegistrados, pasajeros, vehiculos,
                  viajesAsignados, destinoAsignado, terminal, taller, viajesTerminados, dueño, estrellas):
         self._nombre = nombre
         self._dinero = dinero
         self._conductores = conductores
+        self._conductoresRegistrados = conductoresRegistrados
         self._pasajeros = pasajeros
         self._vehiculos = vehiculos
         self._viajesAsignados = viajesAsignados
@@ -18,6 +19,84 @@ class Transportadora:
         Transportadora._transportadoras.append(self)
         self._conductoresDespedidos = []
 
+
+    def encontrarConductor(self,id):
+        from gestorAplicacion.usuarios.conductor import Conductor
+        for conductor in self._conductores:
+            if (conductor.getId() == id):
+                return conductor
+        return None
+    
+    def despedirConductor(self, id):
+        from gestorAplicacion.usuarios.conductor import Conductor
+
+        conductor : Conductor = self.encontrarConductor(id)
+
+        if (len(conductor.getHorario()) == 0):
+            
+            if conductor.getVehiculo() is None:
+                conductor.quitarVehiculo()
+                conductor.getTransportadora().getConductores().remove(conductor)
+                conductor.indemnizar()
+                conductor.reinicioAtributos()
+                return "Se ha despedido a " + conductor.getNombre()
+            
+            if len(conductor.getVehiculo().getConductores()) >= 2:
+                conductor.quitarVehiculo()
+                conductor.getTransportadora().getConductores().remove(conductor)
+                conductor.indemnizar()
+                conductor.reinicioAtributos()
+                return "Se ha despedido a " + conductor.getNombre()
+            else:
+                return "No es posible porque no hay mas conductores asignados al vehiculo asociado al conductor"
+            
+        else:
+            return "No es posible porque el conductor tiene viajes programados"
+
+    def mostrarConductRegistrados(self):
+        mensaje = ""
+        for conductor in self._conductoresRegistrados:
+            mensaje += "Nombre: " + conductor.getNombre() + "#Id: " + str(conductor.getId()) + "\n"
+
+
+    def contratarConductorId(self, id: int):
+        from gestorAplicacion.usuarios.conductor import Conductor
+        conductor : Conductor = None
+
+        for driver in self._conductoresRegistrados:
+
+            if driver.getId() == id:
+                index = self._conductoresRegistrados.index(driver)
+                conductor = self._conductoresRegistrados[index]
+        
+        return Transportadora.contratarConductor(conductor)
+    
+    def contratarConductor(self, conductor):
+
+        if conductor == None:
+            return "No se ha encontrado el conductor"
+        else:
+
+            if (conductor.getExperiencia() >= 5):
+
+                if (conductor.getEstadoLicencia()):
+                    conductor.reinicioAtributos()
+                    self.getConductores().append(conductor)
+                    self.getConductoresRegistrados().remove(conductor)
+                    conductor.bonoBienvenida(conductor.getTransportadora())
+                    return "Se contrato a " + conductor.getNombre() + " exitosamente"
+                else:
+                    return "No se pudo contratar a " + conductor.getNombre() + " porque no tiene licencia activa"
+            else:
+                return "No se pudo contratar a " + conductor.getNombre() + " porque tiene menos de cinco años de experiencia"
+
+    def encontrarViaje(self, id):
+
+        for viaje in self._viajesAsignados:
+
+            if (viaje.getId() == id):
+                return viaje
+        return None
 
     # Métodos get
 
@@ -32,6 +111,10 @@ class Transportadora:
     # Devuelve la lista de conductores de la transportadora
     def getConductores(self):
         return self._conductores
+    
+    def getConductoresRegistrados(self):
+        """Devuelve la lista de conductores registrados de la transportadora"""
+        return self._conductoresRegistrados
 
     # Devuelve la lista de pasajeros de la transportadora
     def getPasajeros(self):
@@ -87,6 +170,10 @@ class Transportadora:
     # Establece la lista de conductores de la transportadora
     def setConductores(self, conductores):
         self._conductores = conductores
+
+    def setConductoresRegistrados(self, conductoresRegistrados):
+        """Establece la lista de conductores registrados de la transportadora"""
+        self._conductoresRegistrados = conductoresRegistrados
 
     # Establece la lista de pasajeros de la transportadora
     def setPasajeros(self, pasajeros):

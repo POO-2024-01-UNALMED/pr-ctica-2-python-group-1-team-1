@@ -21,7 +21,7 @@ class Conductor(Persona):
         """Metodo para asociar un conductor al vehiculo que
 	    va de parametro si el vehiculo tiene menos de 3 conductores."""
 
-        if (len(vehiculo.get_conductores) < 3):
+        if (len(vehiculo.getConductores) < 3):
             vehiculo.asociarConductor(self)
             self._vehiculo = vehiculo
 
@@ -39,76 +39,95 @@ class Conductor(Persona):
 
     def sumerUnDiaTrabajado(self):
         """Metodo para agregarle un dia trabajado al conductor"""
-        self.diasTrabajados += 1
+        self._diasTrabajados += 1
 
     def reinicioAtributos(self):
         """Metodo para reiniciar algunos atributos del conductor, 
 	    este se usara cuando se despida o contrate un conductor
 	    para que no haya errores en un futuro"""
-        self.horario = []
-        self.diasRestantesContrato = 0
-        self.diasTrabajados = 0
-        self.historial = []
+        self._horario = []
+        self._diasRestantesContrato = 0
+        self._diasTrabajados = 0
+        self._historial = []
 
     def desvincularYVincular(self, conductor, viaje):
         """Metodo para desvincular un viaje al conductor que invoco el metodo
 	    y vincular el viaje al conductor que va de parametro"""
-        conductor.get_horario().append(viaje)
-        viaje.set_conductor(conductor)
-        viaje.set_vehiculo(conductor.get_vehiculo())
-        self.get_horario().remove(viaje)
+        conductor.getHorario().append(viaje)
+        viaje.setConductor(conductor)
+        viaje.setVehiculo(conductor.getVehiculo())
+        self.getHorario().remove(viaje)
 
     def vincularYDesvincular(self, conductor, viaje):
         """Metodo para vincular un viaje al conductor que invoco el metodo
 	    y desvincular el viaje al conductor que va de parametro"""
-        self.get_horario().append(viaje)
-        viaje.set_conductor(self)
-        viaje.set_vehiculo(self.get_vehiculo)
-        conductor.get_horario().remove(viaje)
+        self.getHorario().append(viaje)
+        viaje.setConductor(self)
+        viaje.setVehiculo(self.getVehiculo())
+        conductor.getHorario().remove(viaje)
 
+    def quitarVehiculo(self):
 
-    #Getters and setters
+        if (len(self._horario) == 0):
+
+            if (len(self._vehiculo().getConductores()) >= 2):
+                self._vehiculo.quitarVehiculo(self.id)
+                self._vehiculo = None
+                return "Se ha desvinculado el vehiculo a " + self.nombre
+            else:
+                return "No se ha podido desvincular el vehiculo a " + self.nombre
+        else:
+            return "No se ha podido desvincular el vehiculo a " + self.nombre
+        
+    
+    
 
     def bonoBienvenida(transportadora):
         """Metodo que le da un bono de bienvenida al conductor contratado"""
 
-    def set_estado_licencia(self, estado_licencia):
+    #Getters and setters
+
+    def setEstadoLicencia(self, estadoLicencia):
         """Establece o modifica el estado de la licencia del conductor."""
-        self.estado_licencia = estado_licencia
+        self._estadoLicencia = estadoLicencia
 
-    def get_estado_licencia(self):
+    def getEstadoLicencia(self):
         """Obtiene el estado de la licencia del conductor."""
-        return self.estado_licencia
+        return self._estadoLicencia
 
-    def set_vehiculo(self, vehiculo):
+    def setVehiculo(self, vehiculo):
         """Establece o modifica el vehículo asociado al conductor."""
-        self.vehiculo = vehiculo
+        self._vehiculo = vehiculo
 
-    def get_vehiculo(self):
+    def getVehiculo(self):
         """Obtiene el vehículo asociado al conductor."""
-        return self.vehiculo
+        return self._vehiculo
 
-    def set_transportadora(self, transportadora):
+    def setTransportadora(self, transportadora):
         """Establece o modifica la transportadora vinculada al conductor."""
-        self.transportadora = transportadora
+        self._transportadora = transportadora
 
-    def get_transportadora(self):
+    def getTransportadora(self):
         """Obtiene la transportadora vinculada al conductor."""
-        return self.transportadora
+        return self._transportadora
 
-    def set_horario(self, horario):
+    def setHorario(self, horario):
         """Establece o modifica el listado con el horario asociado al conductor."""
-        self.horario = horario
+        self._horario = horario
 
-    def get_horario(self):
+    def getHorario(self):
         """Obtiene el listado con el horario del conductor."""
-        return self.horario
+        return self._horario
+    
+    def setNumeroDePagosRecibidos(self, numeroDePagosRecibidos):
+        """Establece el número de pagos recibidos por el conductor."""
+        self._numeroDePagosRecibidos = numeroDePagosRecibidos
 
-    def get_numeroDePagosRecibidos(self):
+    def getNumeroDePagosRecibidos(self):
         """Obtiene el número de pagos recibidos por el conductor."""
         return self._numeroDePagosRecibidos
     
-    @staticmethod
-    def getConductores():
+    @classmethod
+    def getConductores(cls):
         """Obtiene la lista de todos los conductores."""
         return Conductor.conductores
