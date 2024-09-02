@@ -1,4 +1,6 @@
 # Importaciones: 
+from multimethod import multimethod
+from gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
 
 class Terminal:
     # Atributos de clase
@@ -51,37 +53,105 @@ class Terminal:
     def obtenerTransportadorasUnicas():
         pass
 
-    def viajesDestino():
-        pass
+    @staticmethod
+    def viajesDestino(self, destino):
+        """Encontrar viajes disponibles con un destino en específico
+        la idea es que solo en este se verifique si esta en la terminal 'getEstado()'"""
+
+        viajesDisponibles = []
+
+        for viaje in Terminal.getViajes(): 
+            if viaje.getLlegada()==destino and not viaje.getEstado():
+                viajesDisponibles.append(viaje)     
+            
+        return viajesDisponibles
 
     def transportadorasViajeDisponible(self): # SA
         pass
 
     def viajesDisponibles(): # Para que se usa???
         pass
+    
+    @staticmethod
+    def masRapido(viajes):
 
-    def masRapido():
-        pass
+        viajeMasRapido = None
 
+        for viaje in viajes:
+            if viaje.getVehiculo().getTipo()==TipoVehiculo.VANS or viaje.getVehiculo().getTipo()==TipoVehiculo.TAXI:
+                if viaje is None or viaje.getDuracion() < viajeMasRapido.getDuracion():
+                    viajeMasRapido = viaje
+
+        return viajeMasRapido
+            
     def obtenerViajeMasProximo():
         pass
 
-    def masEconomico():
-        pass
+    @staticmethod
+    def masEconomico(viajes):
+        """Este método permite encontrar el viaje mas barato en una lista de viajes previamente seleccionados"""
+        viajeMasBarato = None
 
-    def viajesParaRegularesYDiscapacitados():
-        pass
+        for viaje in viajes:
+            if viaje.getVehiculo().getTipo()==TipoVehiculo.BUS:
+                if viaje is None or viaje.getTarifa() < viajeMasBarato.getTarifa():
+                    viajeMasBarato = viaje
+        
+        return viajeMasBarato
+
+    @multimethod
+    def viajesParaRegularesYDiscapacitados(tipoVehiculo : TipoVehiculo, viajes : list):
+        """Método para filtrar viajes por el tipo de vehiculo"""
+        viajesDisponibles = []
+
+        for viaje in viajes:
+            if viaje is None:
+                continue
+            if viaje.getVehiculo().getTipo()==tipoVehiculo:
+                viajesDisponibles.append(viaje)  
+
+        return viajesDisponibles             
 
     # Sobrecarga
-    def viajesParaRegularesYDiscapacitados():
-        pass
+    @multimethod
+    def viajesParaRegularesYDiscapacitados(cantidad : int, viajes : list):
+        """Método para filtrar viajes por cantidad de asientos solicitados"""
+        viajesDisponibles = []
 
-    def viajesParaVips():
-        pass
+        for viaje in viajes:
+            if viaje == None:
+                continue
+            if viaje.verificarAsientos()>=cantidad:
+                viajesDisponibles.append(viaje)  
+
+        return viajesDisponibles
+            
+    @multimethod
+    def viajesParaVips(tipoVehiculo : TipoVehiculo, viajes : list):
+        """Método para filtrar viajes por el tipo de vehiculo"""
+        viajesDisponibles = []
+
+        for viaje in viajes:
+            if viaje is None:
+                continue
+            if viaje.getVehiculo().getTipo()==tipoVehiculo:
+                viajesDisponibles.append(viaje)  
+
+        return viajesDisponibles
 
     # Sobrecarga
-    def viajesParaVips():
-        pass
+    @multimethod
+    def viajesParaVips(cantidad : int, viajes : list):
+        """Método para filtrar viajes por cantidad de asientos solicitados"""
+        viajesDisponibles = []
+
+        for viaje in viajes:
+            if viaje == None:
+                continue
+            if viaje.verificarAsientos()>=cantidad and viaje.getVehiculo().getTipo() is not TipoVehiculo.ESCALERA:
+                viajesDisponibles.append(viaje)  
+
+        return viajesDisponibles
 
     def viajesParaEstudiantes():
         pass
