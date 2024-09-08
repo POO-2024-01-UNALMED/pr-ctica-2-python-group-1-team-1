@@ -27,6 +27,17 @@ class Transportadora:
                 return conductor
         return None
     
+    def transportadorasViaje(viajes):#Sacar tansportadoras sin repetir
+        transportadoras = []
+
+        for viaje in viajes:
+            transportadora = viaje.getVehiculo().getTransportadora()
+            if transportadora not in transportadoras:
+                transportadoras.append(transportadora)
+    
+        return transportadoras
+
+    
     def despedirConductor(self, id):
         from gestorAplicacion.usuarios.conductor import Conductor
 

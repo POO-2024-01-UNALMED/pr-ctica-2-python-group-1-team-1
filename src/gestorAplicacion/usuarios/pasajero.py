@@ -1,9 +1,11 @@
 from persona import Persona 
 class Pasajero(Persona):
-    def __init__(self,tipo):
+    def __init__(self,tipo, id, edad, nombre):
         self._tipoPasajero = tipo
-        self.viaje = None
-        #super.__init__(self) pendiente
+        self._viaje = None
+        super.__init__(id, edad, nombre)
+    
+    
     
     def nuevoPasajero(self, tipo, id, edad, nombre):
         return Pasajero(tipo, id, edad, nombre)
@@ -21,9 +23,9 @@ class Pasajero(Persona):
     # Método get para el atributo viaje
     def getViaje(self):
         """Devuelve el viaje asociado al pasajero."""
-        return self.viaje
+        return self._viaje
 
     # Método set para el atributo viaje
     def setViaje(self, viaje):
         """Establece el viaje asociado al pasajero."""
-        self.viaje = viaje
+        self._viaje = viaje

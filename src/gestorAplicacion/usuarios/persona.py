@@ -35,13 +35,13 @@ class Persona(ABC, Incentivo):
         self.dinero = dinero
         
     @multimethod
-    def __init__(self, id: int, edad: int, nombre: str, genero: str):
+    def __init__(self, id: int, edad: int, nombre: str):
+        """Iniciador para clase Persona para heredar en Pasajero"""
         
         self.id = id
         self.edad = edad
         self.nombre = nombre
-        self.genero = genero
-        
+     
     
     def aunmentarDinero(self, dinero):
         
