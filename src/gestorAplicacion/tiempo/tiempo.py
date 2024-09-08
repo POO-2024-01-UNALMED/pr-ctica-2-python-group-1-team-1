@@ -46,7 +46,8 @@ class Tiempo:
     # Metodo que realiza las tareas y define el intervalo de tiempo para las iteraciones. 
     def ejecutarPeriodicamente(self):
         if self.ejecutando:  # Verificar si el temporizador debe seguir ejecutándose
-            self.timer = threading.Timer(self.intervalo, self.tareas)
+            self.timer = threading.Timer(self.intervalo, self.tareas) # Hilo no DEMONIO
+            #self.timer = threading.Thread(target=self.tareas, daemon=True) # Hilo DEMONIO
             self.timer.start()
 
     # Se implementa para evitar que se creen dos Hilos simultaneamente
@@ -133,9 +134,13 @@ class Tiempo:
 
 #PRUEBAS
 
-contador = Tiempo(intervalo_ms=1)  # Intervalo de 1000 ms (1 segundo)
+#contador = Tiempo(intervalo_ms=1)  # Intervalo de 1000 ms (1 segundo)
 
+#try:
+#    while True:
+#        pass  # Aquí puedes continuar con tu lógica principal del programa
 
-# Dejar correr por 100 segundos antes de detenerlo (Pruebas)
-time.sleep(5) # La idea es que se detenga unicamente cuando se termina el main.
-contador.detener()
+#except KeyboardInterrupt:
+#    # Manejo de interrupción del teclado para detener el temporizador
+#    contador.detener()
+#    print("Programa terminado por el usuario.")

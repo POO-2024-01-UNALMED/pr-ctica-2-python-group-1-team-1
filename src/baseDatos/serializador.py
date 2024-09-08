@@ -1,5 +1,8 @@
 import pickle
+
+import sys
 import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 from src.gestorAplicacion.administrativo.terminal import Terminal
 from src.gestorAplicacion.administrativo.viaje import Viaje
@@ -40,3 +43,7 @@ class Serializador():
         #Serializador.serializar("facturas", Factura.getFacturasCreadas())  # OBJETOS TIPO FACTURA
         #Serializador.serializar("talleres", Taller.getListaTalleres())  # OBJETOS TIPO TALLER
         #Serializador.serializar("vehiculos", Vehiculo.getListaVehiculos())  # OBJETOS TIPO VEHICULO
+
+    @staticmethod
+    def crearObjetos():
+        Tiempo()

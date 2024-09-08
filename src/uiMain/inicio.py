@@ -1,12 +1,27 @@
 import tkinter as tk
 import principal as main
 
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+
+from src.gestorAplicacion.tiempo.tiempo import Tiempo
+#from src.baseDatos.serializador import Serializador
+
 # FUNCIÓN PARA MOSTRAR LA DESCRIPCION DEL PROYECTO
 def mostrarDescripcion():
-    label_frame_top.config(text= "Bienvenido al Sistema de Administración Inteligente de Terminales de Transporte.\n Donde los viajes que salen nunca terminan...", font = "Impact")
+    label_frame_top.config(text= "Terminal Creations es una plataforma integral de administración y seguimineto,\n que optimiza las operaciones de terminales. Permite administrar transportadoras, \nprogramar viajes, controlar tarifas y gestionar facturación desde un sistema \ncentralizado. Con monitoreo en tiempo real y generación de informes personalizados, \nfacilita la toma de decisiones y mejora la eficiencia operativa, maximizando la productividad \ny controlando todas las operaciones en un solo lugar.", font = "Century", )
 
-# FUNCIÓN PARA SALIR DE LA APLICACIÓN
+# FUNCIÓN PARA SALIR DE LA APLICACIÓN Y APAGAR EL TIEMPO
+Tiempo(1) # Solo para las pruebas
+#Serializador.crearObjetos()
+tiempo = Tiempo.tiempos[0] # 
+
+
 def salir():
+    global tiempo
+    if tiempo:
+        tiempo.detener()
     root.quit()
 
 #
@@ -88,7 +103,7 @@ frame_left_bottom = tk.Frame(frame_left, bg = "#0c1424", bd = 2, relief = "solid
 # DEBO DAR LA UBICACIÓN DEL FRAME P3 y P4
 frame_left_top.place(relx=0, rely=0, relwidth=1, relheight=0.2)
 frame_left_bottom.place(relx=0, rely=0.2, relwidth=1, relheight=0.8)
-frame_left_bottom.bind("<Enter>", lambda event: cambiarImagen()) # PERMITE CAMBIAR LA IMAGEN CUANDO EL MOUSE ENTRA Y SALE DEL FRAME
+#frame_left_bottom.bind("<Enter>", lambda event: cambiarImagen()) # PERMITE CAMBIAR LA IMAGEN CUANDO EL MOUSE ENTRA Y SALE DEL FRAME
 
 # CREACIÓN DE P5 Y P6
 frame_right_top = tk.Frame(frame_right, bg = "#0c1424", bd = 2, relief = "solid")
@@ -99,7 +114,7 @@ frame_right_top.place(relx=0, rely=0, relwidth=1, relheight=0.3)
 frame_right_bottom.place(relx=0, rely=0.3, relwidth=1, relheight=0.7)
 
 # PARA DESCRIPCION, en los frame se pueden meter etiquetas ls cuales tienen texto. 
-label_frame_top = tk.Label(frame_left_top, text="Bienvenido a Terminal Creations, donde podras llevar el control\n de tu terminal a un solo clic...", fg = "white", font= ("Century", 15), bg = "#0c1424")
+label_frame_top = tk.Label(frame_left_top, text="Bienvenido a Terminal Creations, sistema inteligente \n donde podras llevar el control de tu terminal a un solo clic...\nEn esta ventana puedes ver la informacion de los desarrolladores e \n ingresar al sistema dando click en la imagen inferior", fg = "white", font= ("Century", 15), bg = "#0c1424")
 label_frame_top.pack(expand=True, fill="both", padx=5, pady=5)
 
 # BOTON PARA CAMBIAR LAS HOJAS DE VIDA
@@ -108,13 +123,13 @@ boton_right_top.pack(expand=True, fill="both", padx=7, pady=7)
 
 # BOTONES ASOCIADO AL INGRESO AL SISTEMA
 boton_left_bottom = tk.Button(frame_left_bottom, bg = "black", text = "Administrar Terminal", fg = "lightblue" ,font = ("Century", 15), relief = "groove")
-boton_left_bottom.pack(side = "bottom", pady = 5)
+#boton_left_bottom.pack(side = "bottom", pady = 5)
 boton_left_bottom.bind("<Button-1>", lambda e : main.interfazPrincipal(root)) # PASA A GENERAR LA NUEVA VENTANA DEL SISTEMA
 
 # BOTONES ASOCIADO AL INGRESO AL CAMBIO DE IMAGEN
-boton_left_top = tk.Button(frame_left_bottom, image = photoInicio[0], command = lambda: main.interfazPrincipal(root))
-boton_left_top.pack(side = "top", expand = True, pady = 5)
-#boton_left_top.bind("<Enter>", lambda event: cambiarImagen()) # MEJOR LLAMARLO DESDE EL FRAME
+boton_left_top = tk.Button(frame_left_bottom, image = photoInicio[0], highlightbackground= "blue",command = lambda: main.interfazPrincipal(root))
+boton_left_top.pack(side = "top", pady = 20, padx = 20)
+boton_left_top.bind("<Enter>", lambda event: cambiarImagen())
 
 # EL FRAME INFERIOR DERECHO (P6), DIVIDIRLO EN 4, 2FIL, 2COL
 frame_right_bottom.grid_rowconfigure(0, weight=1)
