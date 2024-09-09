@@ -43,7 +43,7 @@ class Persona(ABC, Incentivo):
         self.nombre = nombre
      
     
-    def aunmentarDinero(self, dinero):
+    def aumentarDinero(self, dinero):
         
         self.dinero += dinero
         
@@ -77,7 +77,7 @@ class Persona(ABC, Incentivo):
         
         else:
             
-            return self.getNombre() + " no ha viajado a ningún lado"
+            return self.nombre + " no ha viajado a ningún lado"
 
     def mostrarFactura(self, factura):
         
@@ -109,7 +109,7 @@ class Persona(ABC, Incentivo):
 					"\nTaller: " + factura.getTaller().getNombre())
                 
     @abstractmethod
-    def identificarse():
+    def identificarse(self):
         
         pass
     
@@ -177,7 +177,7 @@ class Persona(ABC, Incentivo):
         
         for viaje in Terminal.getViajes():
             
-            if ((viaje.getLlegada == destino) and viaje.getFecha() == fecha and viaje.getVehiculo.getCapacidad() >= len(pasajeros)):
+            if ((viaje.getLlegada() == destino) and viaje.getFecha() == fecha and viaje.getVehiculo().getCapacidad() >= len(pasajeros)):
                 
                 viajesReservables.append(viaje)
             
@@ -191,7 +191,7 @@ class Persona(ABC, Incentivo):
             
             for viaje in viajesReservables:
                 
-                if (viaje.gerTarifa() < viajeReservado.getTarifa()):
+                if (viaje.getTarifa() < viajeReservado.getTarifa()):
                     
                     viajeReservado = viaje
                     
@@ -201,7 +201,7 @@ class Persona(ABC, Incentivo):
             if (costo <= self.dinero):
                 
                 viajeReservado.setPasajeros(pasajeros)
-                Terminal.getViajes.remove(viajeReservado)
+                Terminal.getViajes().remove(viajeReservado)
                 self.dinero -= costo
                 
             for pasajero in pasajeros:
@@ -214,7 +214,7 @@ class Persona(ABC, Incentivo):
             
             for viaje in viajesReservablesOtraFecha:
                 
-                if (viaje.gerTarifa() < viajeReservado.getTarifa()):
+                if (viaje.getTarifa() < viajeReservado.getTarifa()):
                     
                     viajeReservado = viaje
             
@@ -223,7 +223,7 @@ class Persona(ABC, Incentivo):
             if (costo <= self.dinero):
                 
                 viajeReservado.setPasajeros(pasajeros)
-                Terminal.getViajes.remove(viajeReservado)
+                Terminal.getViajes().remove(viajeReservado)
                 self.dinero -= costo
             
             for pasajero in pasajeros:
@@ -249,7 +249,7 @@ class Persona(ABC, Incentivo):
         
         for viaje in Terminal.getViajes():
             
-            if (viaje.getLlegada() == destino and viaje.getFecha == fecha and len(viaje.getPasajeros()) < viaje.getVehiculo().getCapacidad()):
+            if (viaje.getLlegada() == destino and viaje.getFecha() == fecha and len(viaje.getPasajeros()) < viaje.getVehiculo().getCapacidad()):
                 
                 viajesDisponibles.append(viaje)
             
@@ -276,11 +276,11 @@ class Persona(ABC, Incentivo):
                     
                     if (destino == transportadora.getDestinoAsignado()):
                         
-                        transportadora.getPasajeros().add(self)
+                        transportadora.getPasajeros().append(self)
                         
     
     @abstractmethod
-    def renovarContrato():
+    def renovarContrato(self):
         
         pass
     

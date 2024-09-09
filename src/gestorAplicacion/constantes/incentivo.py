@@ -2,10 +2,10 @@ class Incentivo:
     
     INCENTIVOBASE = 250000.0
     
-    def descuento():
+    def descuento(self):
         
         pass
     
-    def bonificacion():
+    def bonificacion(self):
         
         pass
