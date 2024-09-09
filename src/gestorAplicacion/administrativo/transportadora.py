@@ -37,6 +37,13 @@ class Transportadora:
     
         return transportadoras
 
+    def ejegirViajeTransportadora(self, viajes):
+        """Método para elegir el primer viaje que encuentre con la misma transportadora"""
+
+        for viaje in viajes:
+            if viaje.getVehiculo().getTransportadora():
+                return viaje
+
     
     def despedirConductor(self, id):
         from gestorAplicacion.usuarios.conductor import Conductor
