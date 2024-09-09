@@ -41,8 +41,7 @@ class Persona(ABC, Incentivo):
         self.id = id
         self.edad = edad
         self.nombre = nombre
-     
-    
+
     def aumentarDinero(self, dinero):
         
         self.dinero += dinero
