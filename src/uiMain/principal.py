@@ -1,4 +1,18 @@
 import tkinter as tk
+from tkinter import messagebox
+
+
+# PALETA DE COLORES
+colors = {
+        "background": "#0c1424",
+        "text": "#f5f5f5",
+        "naranja": "#ff350a",
+        "amarillo": "#ffbf00",
+        "grisClaro": "#d1d1d1",
+        "grisOscuro": "#4a5568",
+        "azul" : "#2d9bfb",
+        "accent": "#2e3b49"
+}
 
 def interfazPrincipal(ventanaInicio):
     """
@@ -17,7 +31,7 @@ def interfazPrincipal(ventanaInicio):
 
     menuArchivo = tk.Menu(menuBar, tearoff=False,bg="white")
     menuBar.add_cascade(menu=menuArchivo, label="Archivo")
-    menuArchivo.add_command(label="Aplicacion")
+    menuArchivo.add_command(label="Aplicacion", command= mensajeEmergente)
     menuArchivo.add_command(label="Salir", command= lambda: salir(ventanaPrincipal, ventanaInicio))
 
     menuConsultas = tk.Menu(menuBar, tearoff=False,bg="white")
@@ -30,7 +44,13 @@ def interfazPrincipal(ventanaInicio):
 
     menuAyuda = tk.Menu(menuBar, tearoff=False,bg= "white")
     menuBar.add_cascade(menu=menuAyuda, label="Ayuda")
-    menuAyuda.add_command(label="Acerca de:")
+    menuAyuda.add_command(label="Acerca de", command=mensajeAcerdade)
+
+def mensajeEmergente():
+    messagebox.showinfo("Información básica", "Nuestra aplicación permite la gestion de una Terminal de Transporte...")
+
+def mensajeAcerdade():
+    messagebox.showinfo("Quienes somos", " Santiago Ochoa Cardona \n Johan Ramirez Marin \n Jaime Luis Osorio Gomez \n Juan Camilo Marin Valencia \n Jonathan David Osorio Restrepo")
 
 def salir(ventanaPrincipal, ventanaInicio):
     ventanaPrincipal.destroy()
