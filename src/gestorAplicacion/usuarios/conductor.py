@@ -2,11 +2,12 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+from gestorAplicacion.constantes.incentivo import Incentivo
 #--------------------------------------------------------------------------------------
 
 from gestorAplicacion.usuarios.persona import Persona
 
-class Conductor(Persona):
+class Conductor(Persona, Incentivo):
     conductores = []
 
     def __init__(self, id, edad, nombre, genero, historial, experiencia, dinero, estadoLicencia, vehiculo, transportadora, horario, numeroDePagosRecibidos):
@@ -99,6 +100,44 @@ class Conductor(Persona):
             return False
         else:
             return True
+    def descuento(self):
+        
+        valorAseguradora = 20000
+        
+        self.dinero -= valorAseguradora
+        self.getTransportadora().setDinero(self.getTransportadora().getDinero() + valorAseguradora)
+        
+    
+    def bonificacion(self):
+        
+        numeroViajesRealizados = 0
+        dineroTransportadora = self.getTransportadora().getDinero()
+        
+        for v in self.getTransportadora().getViajesTerminados():
+            
+            if (self.id == v.getConductor().getId()):
+                
+                numeroViajesRealizados += 1
+                
+                
+            if (numeroViajesRealizados < 10):
+                
+                self.dinero += Incentivo.INCENTIVOBASE
+                self.getTransportadora().setDinero(dineroTransportadora - Incentivo.INCENTIVOBASE)
+                
+            elif (numeroViajesRealizados > 10):
+                
+                self.dinero += Incentivo.INCENTIVOBASE * 2
+                self.getTransportadora().setDinero(dineroTransportadora - (Incentivo.INCENTIVOBASE*2))
+            
+            
+        
+        
+        
+        
+        
+        
+    
     
 
     def bonoBienvenida(transportadora):

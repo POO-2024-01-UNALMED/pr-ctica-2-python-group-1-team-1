@@ -1,10 +1,13 @@
+from gestorAplicacion.constantes.incentivo import Incentivo
+
+class Transportadora (Incentivo):
 from multimethod import multimethod
 
 class Transportadora:
     _transportadoras = [] #No se utiliza
 
     def __init__(self, nombre, dinero, conductores, conductoresRegistrados, pasajeros, vehiculos,
-                 viajesAsignados, destinoAsignado, terminal, taller, viajesTerminados, dueño, estrellas):
+                viajesAsignados, destinoAsignado, terminal, taller, viajesTerminados, dueño, estrellas):
         self._nombre = nombre
         self._dinero = dinero
         self._conductores = conductores
@@ -127,6 +130,57 @@ class Transportadora:
             if (viaje.getId() == id):
                 return viaje
         return None
+    
+    def descuento(self):
+        
+        valorPagar = self.retornarValorAPagar()
+        verificacionViajes = 0
+        
+        if(len(self.getViajesAsignados()) == len(self.getViajesTerminados())):
+            
+            verificacionViajes = 1
+            
+        
+        if (valorPagar > 0):
+            
+            if (verificacionViajes == 0):
+                
+                self._dinero -= valorPagar
+                self._terminal.setDinero(self.getTerminal().getDinero() + valorPagar)
+                
+        else: 
+            self.dinero -= (valorPagar - (valorPagar*0.05))
+            self._terminal.setDinero(self.getTerminal().getDinero() + valorPagar)
+    
+    def bonificacion(self):
+        
+        dineroTerminal = self.getTerminal().getDinero()
+        dineroaRestarTerminal = 0
+        
+        for pasajero in self.getPasajeros():
+            
+            if (pasajero.verificarBonificacion() != 0):
+                
+                dineroaRestarTerminal += Incentivo.INCENTIVOBASE
+                self._dinero += dineroaRestarTerminal
+                
+        
+        self.getTerminal().setDinero(dineroTerminal - dineroaRestarTerminal)
+        
+    def retornarValorAPagar(self):
+        
+        calcularValorApagar = self._terminal.getComision() * len(self.getViajesTerminados())
+        
+        if (self.verificarPagoTerminal()):
+            
+            return calcularValorApagar
+        
+        return 0.0
+        
+        
+        
+        
+    
     
     def mostrarConductoresActivos(self):
         mensaje = ""

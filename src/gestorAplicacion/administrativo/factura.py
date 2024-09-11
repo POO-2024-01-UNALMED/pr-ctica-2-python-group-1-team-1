@@ -1,3 +1,6 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from gestorAplicacion.usuarios.pasajero import Pasajero
 from gestorAplicacion.usuarios.persona import Persona
 from gestorAplicacion.usuarios.conductor import Conductor

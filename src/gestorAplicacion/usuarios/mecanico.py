@@ -3,7 +3,7 @@ from constantes.incentivo import Incentivo
 from administrativo.vehiculo import Vehiculo
 from administrativo.taller import Taller
 
-class Mecanico (Persona):
+class Mecanico (Persona, Incentivo):
 
     _mecanicos = []
 
@@ -53,7 +53,7 @@ class Mecanico (Persona):
 
         dineroTransportadora = self._taller.getTransportadora().getDinero()
 
-        if (len(self.getHistorialReparados) > 10):
+        if (len(self.getHistorialReparados()) > 10):
 
             self._dinero += Incentivo.incentivoBase
             self._taller.getTransportadora().setDinero (dineroTransportadora - Incentivo.incentivoBase)
