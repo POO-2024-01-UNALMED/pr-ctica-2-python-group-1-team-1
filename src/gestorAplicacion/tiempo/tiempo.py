@@ -2,8 +2,15 @@
 import threading
 import time
 
-# Importaciones para el tiempo
-#from src.gestorAplicacion.constantes.dia import Dia
+# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+#--------------------------------------------------------------------------------------
+
+from gestorAplicacion.constantes.dia import Dia
+#from gestorAplicacion.administrativo.terminal import Terminal
+#from gestorAplicacion.administrativo.viaje import Viaje
 
 class Tiempo:
     # Atributos de Clase
@@ -23,7 +30,7 @@ class Tiempo:
         self.semana = 0
         self.meses = 1
         self.año = 2024
-        self.Dia = None
+        self.Dia = Dia.LUN.name
         # Controladores
         self.intervalo = intervalo_ms / 1000  # Convertir milisegundos a segundos
         self.ejecutando = True  # Para controlar si el contador está activo - - Sirve para evitar que se la ejecución de dos o más Hilos.
@@ -34,12 +41,19 @@ class Tiempo:
     
     # Método donde se asignan las tareas.
     def tareas(self):
+        # MÉTODOS NECESARIOS PARA CALCULAR EL TIEMPO
         self.calcularHora() # Calcula la hora
+        self.calcularDia() # Calcula el dia de la Semana
         self.calcularSalidaHora() # Define el formato de salida de la hora sirve para hacer validaciones.
         self.calcularSalidaFecha() # Define el formato de salida de la fecha sirve para hacer validaciones.
-        #print(Tiempo.mostrarTiempo())
-        print(f"{self.salidaFecha} ---- {self.salidaHora} --- {self.Dia}")
-        # Llamar métodos creados
+        # print(self.mostrarTiempo()) # Pruebas 
+        
+        # MÉTODOS PARA ADMINISTRAR LOS VIAJES
+        #self.comprobarViajes()
+        #self.comprobarViajesEnCurso()
+
+        # MÉTODOS PARA ADMINISTRAR EL TALLER
+
         # Necesario para reiniciar
         self.ejecutarPeriodicamente() # Reiniciar el temporizador
     
@@ -101,14 +115,13 @@ class Tiempo:
 
         diasDesdeBase += (self.dias - baseDia)  # Añadir días del mes actual
 
-        #diasSemana = list(Dia)  # Determinar el día de la semana
-        #indiceDia = (diasDesdeBase + baseDia - 1) % 7
-        #Tiempo.Dia = diasSemana[indiceDia] 
+        diasSemana = list(Dia)  # Determinar el día de la semana
+        indiceDia = (diasDesdeBase + baseDia-1) % 7
+        self.Dia = diasSemana[indiceDia].name
 
     def mostrarTiempo(self):
         """
         Imprime la fecha y hora actual en un formato completo para propósitos de prueba.
-        
         Returns: (String) 
             * La fecha en formato "día/mes/año"
             * La hora en formato "hora:minutos"
@@ -116,6 +129,50 @@ class Tiempo:
         """
         tiempo = f"Fecha: {self.dias}/{self.meses}/{self.año} Hora: {self.horas}:{self.minutos} Hoy es: {self.Dia}"
         return tiempo
+    
+    def comprobarViajes(self):
+        """
+        Revisa todos los viajes programados en la terminal y valida aquellos que coincidan con la fecha y hora actuales.
+        La lógica es la siguiente:
+    	 * 1. Se obtiene la lista de viajes desde la terminal.
+    	 * 2. Si la lista de viajes no es nula, se itera sobre cada viaje.
+    	 * 3. Para cada viaje, se compara la fecha y la hora del viaje con la fecha y hora actuales.
+    	 * 4. Si el viaje coincide con la fecha y hora actuales, se llama al método `validacion()` del viaje.
+        """
+        viajes = Terminal.getViajes()
+        if (viajes is not None):
+            for i in range(len(viajes)):
+                viaje = viajes[i]
+                if (viaje.getFecha() == Tiempo.salidaFecha):
+                    if not (viaje.getPasajeros()):
+                        pass
+                        #viaje.asignarPasajerosAViaje(Terminal.getPasajeros)
+                    if (viaje.getHora() == Tiempo.salidaHora):
+                        viaje.validacion()
+
+    def comprobarViajesEnCurso(self):
+        """
+        Revisa todos los viajes en curso en la terminal y ejecuta la programación automática para aquellos que llegan a la hora actual.
+        La lógica es la siguiente:
+    	 * 1. Se obtiene la lista de viajes en curso desde la terminal.
+    	 * 2. Si la lista de viajes en curso no es nula, se itera sobre cada viaje.
+    	 * 3. Para cada viaje, se compara la fecha y la hora de llegada del viaje con la fecha y hora actuales.
+    	 * 4. Si el viaje coincide con la fecha y hora actuales, se llama al método `programacionAutomatica()` del viaje.
+    	 */
+        """
+        viajes = Terminal.getViajesEnCurso()
+        if (viajes is not None):
+            for i in range(len(viajes)):
+                viaje = viajes[i]
+                if (viaje.getFecha() == Tiempo.salidaFecha):
+                    if (viaje.getHora() == Tiempo.salidaHora):
+                        viaje.programacionAutomatica()
+
+    def mecanicosDisponibles(self):
+        pass
+
+    def verificarVehiculos(self):
+        pass
     
     def calcularSalidaHora(self):
         Tiempo.salidaHora = f"{self.horas}:{self.minutos}"

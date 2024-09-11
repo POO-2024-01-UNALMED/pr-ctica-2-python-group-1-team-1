@@ -1,9 +1,11 @@
 import tkinter as tk
 import principal as main
 
+# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+#--------------------------------------------------------------------------------------
 
 from src.gestorAplicacion.tiempo.tiempo import Tiempo
 #from src.baseDatos.serializador import Serializador
@@ -19,7 +21,6 @@ def mostrarDescripcion():
 Tiempo(1) # Solo para las pruebas
 #Serializador.crearObjetos()
 tiempo = Tiempo.tiempos[0] # 
-
 
 def salir():
     global tiempo

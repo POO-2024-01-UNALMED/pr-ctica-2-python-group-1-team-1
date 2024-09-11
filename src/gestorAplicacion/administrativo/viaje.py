@@ -1,5 +1,11 @@
 import math
-# Faltan las importaciones...
+import random
+# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+#--------------------------------------------------------------------------------------
+from gestorAplicacion.administrativo.terminal import Terminal
 
 class Viaje:
     _totalViajes = 1 # Atributo de clase
@@ -19,12 +25,13 @@ class Viaje:
         self._dia = None
         self._distancia = None # Tiempo.calcularDia(fecha)
         self._duracion = None # Viaje.calcularDistancia(salida, llegada)
-        self._horaLlegada = None # calcularHoraLlegada()
-        self._fechaLlegada = None # calcularFechaLlegada()
+        self._horaLlegada = self.calcularHoraLlegada()
+        self._fechaLlegada = None # calcularFechaLlegada() --- Se asigna automáticamenente
         self._tarifa = None # calcularTarifa ()
         self._asientosDisponibles = None # Replantear la forma de calcularlos
-        # Añadirlo a la lista de la Terminal, Terminal.getViajes.append() 
-        # Asignar a la Transportadora --- Intentar que sea desde la transportadora que se asigne al conductor y vehiculo.
+        Terminal.getViajes().append(self)
+        #self._conductor.getTransportadora().append(self)
+        #self._conductor.getHorario().append(self)
         Viaje._totalViajes += 1
     
     # Metodos necesarios para inicializar
@@ -46,8 +53,26 @@ class Viaje:
 
         return distancia
 
-    def asignarPasajerosAViaje():
-        pass
+    def asignarPasajerosAViaje(self, pasajeros):
+        """
+        Agerega pasajeros al viaje aleatoriamente seleccionandolos de una lista de pasajeros
+        recurrentes
+        """
+        dineroTotal = 0
+        cantidadPasajeros = (self.getVehiculo().getTipo().getCapacidad() // 2) + 1
+        
+        for _ in range(cantidadPasajeros): # VERIFICAR LA LISTA DE PASAJEROS
+            if not pasajeros:
+                break
+            
+            pasajero = random.choice(pasajeros)
+            self.getPasajeros().append(pasajero)
+            pasajeros.remove(pasajero) # ELIMINARLO DE LA LISTA PARA NO REPETIR
+            
+            dineroTotal += self.getTarifa() * pasajero.getTipo().getDescuento()
+        
+        transportadora = self.getVehiculo().getTransportadora()
+        transportadora.setDinero(transportadora.getDinero() + dineroTotal)
 
     """
     Calcula la duración estimada de un viaje en horas.
@@ -149,14 +174,70 @@ class Viaje:
         
         return total
     
-    def validacion(self): # Implementación depende del tiempo
-        pass
+    """
+    Valida el estado del viaje actual. Si el viaje no está en la lista de viajes en curso,
+    lo añade a dicha lista, marca el viaje como activo, actualiza el estado del vehículo asociado,
+    y lo elimina de la lista de todos los viajes. Retorna un mensaje indicando si el viaje está 
+    ahora en curso o si ya estaba en curso.
 
-    def programacionAutomatica(self): # Implementación depende del tiempo
-        pass
+    Returns:
+        str: Mensaje indicando el estado del viaje.
+    """
+    def validacion(self):
+        viajes = Terminal.getViajesEnCurso()
+        if (self in viajes):
+            return "El viaje ya esta en curso"
+        else:
+            Terminal.getViajesEnCurso().append(self)
+            self.setEstado(True)
+            self.getVehiculo().viaje(int(self.getDistancia()))
+            Terminal.getViajes().remove(self)
+            if (self in Terminal.getReservas()):
+                Terminal.getReservas().remove(self)
+            return "El viaje está en Curso"
 
-    def ajusteFecha(self): # Implementación depende del tiempo
-        pass
+    """
+    Maneja la programación automática del viaje, gestionando la continuidad del viaje o su cancelación. 
+    Si el viaje está en curso, lo mueve al historial, lo elimina de la lista de viajes en curso y crea 
+    un nuevo viaje con la fecha ajustada. Si el viaje no está en curso (lo que indica que fue cancelado 
+    antes de salir), lo elimina de la lista de todos los viajes y también crea un nuevo viaje con la 
+    fecha ajustada.
+    """
+    def programacionAutomatica(self):
+        viaje = Terminal.getViajesEnCurso()
+        self.getConductor().getHorario().remove(self)
+        self.setEstado
+        if (self in viaje):
+            Terminal.getHistorial().append(self)
+            viaje.remove(self)
+        else:
+            Terminal.getViajes().remove(self)
+
+    def ajusteFecha(self, dias):
+        """
+        Ajusta la fecha de llegada sumando una cantidad de días.
+
+        Args:
+            dias (int): Número de días a sumar a la fecha de llegada.
+
+        Returns:
+            str: La nueva fecha en formato "dd/mm/yyyy".
+        """
+        fechaPartes = self.getFechaLlegada().split("/") # SEPARAR LA FECHA EN PARTES NUMÉRICAS
+        dia = int(fechaPartes[0])
+        mes = int(fechaPartes[1])
+        año = int(fechaPartes[2])
+
+        dia += dias
+        if (dia > 30):
+            dia = dia-30
+            mes += 1
+            if (mes > 12):
+                mes = 1
+                año +=1
+        
+        fechaLlegada = f"{dia}/{mes}/{año}"
+        return fechaLlegada
 
     """ Genera un informe del estado actual del viaje, con detalles que varían dependiendo de si el viaje está en curso 
     o si aún no ha salido.

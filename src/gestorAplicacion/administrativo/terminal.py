@@ -1,5 +1,11 @@
-# Importaciones: 
-from multimethod import multimethod
+# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+#--------------------------------------------------------------------------------------
+
+# Importaciones:
+#from multimethod import multimethod
 from gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
 from gestorAplicacion.constantes.destino import Destino
 from gestorAplicacion.administrativo.transportadora import Transportadora

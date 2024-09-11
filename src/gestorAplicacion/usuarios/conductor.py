@@ -1,4 +1,10 @@
-from persona import Persona
+# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+#--------------------------------------------------------------------------------------
+
+from gestorAplicacion.usuarios.persona import Persona
 
 class Conductor(Persona):
     conductores = []
