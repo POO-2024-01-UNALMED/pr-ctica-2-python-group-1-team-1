@@ -11,9 +11,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 from gestorAplicacion.constantes.dia import Dia
 #from gestorAplicacion.administrativo.terminal import Terminal
 #from gestorAplicacion.administrativo.viaje import Viaje
-from usuarios.mecanico import Mecanico
-from administrativo.taller import Taller
-from administrativo.vehiculo import Vehiculo
+
 
 class Tiempo:
     # Atributos de Clase
