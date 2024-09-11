@@ -1,5 +1,6 @@
 import math
 import random
+from administrativo.transportadora import Transportadora
 
 class Taller ():
 

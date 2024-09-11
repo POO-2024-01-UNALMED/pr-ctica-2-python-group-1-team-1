@@ -11,6 +11,9 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 from gestorAplicacion.constantes.dia import Dia
 #from gestorAplicacion.administrativo.terminal import Terminal
 #from gestorAplicacion.administrativo.viaje import Viaje
+from usuarios.mecanico import Mecanico
+from administrativo.taller import Taller
+from administrativo.vehiculo import Vehiculo
 
 class Tiempo:
     # Atributos de Clase
@@ -168,11 +171,59 @@ class Tiempo:
                     if (viaje.getHora() == Tiempo.salidaHora):
                         viaje.programacionAutomatica()
 
-    def mecanicosDisponibles(self):
-        pass
+    def mecanicosDisponibles (self):
 
-    def verificarVehiculos(self):
-        pass
+        for i in Mecanico.getMecanicos():
+
+            if (len(i.getVehiculosReparando()) == 0):
+
+                i.setEstado (True)
+            
+            else:
+
+                i.setEstado (False)
+
+    def verificarVehiculos ():
+
+        for taller in Taller.getListaTalleres():
+
+            copiaVehiculos = taller.getVehiculosEnReparacion()
+
+            for vehiculo in copiaVehiculos:
+
+                if (vehiculo.getFechaHoraReparacion() <= Tiempo.getFechaHora()):
+
+                    vehiculo.getMecanicoAsociado().repararVehiculo(vehiculo)
+                
+                #elif ((vehiculo.getFechaHoraReparacion() - Tiempo.getFechaHora()) >= 1000):
+
+                    #vehiculo.getMecanicoAsociado().repararVehiculo(vehiculo)
+    
+    def verificarVehiculosVenta ():
+
+        for taller in Taller.getListaTalleres():
+
+            vehiculosEnVenta = taller.getVehiculosEnVenta()
+
+            for vehiculo in vehiculosEnVenta:
+
+                if (vehiculo.getFechaHoraReparacion() <= Tiempo.getFechaHora()):
+
+                    vehiculo.getTransportadora().getTaller().venderVehiculo(vehiculo)
+                    vehiculo.setReparando(False)
+                
+                #elif ((vehiculo.getFechaHoraReparacion() - Tiempo.getFechaHora()) >= 1000):
+
+                    #vehiculo.getTransportadora().getTaller().venderVehiculo(vehiculo)
+                    #vehiculo.setReparando(False)
+                
+
+    
+
+    @classmethod
+    def getFechaHora(cls):
+
+        return((525600 * cls.año) + (43800 * cls.meses) + (10950 * cls.semana) + (1440 + cls.dias) + (60 * cls.horas))
     
     def calcularSalidaHora(self):
         Tiempo.salidaHora = f"{self.horas}:{self.minutos}"
