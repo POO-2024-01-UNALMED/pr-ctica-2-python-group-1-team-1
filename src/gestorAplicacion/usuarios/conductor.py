@@ -73,6 +73,7 @@ class Conductor(Persona):
         conductor.getHorario().remove(viaje)
 
     def quitarVehiculo(self):
+        """Metodo para quitar el vehiculo si no tiene viajes programados"""
 
         if (len(self._horario) == 0):
 
@@ -85,7 +86,19 @@ class Conductor(Persona):
         else:
             return "No se ha podido desvincular el vehiculo a " + self.nombre
         
+    def mostrarViajes(self):
+        mensaje = ""
+        for viaje in self.getHorario(): 
+            mensaje += "\n" + viaje.detallesViaje()
+        
+        return mensaje
     
+    def tieneVehiculo(self):
+        """Metodo para saber si el conductor tiene un vehiculo"""
+        if self.getVehiculo() == None:
+            return False
+        else:
+            return True
     
 
     def bonoBienvenida(transportadora):

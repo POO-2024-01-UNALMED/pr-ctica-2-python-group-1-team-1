@@ -1,3 +1,5 @@
+from multimethod import multimethod
+
 class Transportadora:
     _transportadoras = [] #No se utiliza
 
@@ -21,6 +23,7 @@ class Transportadora:
 
 
     def encontrarConductor(self,id):
+        """Encuentra el conductor con el id dado como argumento"""
         from gestorAplicacion.usuarios.conductor import Conductor
         for conductor in self._conductores:
             if (conductor.getId() == id):
@@ -46,6 +49,12 @@ class Transportadora:
 
     
     def despedirConductor(self, id):
+        """Metodo para despedir conductor al cual se le remueve el vehiculo,
+	    se le remueve de la lista de conductores de la transportadora.
+	    Para esto, primero se verifica que no tenga viajes programados y 
+	    que su vehiculo tenga almenos 2 conductores. Si existe algun inconveniente
+	    el metodo devolvera un valor diferente para cada caso.
+        """
         from gestorAplicacion.usuarios.conductor import Conductor
 
         conductor : Conductor = self.encontrarConductor(id)
@@ -76,7 +85,7 @@ class Transportadora:
         for conductor in self._conductoresRegistrados:
             mensaje += "Nombre: " + conductor.getNombre() + "#Id: " + str(conductor.getId()) + "\n"
 
-
+    @multimethod
     def contratarConductorId(self, id: int):
         from gestorAplicacion.usuarios.conductor import Conductor
         conductor : Conductor = None
@@ -89,7 +98,10 @@ class Transportadora:
         
         return Transportadora.contratarConductor(conductor)
     
-    def contratarConductor(self, conductor):
+    @multimethod
+    def contratarConductor(self, conductor): #Solucionar error de importacion para hacer la sobrecarga
+        """Metodo para contratar un conductor el cual se agregara
+	    a la lista de conductores de la transportadora."""
 
         if conductor == None:
             return "No se ha encontrado el conductor"
@@ -109,12 +121,71 @@ class Transportadora:
                 return "No se pudo contratar a " + conductor.getNombre() + " porque tiene menos de cinco años de experiencia"
 
     def encontrarViaje(self, id):
-
+        """Devuelve el viaje que coincida con el id dado como argumento"""
         for viaje in self._viajesAsignados:
 
             if (viaje.getId() == id):
                 return viaje
         return None
+    
+    def mostrarConductoresActivos(self):
+        mensaje = ""
+
+        for conductor in self.getConductores():
+            mensaje += "Nombre: " + conductor.getNombre()+ "  #ID: " + conductor.getId() + "\n"
+
+    def mostrarViajesDisponibles(self, digitoDia, tipoVehiculo, conductor):
+        mensaje = ""
+        viajesDisponibles = []
+
+        for viaje in self.getViajesAsignados():
+            if ((abs(viaje.getValue() - digitoDia) >= 1) and (viaje.getVehiculo().getTipo == tipoVehiculo)):
+                if viaje in conductor.getHorario():
+                    continue
+                viajesDisponibles.append(viaje)
+                mensaje += "\n" + viaje.detallesViaje()
+        
+        return mensaje
+    
+    def conductoresDisponibles(self, viaje):
+        """ Metodo que muestra los conductores disponibles de la terminal
+	    que no tengan un viaje asignado el mismo dia del viaje pasado como
+	    parametro y que los otros conductores asociados al vehiculo de cada
+	    conductor no tengan viajes asignados el mismo dia del pasado como parametro"""
+        conductoresLibres = []
+        mensaje = ""
+
+        for conductor in self.getConductores():
+            valor = True
+
+            if conductor.getVehiculo().getTipo() == viaje.getVehiculo().getTipo():
+
+                for driver in conductor.getVehiculo().getConductores():
+
+                    if driver in conductoresLibres:
+                        continue
+
+                    if driver.getHorario() == None:
+                         conductoresLibres.append(driver)
+                         continue
+                    
+                    for viaje in driver.getHorario():
+
+                        if ((viaje.getDia().getValue() - viaje.getDia().getValue) == 0):
+                            valor = False
+                            break
+                        else:
+                            valor=True
+
+                    if valor:
+                        conductoresLibres.append(driver)
+        
+        for conductor in conductoresLibres:
+            mensaje += "Nombre: " + conductor.getNombre()+ "  #ID: " + str(conductor.getId()) + "\n"
+        
+        return mensaje
+
+
 
     # Métodos get
 

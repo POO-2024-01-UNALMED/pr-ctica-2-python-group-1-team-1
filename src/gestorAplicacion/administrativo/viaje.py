@@ -303,8 +303,9 @@ class Viaje:
     def isequals():
         pass
 
-    def detallesViaje(): # Depronto sirve el metodo estado - - - Hacen lo mismo. 
-        pass
+    def detallesViaje(self):
+        """Metodo para mostrar los detalles del viaje de manera superficial"""
+        return "Fecha del viaje: " + str(self.getFecha()) + " Destino: " + str(self.getLlegada) + " ID: " + str(self.getId())
 
     # Métodos Get y Set
     # Establece o modifica la Terminal del viaje.

@@ -59,6 +59,14 @@ class Vehiculo ():
 
         self._conductores.remove(conductor)
 
+    def quitarConductorPorId(self, id):
+        """Metodo que sirve para quitar un conductor asociado al vehículo."""
+
+        for conductor in self._conductores:
+
+            if conductor.getId() == id:
+                self._conductores.remove(conductor)
+
     def reparacion (self):
 
         self._integridad = 100
