@@ -21,6 +21,7 @@ class Transportadora (Incentivo):
         self._estrellas = estrellas
         Transportadora._transportadoras.append(self)
         self._conductoresDespedidos = []
+        self._destinos=[]
 
 
     def encontrarConductor(self,id):
@@ -286,6 +287,9 @@ class Transportadora (Incentivo):
     def getEstrellas(self):
         return self._estrellas
     
+    def detDestinos(self):
+        return self._destinos
+    
     @classmethod
     def getTransportadoras(cls):
         """Devuelve la lista de todas las instancias de Transportadora."""
@@ -344,6 +348,9 @@ class Transportadora (Incentivo):
     # Establece la calificación en estrellas de la transportadora
     def setEstrellas(self, estrellas):
         self._estrellas = estrellas
+    
+    def setDestinos(self, destinos):
+        self._destinos = destinos
 
     @classmethod
     def setTransportadoras(cls, transportadoras):
