@@ -10,13 +10,13 @@ from gestorAplicacion.usuarios.persona import Persona
 class Conductor(Persona, Incentivo):
     conductores = []
 
-    def __init__(self, id, edad, nombre, genero, historial, experiencia, dinero, estadoLicencia, vehiculo, transportadora, horario, numeroDePagosRecibidos):
-        super.__init__(id, edad, nombre, genero, historial, experiencia, dinero)
+    def __init__(self, id, edad, nombre, genero, historial, experiencia, dinero, estadoLicencia, vehiculo, transportadora, horario, facturas, diasRestantesContr, diasTrabajados):
+        super.__init__(id, edad, nombre, genero, historial, experiencia, dinero, facturas, diasRestantesContr, diasTrabajados)
         self._estadoLicencia = estadoLicencia
         self._vehiculo = vehiculo
         self._transportadora = transportadora
         self._horario = horario
-        self._numeroDePagosRecibidos = numeroDePagosRecibidos
+        self._numeroDePagosRecibidos = len(self.getFacturas())
         Conductor.conductores.append(self)
 
 
