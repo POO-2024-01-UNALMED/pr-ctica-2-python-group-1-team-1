@@ -1,4 +1,10 @@
-from persona import Persona 
+# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+import sys
+import os
+sys.path.append(os.path.abspath("src"))
+#--------------------------------------------------------------------------------------
+
+from gestorAplicacion.usuarios.persona import Persona 
 from gestorAplicacion.constantes.incentivo import Incentivo
 class Pasajero(Persona, Incentivo):
     def __init__(self,tipo, id, edad, nombre):

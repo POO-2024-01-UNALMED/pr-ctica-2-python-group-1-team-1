@@ -3,14 +3,16 @@ import random
 # SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+sys.path.append(os.path.abspath("src"))
 #--------------------------------------------------------------------------------------
-from gestorAplicacion.administrativo.terminal import Terminal
+
 
 class Viaje:
     _totalViajes = 1 # Atributo de clase
     # Constructor
     def __init__(self, terminal, horaSalida, fechaSalida, vehiculo, conductor, llegada, salida):
+        from gestorAplicacion.administrativo.terminal import Terminal
+
         self._terminal = terminal
         self._id = Viaje._totalViajes
         self._horaSalida = horaSalida
@@ -149,6 +151,10 @@ class Viaje:
         total, dependiendo las condiciones establecidas: duración y tipo de vehiculo.
     """
     def calcularTarifa(self):
+        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
+        from gestorAplicacion.administrativo.transportadora import Transportadora
+
         costoPorMinuto = 0
         total = 0
         
@@ -184,6 +190,10 @@ class Viaje:
         str: Mensaje indicando el estado del viaje.
     """
     def validacion(self):
+        from gestorAplicacion.administrativo.terminal import Terminal
+        from gestorAplicacion.administrativo.viaje import Viaje
+        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        
         viajes = Terminal.getViajesEnCurso()
         if (self in viajes):
             return "El viaje ya esta en curso"
@@ -204,6 +214,10 @@ class Viaje:
     fecha ajustada.
     """
     def programacionAutomatica(self):
+        from gestorAplicacion.administrativo.terminal import Terminal
+        from gestorAplicacion.usuarios.conductor import Conductor
+        from gestorAplicacion.administrativo.viaje import Viaje
+
         viaje = Terminal.getViajesEnCurso()
         self.getConductor().getHorario().remove(self)
         self.setEstado
@@ -295,6 +309,9 @@ class Viaje:
         de los que puede acomodar el vehículo.
     """
     def verificarAsientos(self):
+        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
+
         capacidadVehiculo = self._vehiculo.getTipo().getCapacidad()
         asientosOcupados = len(self._pasajeros)
         total = capacidadVehiculo - asientosOcupados

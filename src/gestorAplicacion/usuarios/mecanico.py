@@ -1,7 +1,13 @@
-from persona import Persona
-from constantes.incentivo import Incentivo
-from administrativo.vehiculo import Vehiculo
-from administrativo.taller import Taller
+# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+import sys
+import os
+sys.path.append(os.path.abspath("src"))
+#--------------------------------------------------------------------------------------
+
+from gestorAplicacion.usuarios.persona import Persona
+from gestorAplicacion.constantes.incentivo import Incentivo
+from gestorAplicacion.administrativo.vehiculo import Vehiculo
+from gestorAplicacion.administrativo.taller import Taller
 
 class Mecanico (Persona, Incentivo):
 

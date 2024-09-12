@@ -4,11 +4,13 @@ import principal as main
 # SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+sys.path.append(os.path.abspath("src"))
 #--------------------------------------------------------------------------------------
 
-from src.gestorAplicacion.tiempo.tiempo import Tiempo
-#from src.baseDatos.serializador import Serializador
+from gestorAplicacion.tiempo.tiempo import Tiempo
+from gestorAplicacion.administrativo.terminal import Terminal
+
+from baseDatos.serializador import Serializador
 
 # PALETA DE COLORES
 colors = main.colors

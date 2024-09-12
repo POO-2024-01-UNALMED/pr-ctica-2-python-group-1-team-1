@@ -1,6 +1,12 @@
+# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+import sys
+import os
+sys.path.append(os.path.abspath("src"))
+#--------------------------------------------------------------------------------------
+
 import math
 import random
-from administrativo.transportadora import Transportadora
+from gestorAplicacion.administrativo.transportadora import Transportadora
 
 class Taller ():
 

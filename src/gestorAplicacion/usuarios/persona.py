@@ -1,13 +1,19 @@
+# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+import sys
+import os
+sys.path.append(os.path.abspath("src"))
+#--------------------------------------------------------------------------------------
+
 from abc import ABC, abstractmethod
 from multimethod import multimethod
+from gestorAplicacion.constantes.incentivo import Incentivo
 from gestorAplicacion.constantes.destino import Destino
-from gestorAplicacion.administrativo.viaje import Viaje
+"""from gestorAplicacion.administrativo.viaje import Viaje
 from gestorAplicacion.administrativo.factura import Factura
 from gestorAplicacion.administrativo.terminal import Terminal
 from gestorAplicacion.administrativo.transportadora import Transportadora
-from gestorAplicacion.constantes.incentivo import Incentivo
-from gestorAplicacion.usuarios.pasajero import Pasajero
-from gestorAplicacion.usuarios.pasajero import Conductor
+from gestorAplicacion.usuarios.pasajero import Pasajero"""
+
 
 class Persona(ABC, Incentivo):
     
@@ -56,6 +62,7 @@ class Persona(ABC, Incentivo):
         
     
     def verHistorialViajes(self):
+        from gestorAplicacion.administrativo.viaje import Viaje
         
         resultado = ""
         
@@ -79,6 +86,15 @@ class Persona(ABC, Incentivo):
             return self.nombre + " no ha viajado a ningún lado"
 
     def mostrarFactura(self, factura):
+        from gestorAplicacion.administrativo.viaje import Viaje #
+        from gestorAplicacion.administrativo.factura import Factura #
+        from gestorAplicacion.administrativo.terminal import Terminal #
+        from gestorAplicacion.administrativo.transportadora import Transportadora #
+        from gestorAplicacion.usuarios.pasajero import Pasajero #
+        from gestorAplicacion.usuarios.conductor import Conductor #
+        from gestorAplicacion.administrativo.vehiculo import Vehiculo #
+        from gestorAplicacion.administrativo.taller import Taller #
+
         
         if (factura in self.getFacturas()):
             
@@ -113,6 +129,7 @@ class Persona(ABC, Incentivo):
         pass
     
     def consultarDinero(self):
+        from gestorAplicacion.administrativo.factura import Factura
         
         dinero_gastado = 0
         
@@ -130,6 +147,10 @@ class Persona(ABC, Incentivo):
             return self.dinero
     
     def tomarViaje(self, destino, fecha, terminal):
+        from gestorAplicacion.administrativo.viaje import Viaje
+        from gestorAplicacion.usuarios.pasajero import Pasajero
+        from gestorAplicacion.administrativo.terminal import Terminal
+        from gestorAplicacion.administrativo.transportadora import Transportadora
         
         self.elegirDestino(destino, terminal)
         disponiblesAtomar = self.verDisponibilidad(destino, fecha, terminal)
@@ -168,6 +189,10 @@ class Persona(ABC, Incentivo):
             return None
     
     def reservarViaje(self, destino, fecha, pasajeros, terminal):
+        from gestorAplicacion.administrativo.terminal import Terminal
+        from gestorAplicacion.administrativo.viaje import Viaje
+        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from gestorAplicacion.administrativo.transportadora import Transportadora
         
         costo = 0
         viajeReservado = None
@@ -242,6 +267,10 @@ class Persona(ABC, Incentivo):
         return viajeReservado
     
     def verDisponibilidad(self, destino, fecha, terminal):
+        from gestorAplicacion.administrativo.terminal import Terminal
+        from gestorAplicacion.administrativo.viaje import Viaje
+        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from gestorAplicacion.usuarios.pasajero import Pasajero
         
         viajesDisponibles = []
         viajesDisponiblesEnOtraFecha = []
@@ -266,6 +295,10 @@ class Persona(ABC, Incentivo):
             return viajesDisponiblesEnOtraFecha
         
     def elegirDestino(self, destino, terminal):
+        from gestorAplicacion.administrativo.terminal import Terminal
+        from gestorAplicacion.administrativo.transportadora import Transportadora
+        from gestorAplicacion.usuarios.pasajero import Pasajero
+        
         
         for d in Terminal.getDestinos():
             
