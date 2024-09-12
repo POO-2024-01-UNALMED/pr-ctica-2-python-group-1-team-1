@@ -5,9 +5,7 @@ class Pasajero(Persona, Incentivo):
         self._tipoPasajero = tipo
         self._viaje = None
         super.__init__(id, edad, nombre)
-    
-    
-    
+
     def nuevoPasajero(self, tipo, id, edad, nombre):
         return Pasajero(tipo, id, edad, nombre)
     
@@ -61,10 +59,7 @@ class Pasajero(Persona, Incentivo):
         dineroTrans = self._viaje.getTransportadora().getDinero()
         dineroTransportadoraluegoDeIncentivo = dineroTrans - (Incentivo.INCENTIVOBASE * 2)
         self._viaje.getTransportadora().setDinero(dineroTransportadoraluegoDeIncentivo)
-            
-        
-        
-    
+
     def verificarBonificacion(self):
         
         viajesMismaTransportadora = 0

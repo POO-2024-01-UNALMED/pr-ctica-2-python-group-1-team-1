@@ -1,9 +1,7 @@
 from gestorAplicacion.constantes.incentivo import Incentivo
-
-class Transportadora (Incentivo):
 from multimethod import multimethod
+class Transportadora (Incentivo):
 
-class Transportadora:
     _transportadoras = [] #No se utiliza
 
     def __init__(self, nombre, dinero, conductores, conductoresRegistrados, pasajeros, vehiculos,
@@ -176,12 +174,7 @@ class Transportadora:
             return calcularValorApagar
         
         return 0.0
-        
-        
-        
-        
-    
-    
+
     def mostrarConductoresActivos(self):
         mensaje = ""
 
@@ -220,8 +213,8 @@ class Transportadora:
                         continue
 
                     if driver.getHorario() == None:
-                         conductoresLibres.append(driver)
-                         continue
+                        conductoresLibres.append(driver)
+                        continue
                     
                     for viaje in driver.getHorario():
 
@@ -238,8 +231,6 @@ class Transportadora:
             mensaje += "Nombre: " + conductor.getNombre()+ "  #ID: " + str(conductor.getId()) + "\n"
         
         return mensaje
-
-
 
     # Métodos get
 
