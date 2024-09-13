@@ -990,3 +990,66 @@ class Serializador():
         ]
         #Agregar los pasajeros a la terminal
         Terminal.setPasajeros(pasajerosTerminal)
+
+        # VIAJES
+        lista = []
+        reservas = []
+
+        # TRANSPORTADORA 1
+        lista.append(Viaje(terminal, "8:0", "3/1/2024", conductores1[1].getVehiculo(), conductores1[1], Destino.CARTAGENA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "10:0", "5/1/2024", conductores1[3].getVehiculo(), conductores1[3], Destino.BARRANQUILLA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "12:0", "7/1/2024", conductores1[7].getVehiculo(), conductores1[7], Destino.BELLO, Destino.MEDELLIN))
+        a = Viaje(terminal, "14:0", "14/1/2024", conductores1[9].getVehiculo(), conductores1[9], Destino.SANTAMARTA, Destino.MEDELLIN)
+
+        lista.append(a)
+        reservas.append(a)
+
+        # TRANSPORTADORA 2
+        lista.append(Viaje(terminal, "8:30", "3/1/2024", conductores2[1].getVehiculo(), conductores1[1], Destino.GUARNE, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "10:30", "5/1/2024", conductores2[3].getVehiculo(), conductores1[3], Destino.LAPINTADA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "12:30", "7/1/2024", conductores2[7].getVehiculo(), conductores1[7], Destino.GUATAPE, Destino.MEDELLIN))
+        b = Viaje(terminal, "14:30", "18/1/2024", conductores2[9].getVehiculo(), conductores1[9], Destino.BARBOSA, Destino.MEDELLIN)
+
+        lista.append(a)
+        reservas.append(a)
+
+        # TRANSPORTADORA 3
+        lista.append(Viaje(terminal, "19:0", "12/1/2024", conductores3[1].getVehiculo(), conductores3[1], Destino.CALI, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "10:0", "15/1/2024", conductores3[3].getVehiculo(), conductores3[3], Destino.ITAGUI, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "13:0", "16/1/2024", conductores3[7].getVehiculo(), conductores3[7], Destino.ENVIGADO, Destino.MEDELLIN))
+        c = Viaje(terminal, "9:0", "1/2/2024", conductores3[9].getVehiculo(), conductores3[9], Destino.MARINILLA, Destino.MEDELLIN)
+        
+        lista.append(c)
+        reservas.append(c)
+
+        # TRANSPORTADORA 4
+        lista.append(Viaje(terminal, "11:0", "1/2/2024", conductores4[1].getVehiculo(), conductores4[1], Destino.GIRARDOTA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "9:0", "1/2/2024", conductores4[3].getVehiculo(), conductores4[3], Destino.RIONEGRO, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "10:0", "1/3/2024", conductores4[7].getVehiculo(), conductores4[7], Destino.BOGOTA, Destino.MEDELLIN))
+        d = Viaje(terminal, "9:0", "1/3/2024", conductores4[9].getVehiculo(), conductores4[9], Destino.LAESTRELLA, Destino.MEDELLIN)
+        
+        lista.append(d)
+        reservas.append(d)
+
+        #TRANSPORTADORA 5
+        lista.append(Viaje(terminal, "13:0", "1/3/2024", conductores5[1].getVehiculo(), conductores5[1], Destino.BUENAVENTURA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "9:25", "12/3/2024", conductores5[7].getVehiculo(), conductores5[7], Destino.BUCARAMANGA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "9:30", "2/3/2024", conductores5[3].getVehiculo(), conductores5[3], Destino.ANGELOPOLIS, Destino.MEDELLIN))
+        e = Viaje(terminal, "10:0", "10/4/2024", conductores5[9].getVehiculo(), conductores3[9], Destino.COOPACABANA, Destino.MEDELLIN)
+        
+        lista.append(e)
+        reservas.append(e)
+
+        # TRANSPORTADORA 6
+        lista.append(Viaje(terminal, "18:0", "1/3/2024", conductores6[1].getVehiculo(), conductores6[1], Destino.SANTAMARTA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "20:0", "10/3/2024", conductores6[3].getVehiculo(), conductores6[3], Destino.BARRANQUILLA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "14:0", "14/3/2024", conductores6[7].getVehiculo(), conductores6[7], Destino.CALI, Destino.MEDELLIN))
+        f = Viaje(terminal, "8:0", "11/3/2024", conductores6[9].getVehiculo(), conductores6[9], Destino.LAPINTADA, Destino.MEDELLIN)
+        
+        lista.append(f)
+        reservas.append(f)
+
+        # VINCULAR LOS VIAJES A LA TERMINAL
+        
+        Terminal.setViajes(lista)
+        Terminal.setReservas(reservas)
