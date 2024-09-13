@@ -325,68 +325,132 @@ class Serializador():
 
         # Conductores que tienen contrato con la transportadora1
         conductores1.extend([
-            Conductor(1, 30, "Carlos Gómez", 'M', [], 5, 1500.0, True, None, transportadoraRapida, [], [], 10, 200),
-            Conductor(2, 28, "José Martínez", 'M', [], 4, 1400.0, True, None, transportadoraRapida, [], [], 123, 190),
-            Conductor(3, 35, "Luis Rodríguez", 'M', [], 7, 1600.0, True, None, transportadoraRapida, [], [], 92, 210),
-            Conductor(4, 32, "Miguel Sánchez", 'M', [], 6, 1550.0, True, None, transportadoraRapida, [], [], 81, 220),
-            Conductor(5, 29, "Juan Pérez", 'M', [], 4, 1450.0, True, None, transportadoraRapida, [], [], 148, 180),
-            Conductor(6, 31, "Pedro Fernández", 'M', [], 5, 1500.0, True, None, transportadoraRapida, [], [], 106, 200),
-            Conductor(7, 27, "Antonio López", 'M', [], 3, 1300.0, True, None, transportadoraRapida, [], [], 120, 170),
-            Conductor(8, 34, "Francisco García", 'M', [], 6, 1575.0, True, None, transportadoraRapida, [], [], 299, 215),
-            Conductor(9, 33, "Jorge Hernández", 'M', [], 7, 1620.0, True, None, transportadoraRapida, [], [], 257, 230),
-            Conductor(10, 29, "Alberto Ruiz", 'M', [], 4, 1460.0, True, None, transportadoraRapida, [], [], 213, 190)
+            Conductor(1, 30, "Carlos Gómez", 'M', [], 5, 1500.0, True, vehiculo1, transportadoraRapida, [], [], 10, 200),
+            Conductor(2, 28, "José Martínez", 'M', [], 4, 1400.0, True, vehiculo3, transportadoraRapida, [], [], 123, 190),
+            Conductor(3, 35, "Luis Rodríguez", 'M', [], 7, 1600.0, True, vehiculo5, transportadoraRapida, [], [], 92, 210),
+            Conductor(4, 32, "Miguel Sánchez", 'M', [], 6, 1550.0, True, vehiculo7, transportadoraRapida, [], [], 81, 220),
+            Conductor(5, 29, "Juan Pérez", 'M', [], 4, 1450.0, True, vehiculo1, transportadoraRapida, [], [], 148, 180),
+            Conductor(6, 31, "Pedro Fernández", 'M', [], 5, 1500.0, True, vehiculo2, transportadoraRapida, [], [], 106, 200),
+            Conductor(7, 27, "Antonio López", 'M', [], 3, 1300.0, True, vehiculo7, transportadoraRapida, [], [], 120, 170),
+            Conductor(8, 34, "Francisco García", 'M', [], 6, 1575.0, True, vehiculo8, transportadoraRapida, [], [], 299, 215),
+            Conductor(9, 33, "Jorge Hernández", 'M', [], 7, 1620.0, True, vehiculo8, transportadoraRapida, [], [], 257, 230),
+            Conductor(10, 29, "Alberto Ruiz", 'M', [], 4, 1460.0, True, vehiculo6, transportadoraRapida, [], [], 213, 190),
+            Conductor(121, 40, "Cristiano Ronaldo", 'M', [], 7, 1760.0, True, vehiculo4, transportadoraRapida, [], [], 241, 263),
+            Conductor(122, 35, "Leo Messi", 'M', [], 10, 1710.0, True, vehiculo2, transportadoraRapida, [], [], 155, 196)
         ])
+
+        vehiculo1.asociarConductor(conductores1[0])
+        vehiculo1.asociarConductor(conductores1[4])
+        vehiculo2.asociarConductor(conductores1[5])
+        vehiculo2.asociarConductor(conductores1[11])
+        vehiculo3.asociarConductor(conductores1[1])
+        vehiculo4.asociarConductor(conductores1[10])
+        vehiculo5.asociarConductor(conductores1[2])
+        vehiculo6.asociarConductor(conductores1[9])
+        vehiculo7.asociarConductor(conductores1[3])
+        vehiculo7.asociarConductor(conductores1[6])
+        vehiculo8.asociarConductor(conductores1[7])
+        vehiculo8.asociarConductor(conductores1[8])
+        
+        
 
         # Suponiendo que transportadora1 es una instancia de una clase con un método setConductores
         transportadoraRapida.setConductores(conductores1)
 
         # Conductores que tienen contrato con la transportadora2
         conductores2.extend([
-            Conductor(21, 36, "Rubén Vargas", 'M', [], 8, 1700.0, True, None, transportadoraEficiente, [], [], 213, 230),
-            Conductor(22, 30, "Adrián Muñoz", 'M', [], 5, 1500.0, True, None, transportadoraEficiente, [], [], 122, 200),
-            Conductor(23, 29, "Santiago Reyes", 'M', [], 4, 1400.0, True, None, transportadoraEficiente, [], [], 214, 190),
-            Conductor(24, 37, "Sebastián Castillo", 'M', [], 9, 1750.0, True, None, transportadoraEficiente, [], [], 310, 240),
-            Conductor(25, 32, "Martín Rojas", 'M', [], 6, 1550.0, True, None, transportadoraEficiente, [], [], 412, 210),
-            Conductor(26, 31, "Iván Morales", 'M', [], 5, 1520.0, True, None, transportadoraEficiente, [], [], 131, 220),
-            Conductor(27, 30, "Tomás Herrera", 'M', [], 4, 1490.0, True, None, transportadoraEficiente, [], [], 141, 180),
-            Conductor(28, 38, "Enrique Romero", 'M', [], 10, 1800.0, True, None, transportadoraEficiente, [], [], 153, 250),
-            Conductor(29, 33, "Eduardo Morales", 'M', [], 6, 1570.0, True, None, transportadoraEficiente, [], [], 123, 220),
-            Conductor(30, 31, "Gabriel Paredes", 'M', [], 5, 1500.0, True, None, transportadoraEficiente, [], [], 212, 210)
+            Conductor(21, 36, "Rubén Vargas", 'M', [], 8, 1700.0, True, vehiculo11, transportadoraEficiente, [], [], 213, 230),
+            Conductor(22, 30, "Adrián Muñoz", 'M', [], 5, 1500.0, True, vehiculo11, transportadoraEficiente, [], [], 122, 200),
+            Conductor(23, 29, "Santiago Reyes", 'M', [], 4, 1400.0, True, vehiculo12, transportadoraEficiente, [], [], 214, 190),
+            Conductor(24, 37, "Sebastián Castillo", 'M', [], 9, 1750.0, True, vehiculo13, transportadoraEficiente, [], [], 310, 240),
+            Conductor(25, 32, "Martín Rojas", 'M', [], 6, 1550.0, True, vehiculo13, transportadoraEficiente, [], [], 412, 210),
+            Conductor(26, 31, "Iván Morales", 'M', [], 5, 1520.0, True, vehiculo14, transportadoraEficiente, [], [], 131, 220),
+            Conductor(27, 30, "Tomás Herrera", 'M', [], 4, 1490.0, True, vehiculo15, transportadoraEficiente, [], [], 141, 180),
+            Conductor(28, 38, "Enrique Romero", 'M', [], 10, 1800.0, True, vehiculo15, transportadoraEficiente, [], [], 153, 250),
+            Conductor(29, 33, "Eduardo Morales", 'M', [], 6, 1570.0, True, vehiculo16, transportadoraEficiente, [], [], 123, 220),
+            Conductor(30, 31, "Gabriel Paredes", 'M', [], 5, 1500.0, True, vehiculo17, transportadoraEficiente, [], [], 212, 210),
+            Conductor(123, 38, "Mario Baloteli", 'M', [], 9, 1750.0, True, vehiculo17, transportadoraEficiente, [], [], 256, 244),
+            Conductor(124, 33, "James Rodriguez", 'M', [], 8, 1200.0, True, vehiculo18, transportadoraEficiente, [], [], 175, 111)
         ])
+
+        vehiculo11.asociarConductor(conductores2[0])
+        vehiculo11.asociarConductor(conductores2[1])
+        vehiculo12.asociarConductor(conductores2[2])
+        vehiculo13.asociarConductor(conductores2[3])
+        vehiculo13.asociarConductor(conductores2[4])
+        vehiculo14.asociarConductor(conductores2[5])
+        vehiculo15.asociarConductor(conductores2[6])
+        vehiculo15.asociarConductor(conductores2[7])
+        vehiculo16.asociarConductor(conductores2[8])
+        vehiculo17.asociarConductor(conductores2[9])
+        vehiculo17.asociarConductor(conductores2[10])
+        vehiculo18.asociarConductor(conductores2[11])
 
         # Suponiendo que transportadora2 es una instancia de una clase con un método setConductores
         transportadoraEficiente.setConductores(conductores2)
 
         # Conductores que tienen contrato con la transportadora3
         conductores3.extend([
-            Conductor(41, 29, "Álvaro Soto", 'M', [], 4, 1450.0, True, None, transportadoraExpress, [], [], 313, 185),
-            Conductor(42, 31, "Carlos Guzmán", 'M', [], 5, 1500.0, True, None, transportadoraExpress, [], [], 111, 195),
-            Conductor(43, 34, "Luis Ortega", 'M', [], 7, 1650.0, True, None, transportadoraExpress, [], [], 121, 210),
-            Conductor(44, 28, "Marcelo Fernández", 'M', [], 4, 1400.0, True, None, transportadoraExpress, [], [], 414, 190),
-            Conductor(45, 33, "Antonio Vargas", 'M', [], 6, 1550.0, True, None, transportadoraExpress, [], [], 123, 220),
-            Conductor(46, 30, "Ricardo Ruiz", 'M', [], 5, 1480.0, True, None, transportadoraExpress, [], [], 112, 210),
-            Conductor(47, 32, "Roberto Pérez", 'M', [], 6, 1600.0, True, None, transportadoraExpress, [], [], 121, 225),
-            Conductor(48, 27, "Javier Romero", 'M', [], 4, 1350.0, True, None, transportadoraExpress, [], [], 135, 185),
-            Conductor(49, 36, "Felipe Calderón", 'M', [], 8, 1700.0, True, None, transportadoraExpress, [], [], 101, 240),
-            Conductor(50, 31, "Julio Martínez", 'M', [], 5, 1500.0, True, None, transportadoraExpress, [], [], 131, 215)
+            Conductor(41, 29, "Álvaro Soto", 'M', [], 4, 1450.0, True, vehiculo21, transportadoraExpress, [], [], 313, 185),
+            Conductor(42, 31, "Carlos Guzmán", 'M', [], 5, 1500.0, True, vehiculo22, transportadoraExpress, [], [], 111, 195),
+            Conductor(43, 34, "Luis Ortega", 'M', [], 7, 1650.0, True, vehiculo22, transportadoraExpress, [], [], 121, 210),
+            Conductor(44, 28, "Marcelo Fernández", 'M', [], 4, 1400.0, True, vehiculo23, transportadoraExpress, [], [], 414, 190),
+            Conductor(45, 33, "Antonio Vargas", 'M', [], 6, 1550.0, True, vehiculo24, transportadoraExpress, [], [], 123, 220),
+            Conductor(46, 30, "Ricardo Ruiz", 'M', [], 5, 1480.0, True, vehiculo24, transportadoraExpress, [], [], 112, 210),
+            Conductor(47, 32, "Roberto Pérez", 'M', [], 6, 1600.0, True, vehiculo25, transportadoraExpress, [], [], 121, 225),
+            Conductor(48, 27, "Javier Romero", 'M', [], 4, 1350.0, True, vehiculo26, transportadoraExpress, [], [], 135, 185),
+            Conductor(49, 36, "Felipe Calderón", 'M', [], 8, 1700.0, True, vehiculo26, transportadoraExpress, [], [], 101, 240),
+            Conductor(50, 31, "Julio Martínez", 'M', [], 5, 1500.0, True, vehiculo27, transportadoraExpress, [], [], 131, 215),
+            Conductor(125, 36, "Radamel Falcao", 'M', [], 9, 1450.0, True, vehiculo28, transportadoraExpress, [], [], 14, 196),
+            Conductor(126, 37, "Dorlan Pabon", 'M', [], 8, 1100.0, True, vehiculo28, transportadoraExpress, [], [], 88, 188)
         ])
+
+        vehiculo21.asociarConductor(conductores3[0])
+        vehiculo22.asociarConductor(conductores3[1])
+        vehiculo22.asociarConductor(conductores3[2])
+        vehiculo23.asociarConductor(conductores3[3])
+        vehiculo24.asociarConductor(conductores3[4])
+        vehiculo24.asociarConductor(conductores3[5])
+        vehiculo25.asociarConductor(conductores3[6])
+        vehiculo26.asociarConductor(conductores3[7])
+        vehiculo26.asociarConductor(conductores3[8])
+        vehiculo27.asociarConductor(conductores3[9])
+        vehiculo28.asociarConductor(conductores3[10])
+        vehiculo28.asociarConductor(conductores3[11])
 
         # Suponiendo que transportadora3 es una instancia de una clase con un método setConductores
         transportadoraExpress.setConductores(conductores3)
 
         # Conductores que tienen contrato con la transportadora4
         conductores4.extend([
-            Conductor(61, 29, "Mauricio Álvarez", 'M', [], 4, 1450.0, True, None, transportadoraSegura, [], [], 123, 190),
-            Conductor(62, 32, "Gabriel Herrera", 'M', [], 6, 1500.0, True, None, transportadoraSegura, [], [], 131, 205),
-            Conductor(63, 30, "Eduardo Rivas", 'M', [], 5, 1550.0, True, None, transportadoraSegura, [], [], 113, 220),
-            Conductor(64, 34, "Ricardo Beltrán", 'M', [], 7, 1600.0, True, None, transportadoraSegura, [], [], 124, 225),
-            Conductor(65, 28, "Alejandro Guzmán", 'M', [], 4, 1400.0, True, None, transportadoraSegura, [], [], 141, 200),
-            Conductor(66, 31, "Fabián López", 'M', [], 5, 1500.0, True, None, transportadoraSegura, [], [], 11, 210),
-            Conductor(67, 33, "Héctor Cordero", 'M', [], 6, 1550.0, True, None, transportadoraSegura, [], [], 12, 220),
-            Conductor(68, 36, "Manuel Vargas", 'M', [], 8, 1700.0, True, None, transportadoraSegura, [], [], 10, 240),
-            Conductor(69, 30, "Luis Cuenca", 'M', [], 5, 1480.0, True, None, transportadoraSegura, [], [], 14, 195),
-            Conductor(70, 32, "Oscar Mendoza", 'M', [], 6, 1550.0, True, None, transportadoraSegura, [], [], 13, 210)
+            Conductor(61, 29, "Mauricio Álvarez", 'M', [], 4, 1450.0, True, vehiculo31, transportadoraSegura, [], [], 123, 190),
+            Conductor(62, 32, "Gabriel Herrera", 'M', [], 6, 1500.0, True, vehiculo31, transportadoraSegura, [], [], 131, 205),
+            Conductor(63, 30, "Eduardo Rivas", 'M', [], 5, 1550.0, True, vehiculo32, transportadoraSegura, [], [], 113, 220),
+            Conductor(64, 34, "Ricardo Beltrán", 'M', [], 7, 1600.0, True, vehiculo33, transportadoraSegura, [], [], 124, 225),
+            Conductor(65, 28, "Alejandro Guzmán", 'M', [], 4, 1400.0, True, vehiculo33, transportadoraSegura, [], [], 141, 200),
+            Conductor(66, 31, "Fabián López", 'M', [], 5, 1500.0, True, vehiculo34, transportadoraSegura, [], [], 11, 210),
+            Conductor(67, 33, "Héctor Cordero", 'M', [], 6, 1550.0, True, vehiculo35, transportadoraSegura, [], [], 12, 220),
+            Conductor(68, 36, "Manuel Vargas", 'M', [], 8, 1700.0, True, vehiculo35, transportadoraSegura, [], [], 10, 240),
+            Conductor(69, 30, "Luis Cuenca", 'M', [], 5, 1480.0, True, vehiculo36, transportadoraSegura, [], [], 14, 195),
+            Conductor(70, 32, "Oscar Mendoza", 'M', [], 6, 1550.0, True, vehiculo37, transportadoraSegura, [], [], 13, 210),
+            Conductor(127, 33, "Neymar Junior", 'M', [], 8, 1650.0, True, vehiculo37, transportadoraSegura, [], [], 89, 110),
+            Conductor(128, 30, "Daniel Alves", 'M', [], 5, 1900.0, True, vehiculo38, transportadoraSegura, [], [], 155, 598)
         ])
+
+        vehiculo31.asociarConductor(conductores4[0])
+        vehiculo31.asociarConductor(conductores4[1])
+        vehiculo32.asociarConductor(conductores4[2])
+        vehiculo33.asociarConductor(conductores4[3])
+        vehiculo33.asociarConductor(conductores4[4])
+        vehiculo34.asociarConductor(conductores4[5])
+        vehiculo35.asociarConductor(conductores4[6])
+        vehiculo35.asociarConductor(conductores4[7])
+        vehiculo36.asociarConductor(conductores4[8])
+        vehiculo37.asociarConductor(conductores4[9])
+        vehiculo37.asociarConductor(conductores4[10])
+        vehiculo38.asociarConductor(conductores4[11])
+
+        
 
         # Suponiendo que transportadora4 es una instancia de una clase con un método setConductores
         transportadoraSegura.setConductores(conductores4)
@@ -395,33 +459,65 @@ class Serializador():
         
         
         conductores5.extend([
-            Conductor(81, 30, "Jorge Sandoval", 'M', [], 5, 1550.0, True, None, transportadoraGlobal, [], [], 123, 210),
-            Conductor(82, 32, "Sergio Montoya", 'M', [], 6, 1600.0, True, None, transportadoraGlobal, [], [], 135, 220),
-            Conductor(83, 31, "Ricardo Morales", 'M', [], 5, 1500.0, True, None, transportadoraGlobal, [], [], 113, 215),
-            Conductor(84, 29, "Mauricio Valenzuela", 'M', [], 4, 1450.0, True, None, transportadoraGlobal, [], [], 141, 200),
-            Conductor(85, 35, "Héctor Mejía", 'M', [], 7, 1650.0, True, None, transportadoraGlobal, [], [], 122, 230),
-            Conductor(86, 30, "Fernando Arrieta", 'M', [], 5, 1520.0, True, None, transportadoraGlobal, [], [], 133, 210),
-            Conductor(87, 37, "Mario Cordero", 'M', [], 9, 1750.0, True, None, transportadoraGlobal, [], [], 154, 240),
-            Conductor(88, 33, "Javier Hernández", 'M', [], 6, 1570.0, True, None, transportadoraGlobal, [], [], 125, 225),
-            Conductor(89, 32, "Luis Palacios", 'M', [], 6, 1600.0, True, None, transportadoraGlobal, [], [], 114, 220),
-            Conductor(90, 34, "Ángel Peña", 'M', [], 7, 1650.0, True, None, transportadoraGlobal, [], [], 101, 230)
+            Conductor(81, 30, "Jorge Sandoval", 'M', [], 5, 1550.0, True, vehiculo41, transportadoraGlobal, [], [], 123, 210),
+            Conductor(82, 32, "Sergio Montoya", 'M', [], 6, 1600.0, True, vehiculo42, transportadoraGlobal, [], [], 135, 220),
+            Conductor(83, 31, "Ricardo Morales", 'M', [], 5, 1500.0, True, vehiculo42, transportadoraGlobal, [], [], 113, 215),
+            Conductor(84, 29, "Mauricio Valenzuela", 'M', [], 4, 1450.0, True, vehiculo43, transportadoraGlobal, [], [], 141, 200),
+            Conductor(85, 35, "Héctor Mejía", 'M', [], 7, 1650.0, True, vehiculo44, transportadoraGlobal, [], [], 122, 230),
+            Conductor(86, 30, "Fernando Arrieta", 'M', [], 5, 1520.0, True, vehiculo44, transportadoraGlobal, [], [], 133, 210),
+            Conductor(87, 37, "Mario Cordero", 'M', [], 9, 1750.0, True, vehiculo45, transportadoraGlobal, [], [], 154, 240),
+            Conductor(88, 33, "Javier Hernández", 'M', [], 6, 1570.0, True, vehiculo46, transportadoraGlobal, [], [], 125, 225),
+            Conductor(89, 32, "Luis Palacios", 'M', [], 6, 1600.0, True, vehiculo46, transportadoraGlobal, [], [], 114, 220),
+            Conductor(90, 34, "Ángel Peña", 'M', [], 7, 1650.0, True, vehiculo47, transportadoraGlobal, [], [], 101, 230),
+            Conductor(129, 37, "Kevin Bruyne", 'M', [], 9, 1150.0, True, vehiculo48, transportadoraGlobal, [], [], 99, 288),
+            Conductor(130, 41, "Robert Lewandowski", 'M', [], 5, 1660.0, True, vehiculo48, transportadoraGlobal, [], [], 89, 201)
         ])
+
+        vehiculo41.asociarConductor(conductores5[0])
+        vehiculo42.asociarConductor(conductores5[1])
+        vehiculo42.asociarConductor(conductores5[2])
+        vehiculo43.asociarConductor(conductores5[3])
+        vehiculo44.asociarConductor(conductores5[4])
+        vehiculo44.asociarConductor(conductores5[5])
+        vehiculo45.asociarConductor(conductores5[6])
+        vehiculo46.asociarConductor(conductores5[7])
+        vehiculo46.asociarConductor(conductores5[8])
+        vehiculo47.asociarConductor(conductores5[9])
+        vehiculo48.asociarConductor(conductores5[10])
+        vehiculo48.asociarConductor(conductores5[11])
+
+
 
         # Suponiendo que transportadora5 es una instancia de una clase con un método setConductores
         transportadoraGlobal.setConductores(conductores5)
 
         conductores6.extend([
-            Conductor(101, 30, "Héctor Jiménez", 'M', [], 5, 1550.0, True, None, transportadoraLocal, [], [], 123, 210),
-            Conductor(102, 32, "Santiago Díaz", 'M', [], 6, 1600.0, True, None, transportadoraLocal, [], [], 134, 225),
-            Conductor(103, 31, "Gabriel Andrade", 'M', [], 5, 1500.0, True, None, transportadoraLocal, [], [], 211, 215),
-            Conductor(104, 29, "Alejandro Rodríguez", 'M', [], 4, 1450.0, True, None, transportadoraLocal, [], [], 134, 200),
-            Conductor(105, 35, "Mauricio Ortega", 'M', [], 7, 1650.0, True, None, transportadoraLocal, [], [], 112, 230),
-            Conductor(106, 30, "Ricardo Vargas", 'M', [], 5, 1520.0, True, None, transportadoraLocal, [], [], 513, 210),
-            Conductor(107, 37, "Javier Sánchez", 'M', [], 9, 1750.0, True, None, transportadoraLocal, [], [], 315, 240),
-            Conductor(108, 33, "Luis Carrillo", 'M', [], 6, 1570.0, True, None, transportadoraLocal, [], [], 122, 220),
-            Conductor(109, 32, "Carlos Martínez", 'M', [], 6, 1600.0, True, None, transportadoraLocal, [], [], 90, 225),
-            Conductor(110, 34, "Óscar Morales", 'M', [], 7, 1650.0, True, None, transportadoraLocal, [], [], 10, 230)
+            Conductor(101, 30, "Héctor Jiménez", 'M', [], 5, 1550.0, True, vehiculo51, transportadoraLocal, [], [], 123, 210),
+            Conductor(102, 32, "Santiago Díaz", 'M', [], 6, 1600.0, True, vehiculo51, transportadoraLocal, [], [], 134, 225),
+            Conductor(103, 31, "Gabriel Andrade", 'M', [], 5, 1500.0, True, vehiculo52, transportadoraLocal, [], [], 211, 215),
+            Conductor(104, 29, "Alejandro Rodríguez", 'M', [], 4, 1450.0, True, vehiculo53, transportadoraLocal, [], [], 134, 200),
+            Conductor(105, 35, "Mauricio Ortega", 'M', [], 7, 1650.0, True, vehiculo53, transportadoraLocal, [], [], 112, 230),
+            Conductor(106, 30, "Ricardo Vargas", 'M', [], 5, 1520.0, True, vehiculo54, transportadoraLocal, [], [], 513, 210),
+            Conductor(107, 37, "Javier Sánchez", 'M', [], 9, 1750.0, True, vehiculo55, transportadoraLocal, [], [], 315, 240),
+            Conductor(108, 33, "Luis Carrillo", 'M', [], 6, 1570.0, True, vehiculo55, transportadoraLocal, [], [], 122, 220),
+            Conductor(109, 32, "Carlos Martínez", 'M', [], 6, 1600.0, True, vehiculo56, transportadoraLocal, [], [], 90, 225),
+            Conductor(110, 34, "Óscar Morales", 'M', [], 7, 1650.0, True, vehiculo57, transportadoraLocal, [], [], 10, 230),
+            Conductor(131, 39, "Toni Kross", 'M', [], 6, 1850.0, True, vehiculo57, transportadoraLocal, [], [], 75, 54),
+            Conductor(132, 35, "Kilian Mbape", 'M', [], 7, 1650.0, True, vehiculo58, transportadoraLocal, [], [], 112, 230)
         ])
+
+        vehiculo51.asociarConductor(conductores6[0])
+        vehiculo51.asociarConductor(conductores6[1])
+        vehiculo52.asociarConductor(conductores6[2])
+        vehiculo53.asociarConductor(conductores6[3])
+        vehiculo53.asociarConductor(conductores6[4])
+        vehiculo54.asociarConductor(conductores6[5])
+        vehiculo55.asociarConductor(conductores6[6])
+        vehiculo55.asociarConductor(conductores6[7])
+        vehiculo56.asociarConductor(conductores6[8])
+        vehiculo57.asociarConductor(conductores6[9])
+        vehiculo57.asociarConductor(conductores6[10])
+        vehiculo58.asociarConductor(conductores6[11])
 
         # Suponiendo que transportadora6 es una instancia de una clase con un método setConductores
         transportadoraLocal.setConductores(conductores6)
@@ -438,16 +534,16 @@ class Serializador():
         #Conductores que se registraran(no estan contratados) en la transportadora1
 
         conductoresRegistrados1.extend([
-            Conductor(11, 28, "Fernando Castro", 'M', [], 5, 1490.0, False, None, None, [], [], 11, 200),
-            Conductor(12, 36, "Raúl Ramírez", 'M', [], 7, 1650.0, True, None, None, [], [], 9, 210),
-            Conductor(13, 31, "Manuel Torres", 'M', [], 6, 1580.0, False, None, None, [], [], 8, 220),
-            Conductor(14, 30, "Héctor Gil", 'M', [], 5, 1520.0, True, None, None, [], [], 10, 200),
-            Conductor(15, 29, "Vicente Díaz", 'M', [], 4, 1450.0, True, None, None, [], [], 14, 180),
-            Conductor(16, 32, "Ángel Ramos", 'M', [], 6, 1550.0, False, None, None, [], [], 12, 210),
-            Conductor(17, 30, "Javier Navarro", 'M', [], 5, 1480.0, True, None, None, [], [], 9, 220),
-            Conductor(18, 34, "Mario Ortiz", 'M', [], 6, 1570.0, True, None, None, [], [], 8, 215),
-            Conductor(19, 29, "Andrés Flores", 'M', [], 1, 1420.0, True, None, None, [], [], 10, 200),
-            Conductor(20, 35, "Daniel Maldonado", 'M', [], 7, 1610.0, False, None, None, [], [], 11, 230)
+            Conductor(11, 28, "Fernando Castro", 'M', [], 5, 1490.0, False, None, transportadoraRapida, [], [], 11, 200),
+            Conductor(12, 36, "Raúl Ramírez", 'M', [], 7, 1650.0, True, None, transportadoraRapida, [], [], 9, 210),
+            Conductor(13, 31, "Manuel Torres", 'M', [], 6, 1580.0, False, None, transportadoraRapida, [], [], 8, 220),
+            Conductor(14, 30, "Héctor Gil", 'M', [], 5, 1520.0, True, None, transportadoraRapida, [], [], 10, 200),
+            Conductor(15, 29, "Vicente Díaz", 'M', [], 4, 1450.0, True, None, transportadoraRapida, [], [], 14, 180),
+            Conductor(16, 32, "Ángel Ramos", 'M', [], 6, 1550.0, False, None, transportadoraRapida, [], [], 12, 210),
+            Conductor(17, 30, "Javier Navarro", 'M', [], 5, 1480.0, True, None, transportadoraRapida, [], [], 9, 220),
+            Conductor(18, 34, "Mario Ortiz", 'M', [], 6, 1570.0, True, None, transportadoraRapida, [], [], 8, 215),
+            Conductor(19, 29, "Andrés Flores", 'M', [], 1, 1420.0, True, None, transportadoraRapida, [], [], 10, 200),
+            Conductor(20, 35, "Daniel Maldonado", 'M', [], 7, 1610.0, False, None, transportadoraRapida, [], [], 11, 230)
         ])
 
         transportadoraRapida.setConductoresRegistrados(conductoresRegistrados1)
@@ -455,16 +551,16 @@ class Serializador():
         #Conductores que se registraran(no estan contratados) en la transportadora2
 
         conductoresRegistrados2.extend([
-            Conductor(31, 28, "Emilio Duarte", 'M', [], 4, 1450.0, True, None, None, [], [], 14, 190),
-            Conductor(32, 35, "Felipe Soto", 'M', [], 7, 1650.0, True, None, None, [], [], 10, 230),
-            Conductor(33, 29, "Gonzalo Montalvo", 'M', [], 5, 1480.0, True, None, None, [], [], 11, 200),
-            Conductor(34, 36, "Hugo Escobar", 'M', [], 5, 1720.0, False, None, None, [], [], 12, 240),
-            Conductor(35, 32, "Diego Olivares", 'M', [], 4, 1580.0, True, None, None, [], [], 13, 220),
-            Conductor(36, 34, "Iván Castañeda", 'M', [], 7, 1600.0, True, None, None, [], [], 11, 230),
-            Conductor(37, 30, "Joaquín Salinas", 'M', [], 5, 1500.0, False, None, None, [], [], 14, 200),
-            Conductor(38, 37, "Ismael Peña", 'M', [], 9, 1750.0, True, None, None, [], [], 15, 240),
-            Conductor(39, 33, "Rafael Marín", 'M', [], 6, 1570.0, True, None, None, [], [], 12, 220),
-            Conductor(40, 31, "Alejandro Campos", 'M', [], 2, 1490.0, True, None, None, [], [], 13, 210)
+            Conductor(31, 28, "Emilio Duarte", 'M', [], 4, 1450.0, True, None, transportadoraEficiente, [], [], 14, 190),
+            Conductor(32, 35, "Felipe Soto", 'M', [], 7, 1650.0, True, None, transportadoraEficiente, [], [], 10, 230),
+            Conductor(33, 29, "Gonzalo Montalvo", 'M', [], 5, 1480.0, True, None, transportadoraEficiente, [], [], 11, 200),
+            Conductor(34, 36, "Hugo Escobar", 'M', [], 5, 1720.0, False, None, transportadoraEficiente, [], [], 12, 240),
+            Conductor(35, 32, "Diego Olivares", 'M', [], 4, 1580.0, True, None, transportadoraEficiente, [], [], 13, 220),
+            Conductor(36, 34, "Iván Castañeda", 'M', [], 7, 1600.0, True, None, transportadoraEficiente, [], [], 11, 230),
+            Conductor(37, 30, "Joaquín Salinas", 'M', [], 5, 1500.0, False, None, transportadoraEficiente, [], [], 14, 200),
+            Conductor(38, 37, "Ismael Peña", 'M', [], 9, 1750.0, True, None, transportadoraEficiente, [], [], 15, 240),
+            Conductor(39, 33, "Rafael Marín", 'M', [], 6, 1570.0, True, None, transportadoraEficiente, [], [], 12, 220),
+            Conductor(40, 31, "Alejandro Campos", 'M', [], 2, 1490.0, True, None, transportadoraEficiente, [], [], 13, 210)
         ])
 
         transportadoraEficiente.setConductoresRegistrados(conductoresRegistrados2)
@@ -472,16 +568,16 @@ class Serializador():
         #Conductores que se registraran(no estan contratados) en la transportadora3
 
         conductoresRegistrados3.extend([
-            Conductor(51, 29, "Héctor Villalobos", 'M', [], 10, 1450.0, False, None, None, [], [], 14, 200),
-            Conductor(52, 34, "Luis González", 'M', [], 7, 1600.0, True, None, None, [], [], 12, 225),
-            Conductor(53, 30, "Samuel Morales", 'M', [], 5, 1550.0, True, None, None, [], [], 11, 210),
-            Conductor(54, 37, "Victor Gómez", 'M', [], 9, 1750.0, True, None, None, [], [], 15, 240),
-            Conductor(55, 33, "Óscar Sandoval", 'M', [], 2, 1600.0, True, None, None, [], [], 12, 225),
-            Conductor(56, 32, "Mauricio Ramírez", 'M', [], 3, 1550.0, True, None, None, [], [], 13, 220),
-            Conductor(57, 35, "Fernando Vega", 'M', [], 7, 1650.0, True, None, None, [], [], 10, 230),
-            Conductor(58, 31, "Emmanuel Ruiz", 'M', [], 5, 1500.0, False, None, None, [], [], 14, 200),
-            Conductor(59, 28, "Jorge Silva", 'M', [], 4, 1400.0, True, None, None, [], [], 15, 190),
-            Conductor(60, 30, "Esteban Cruz", 'M', [], 5, 1500.0, True, None, None, [], [], 13, 215)
+            Conductor(51, 29, "Héctor Villalobos", 'M', [], 10, 1450.0, False, None, transportadoraExpress, [], [], 14, 200),
+            Conductor(52, 34, "Luis González", 'M', [], 7, 1600.0, True, None, transportadoraExpress, [], [], 12, 225),
+            Conductor(53, 30, "Samuel Morales", 'M', [], 5, 1550.0, True, None, transportadoraExpress, [], [], 11, 210),
+            Conductor(54, 37, "Victor Gómez", 'M', [], 9, 1750.0, True, None, transportadoraExpress, [], [], 15, 240),
+            Conductor(55, 33, "Óscar Sandoval", 'M', [], 2, 1600.0, True, None, transportadoraExpress, [], [], 12, 225),
+            Conductor(56, 32, "Mauricio Ramírez", 'M', [], 3, 1550.0, True, None, transportadoraExpress, [], [], 13, 220),
+            Conductor(57, 35, "Fernando Vega", 'M', [], 7, 1650.0, True, None, transportadoraExpress, [], [], 10, 230),
+            Conductor(58, 31, "Emmanuel Ruiz", 'M', [], 5, 1500.0, False, None, transportadoraExpress, [], [], 14, 200),
+            Conductor(59, 28, "Jorge Silva", 'M', [], 4, 1400.0, True, None, transportadoraExpress, [], [], 15, 190),
+            Conductor(60, 30, "Esteban Cruz", 'M', [], 5, 1500.0, True, None, transportadoraExpress, [], [], 13, 215)
         ])
 
         transportadoraExpress.setConductoresRegistrados(conductoresRegistrados3)
@@ -489,16 +585,16 @@ class Serializador():
         #Conductores que se registraran(no estan contratados) en la transportadora4
 
         conductoresRegistrados4.extend([
-            Conductor(71, 31, "Luis Silva", 'M', [], 5, 1500.0, True, None, None, [], [], 12, 220),
-            Conductor(72, 29, "Carlos Martínez", 'M', [], 4, 1450.0, True, None, None, [], [], 13, 200),
-            Conductor(73, 34, "Felipe Díaz", 'M', [], 7, 1600.0, True, None, None, [], [], 12, 225),
-            Conductor(74, 30, "Javier López", 'M', [], 5, 1550.0, False, None, None, [], [], 14, 210),
-            Conductor(75, 36, "Mario Castro", 'M', [], 1, 1700.0, True, None, None, [], [], 10, 240),
-            Conductor(76, 32, "Fernando Soto", 'M', [], 6, 1600.0, True, None, None, [], [], 13, 220),
-            Conductor(77, 33, "Adrián Díaz", 'M', [], 6, 1570.0, True, None, None, [], [], 12, 225),
-            Conductor(78, 28, "Ramiro Aguirre", 'M', [], 4, 1400.0, True, None, None, [], [], 14, 190),
-            Conductor(79, 35, "Mauricio Araya", 'M', [], 7, 1650.0, False, None, None, [], [], 11, 230),
-            Conductor(80, 31, "Luis Hernández", 'M', [], 5, 1500.0, True, None, None, [], [], 14, 205)
+            Conductor(71, 31, "Luis Silva", 'M', [], 5, 1500.0, True, None, transportadoraSegura, [], [], 12, 220),
+            Conductor(72, 29, "Carlos Martínez", 'M', [], 4, 1450.0, True, None, transportadoraSegura, [], [], 13, 200),
+            Conductor(73, 34, "Felipe Díaz", 'M', [], 7, 1600.0, True, None, transportadoraSegura, [], [], 12, 225),
+            Conductor(74, 30, "Javier López", 'M', [], 5, 1550.0, False, None, transportadoraSegura, [], [], 14, 210),
+            Conductor(75, 36, "Mario Castro", 'M', [], 1, 1700.0, True, None, transportadoraSegura, [], [], 10, 240),
+            Conductor(76, 32, "Fernando Soto", 'M', [], 6, 1600.0, True, None, transportadoraSegura, [], [], 13, 220),
+            Conductor(77, 33, "Adrián Díaz", 'M', [], 6, 1570.0, True, None, transportadoraSegura, [], [], 12, 225),
+            Conductor(78, 28, "Ramiro Aguirre", 'M', [], 4, 1400.0, True, None, transportadoraSegura, [], [], 14, 190),
+            Conductor(79, 35, "Mauricio Araya", 'M', [], 7, 1650.0, False, None, transportadoraSegura, [], [], 11, 230),
+            Conductor(80, 31, "Luis Hernández", 'M', [], 5, 1500.0, True, None, transportadoraSegura, [], [], 14, 205)
         ])
 
         transportadoraSegura.setConductoresRegistrados(conductoresRegistrados4)
@@ -506,16 +602,16 @@ class Serializador():
         #Conductores que se registraran(no estan contratados) en la transportadora5
 
         conductoresRegistrados5.extend([
-            Conductor(91, 31, "Carlos Ramírez", 'M', [], 5, 1500.0, True, None, None, [], [], 12, 210),
-            Conductor(92, 29, "Andrés Soto", 'M', [], 4, 1400.0, True, None, None, [], [], 14, 190),
-            Conductor(93, 33, "Jorge Morales", 'M', [], 6, 1550.0, False, None, None, [], [], 13, 215),
-            Conductor(94, 30, "Oscar Hernández", 'M', [], 5, 1500.0, True, None, None, [], [], 14, 205),
-            Conductor(95, 36, "Luis García", 'M', [], 8, 1700.0, True, None, None, [], [], 10, 240),
-            Conductor(96, 32, "Samuel Lozano", 'M', [], 1, 1600.0, True, None, None, [], [], 11, 220),
-            Conductor(97, 31, "Ricardo Nieto", 'M', [], 5, 1500.0, True, None, None, [], [], 13, 210),
-            Conductor(98, 28, "Felipe Castaño", 'M', [], 4, 1400.0, True, None, None, [], [], 15, 195),
-            Conductor(99, 35, "Manuel Vargas", 'M', [], 7, 1650.0, True, None, None, [], [], 10, 230),
-            Conductor(100, 33, "Eduardo Peña", 'M', [], 2, 1550.0, True, None, None, [], [], 12, 215)
+            Conductor(91, 31, "Carlos Ramírez", 'M', [], 5, 1500.0, True, None,  transportadoraGlobal, [], [], 12, 210),
+            Conductor(92, 29, "Andrés Soto", 'M', [], 4, 1400.0, True, None,  transportadoraGlobal, [], [], 14, 190),
+            Conductor(93, 33, "Jorge Morales", 'M', [], 6, 1550.0, False, None,  transportadoraGlobal, [], [], 13, 215),
+            Conductor(94, 30, "Oscar Hernández", 'M', [], 5, 1500.0, True, None,  transportadoraGlobal, [], [], 14, 205),
+            Conductor(95, 36, "Luis García", 'M', [], 8, 1700.0, True, None,  transportadoraGlobal, [], [], 10, 240),
+            Conductor(96, 32, "Samuel Lozano", 'M', [], 1, 1600.0, True, None,  transportadoraGlobal, [], [], 11, 220),
+            Conductor(97, 31, "Ricardo Nieto", 'M', [], 5, 1500.0, True, None,  transportadoraGlobal, [], [], 13, 210),
+            Conductor(98, 28, "Felipe Castaño", 'M', [], 4, 1400.0, True, None,  transportadoraGlobal, [], [], 15, 195),
+            Conductor(99, 35, "Manuel Vargas", 'M', [], 7, 1650.0, True, None,  transportadoraGlobal, [], [], 10, 230),
+            Conductor(100, 33, "Eduardo Peña", 'M', [], 2, 1550.0, True, None,  transportadoraGlobal, [], [], 12, 215)
         ])
 
         transportadoraGlobal.setConductoresRegistrados(conductoresRegistrados5)
@@ -523,16 +619,16 @@ class Serializador():
         #Conductores que se registraran(no estan contratados) en la transportadora6
 
         conductoresRegistrados6.extend([
-            Conductor(111, 31, "Mario Ruiz", 'M', [], 4, 1500.0, True, None, None, [], [], 12, 215),
-            Conductor(112, 29, "Ramiro Guzmán", 'M', [], 1, 1400.0, True, None, None, [], [], 14, 190),
-            Conductor(113, 33, "Fernando Pérez", 'M', [], 6, 1550.0, True, None, None, [], [], 13, 220),
-            Conductor(114, 30, "Álvaro Díaz", 'M', [], 5, 1500.0, True, None, None, [], [], 14, 205),
-            Conductor(115, 36, "Jorge Calderón", 'M', [], 8, 1700.0, False, None, None, [], [], 10, 240),
-            Conductor(116, 32, "Héctor Mendoza", 'M', [], 6, 1600.0, True, None, None, [], [], 11, 225),
-            Conductor(117, 31, "Esteban Cordero", 'M', [], 5, 1500.0, True, None, None, [], [], 13, 210),
-            Conductor(118, 28, "Ricardo Silva", 'M', [], 4, 1400.0, True, None, None, [], [], 15, 195),
-            Conductor(119, 35, "José Martínez", 'M', [], 7, 1650.0, False, None, None, [], [], 10, 230),
-            Conductor(120, 33, "Óscar Guerrero", 'M', [], 6, 1550.0, True, None, None, [], [], 12, 215)
+            Conductor(111, 31, "Mario Ruiz", 'M', [], 4, 1500.0, True, None, transportadoraLocal, [], [], 12, 215),
+            Conductor(112, 29, "Ramiro Guzmán", 'M', [], 1, 1400.0, True, None, transportadoraLocal, [], [], 14, 190),
+            Conductor(113, 33, "Fernando Pérez", 'M', [], 6, 1550.0, True, None, transportadoraLocal, [], [], 13, 220),
+            Conductor(114, 30, "Álvaro Díaz", 'M', [], 5, 1500.0, True, None, transportadoraLocal, [], [], 14, 205),
+            Conductor(115, 36, "Jorge Calderón", 'M', [], 8, 1700.0, False, None, transportadoraLocal, [], [], 10, 240),
+            Conductor(116, 32, "Héctor Mendoza", 'M', [], 6, 1600.0, True, None, transportadoraLocal, [], [], 11, 225),
+            Conductor(117, 31, "Esteban Cordero", 'M', [], 5, 1500.0, True, None, transportadoraLocal, [], [], 13, 210),
+            Conductor(118, 28, "Ricardo Silva", 'M', [], 4, 1400.0, True, None, transportadoraLocal, [], [], 15, 195),
+            Conductor(119, 35, "José Martínez", 'M', [], 7, 1650.0, False, None, transportadoraLocal, [], [], 10, 230),
+            Conductor(120, 33, "Óscar Guerrero", 'M', [], 6, 1550.0, True, None, transportadoraLocal, [], [], 12, 215)
         ])
 
         transportadoraLocal.setConductoresRegistrados(conductoresRegistrados6)
