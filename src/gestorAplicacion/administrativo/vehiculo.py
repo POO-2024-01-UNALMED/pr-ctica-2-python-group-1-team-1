@@ -21,7 +21,7 @@ class Vehiculo ():
         self._tipo = tipo
         self._capacidad = tipo.getCapacidad()
         self._transportadora = transportadora
-        Vehiculo.listaVehiculos.append(self)
+        Vehiculo._listaVehiculos.append(self)
 
     def viaje (self, kilometros):
 

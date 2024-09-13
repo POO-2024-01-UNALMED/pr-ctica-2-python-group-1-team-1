@@ -10,7 +10,7 @@ class Pasajero(Persona, Incentivo):
     def __init__(self,tipo, id, edad, nombre):
         self._tipoPasajero = tipo
         self._viaje = None
-        super.__init__(id, edad, nombre)
+        super().__init__(id, edad, nombre)
 
     def nuevoPasajero(self, tipo, id, edad, nombre):
         return Pasajero(tipo, id, edad, nombre)
@@ -35,6 +35,12 @@ class Pasajero(Persona, Incentivo):
         """Establece el viaje asociado al pasajero."""
         self._viaje = viaje
     
+    def identificarse(self):
+        return super().identificarse()
+    
+    def renovarContrato(self):
+        return super().renovarContrato()
+
     def descuento(self):
         
         dineroTransportadora = self.getViaje().getTransportadora().getDinero()

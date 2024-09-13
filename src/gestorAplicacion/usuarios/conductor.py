@@ -11,7 +11,7 @@ class Conductor(Persona, Incentivo):
     conductores = []
 
     def __init__(self, id, edad, nombre, genero, historial, experiencia, dinero, estadoLicencia, vehiculo, transportadora, horario, facturas, diasRestantesContr, diasTrabajados):
-        super.__init__(id, edad, nombre, genero, historial, experiencia, dinero, facturas, diasRestantesContr, diasTrabajados)
+        super().__init__(id, edad, nombre, genero, historial, experiencia, dinero, facturas, diasRestantesContr, diasTrabajados)
         self._estadoLicencia = estadoLicencia
         self._vehiculo = vehiculo
         self._transportadora = transportadora
@@ -23,6 +23,8 @@ class Conductor(Persona, Incentivo):
     def identificarse(self):
         pass
 
+    def renovarContrato(self):
+        return super().renovarContrato()
 
     def tomarVehiculo(self, vehiculo):
         """Metodo para asociar un conductor al vehiculo que

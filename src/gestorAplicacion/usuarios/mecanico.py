@@ -15,7 +15,7 @@ class Mecanico (Persona, Incentivo):
 
     def __init__ (self, id, edad, nombre, genero, historial, experiencia, dinero, facturas, taller, diasRestantes, diasTrabajados):
 
-        super.__init__(id, edad, nombre, genero, historial, experiencia, dinero, facturas, diasRestantes, diasTrabajados)
+        super().__init__(id, edad, nombre, genero, historial, experiencia, dinero, facturas, diasRestantes, diasTrabajados)
 
         self._taller = taller
         self._estado = True

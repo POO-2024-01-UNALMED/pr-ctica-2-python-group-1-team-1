@@ -15,5 +15,5 @@ class TipoVehiculo(Enum):
 
     # Método para obtener la capacidad en base a un vehículo.
     # @return la capacidad respectiva del vehículo.
-    def get_capacidad(self):
+    def getCapacidad(self):
         return self.capacidad

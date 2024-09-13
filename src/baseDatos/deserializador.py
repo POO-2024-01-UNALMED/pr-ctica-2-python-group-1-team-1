@@ -11,7 +11,7 @@ from src.gestorAplicacion.tiempo.tiempo import Tiempo
 
 class Deserializador():
     @staticmethod
-    def deserilizar(nombre, listaSet):
+    def deserializar(nombre, listaSet):
 
         picklefile = open(f'src/baseDatos/temp/{nombre}.txt', 'rb') # Abrir la ruta de nuestro archivo
         
@@ -25,18 +25,18 @@ class Deserializador():
     def deserializarListas():
         # Comentadas temporalmente hasta tener la lógica funcionando
 
-        #Deserializador.deserializar("transportadora", Transportadora.setTransportadoras)
-        #Deserializador.deserializar("transportadorasAsociadas", Terminal.setTransportadoras)
-        #Deserializador.deserializar("terminal", Terminal.setListaTerminales)
-        #Deserializador.deserializar("historialViajes", Terminal.setHistorial)
-        #Deserializador.deserializar("viajesEnCurso", Terminal.setViajesEnCurso)
-        #Deserializador.deserializar("viajesDisponibles", Terminal.setViajes)
-        #Deserializador.deserializar("reservas", Terminal.setReservas)
-        #Deserializador.deserializar("facturas", Terminal.setFacturas)
+        Deserializador.deserializar("transportadora", Transportadora.setTransportadoras)
+        Deserializador.deserializar("transportadorasAsociadas", Terminal.setTransportadoras)
+        Deserializador.deserializar("terminal", Terminal.setListaTerminales)
+        Deserializador.deserializar("historialViajes", Terminal.setHistorial)
+        Deserializador.deserializar("viajesEnCurso", Terminal.setViajesEnCurso)
+        Deserializador.deserializar("viajesDisponibles", Terminal.setViajes)
+        Deserializador.deserializar("reservas", Terminal.setReservas)
+        Deserializador.deserializar("facturas", Terminal.setFacturas)
         #Deserializador.deserializar("pasajeros", Terminal.setPasajeros)
-        Deserializador.deserializar("tiempoObjetos", Tiempo.setTiempos)
+        #Deserializador.deserializar("tiempoObjetos", Tiempo.setTiempos)
         # Serializador.deserializar("personas", Persona.setPersonas)  # Aún no se crea el método
-        #Deserializador.deserializar("facturas", Factura.setFacturasCreadas)
-        #Deserializador.deserializar("talleres", Taller.setListaTalleres)
-        #Deserializador.deserializar("vehiculos", Vehiculo.setListaVehiculos)
+        Deserializador.deserializar("facturas", Factura.setFacturasCreadas)
+        Deserializador.deserializar("talleres", Taller.setListaTalleres)
+        Deserializador.deserializar("vehiculos", Vehiculo.setListaVehiculos)
 

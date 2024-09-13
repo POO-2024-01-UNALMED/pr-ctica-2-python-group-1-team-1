@@ -35,20 +35,46 @@ class Serializador():
     def serializarListas():
         # Comentadas temporalmente hasta tener la lógica funcionando
 
-        #Serializador.serializar("transportadora", Transportadora.getTransportadoras())  # OBJETOS DE TRANSPORTADORA
-        #Serializador.serializar("transportadorasAsociadas", Terminal.getTransportadoras())  # OBJETOS TRANSPORTADORA ASOCIADOS A LA TERMINAL
-        #Serializador.serializar("terminal", Terminal.getListaTerminales())  # OBJETO TERMINAL
-        #Serializador.serializar("historialViajes", Terminal.getHistorial())  # VIAJES TERMINADOS - HISTORIAL
-        #Serializador.serializar("viajesEnCurso", Terminal.getViajesEnCurso())  # VIAJES SIN TERMINAR - EN CURSO
-        #Serializador.serializar("viajesDisponibles", Terminal.getViajes())  # VIAJES SIN SALIR - DISPONIBLES
-        #Serializador.serializar("reservas", Terminal.getReservas())  # VIAJES EN RESERVA
-        #Serializador.serializar("facturas", Terminal.getFacturas())  # FACTURAS ASOCIADAS
+        Serializador.serializar("transportadora", Transportadora.getTransportadoras())  # OBJETOS DE TRANSPORTADORA
+        Serializador.serializar("transportadorasAsociadas", Terminal.getTransportadoras())  # OBJETOS TRANSPORTADORA ASOCIADOS A LA TERMINAL
+        Serializador.serializar("terminal", Terminal.getListaTerminales())  # OBJETO TERMINAL
+        Serializador.serializar("historialViajes", Terminal.getHistorial())  # VIAJES TERMINADOS - HISTORIAL
+        Serializador.serializar("viajesEnCurso", Terminal.getViajesEnCurso())  # VIAJES SIN TERMINAR - EN CURSO
+        Serializador.serializar("viajesDisponibles", Terminal.getViajes())  # VIAJES SIN SALIR - DISPONIBLES
+        Serializador.serializar("reservas", Terminal.getReservas())  # VIAJES EN RESERVA
+        Serializador.serializar("facturas", Terminal.getFacturas())  # FACTURAS ASOCIADAS
         #Serializador.serializar("pasajeros", Terminal.getPasajeros())  # PASAJEROS --- O solo pasajeros sin viaje??????????
-        Serializador.serializar("tiempoObjetos", Tiempo.tiempos())  # OBJETOS TIEMPO - PROGRESO DEL TIEMPO
+        #Serializador.serializar("tiempoObjetos", Tiempo.getTiempos())  # OBJETOS TIEMPO - PROGRESO DEL TIEMPO
         #Serializador.serializar("personas", Persona.getSerializarPersonas())  # OBJETOS TIPO PERSONA ---- Aun no se crea el método
-        #Serializador.serializar("facturas", Factura.getFacturasCreadas())  # OBJETOS TIPO FACTURA
-        #Serializador.serializar("talleres", Taller.getListaTalleres())  # OBJETOS TIPO TALLER
-        #Serializador.serializar("vehiculos", Vehiculo.getListaVehiculos())  # OBJETOS TIPO VEHICULO
+        Serializador.serializar("facturas", Factura.getFacturasCreadas())  # OBJETOS TIPO FACTURA
+        Serializador.serializar("talleres", Taller.getListaTalleres())  # OBJETOS TIPO TALLER
+        Serializador.serializar("vehiculos", Vehiculo.getListaVehiculos())  # OBJETOS TIPO VEHICULO
+
+    @staticmethod
+    def objetosPrueba():
+        Tiempo()
+
+        #TERMINAL
+        terminal = Terminal("Terminal del norte", 99999999, 500, 1, 20, None, None, 0, Destino.MEDELLIN)
+
+        #TRANSPORTADORAS
+        transportadoraRapida = Transportadora("Transportadora Rapida", 196000.0, [], [], [], [], None, terminal, None, [], [], None, 4.5)
+        transportadoraEficiente = Transportadora("Transportadora Eficiente", 189000.0, [], [], [], [], None, terminal, None, [], [], None, 4.0)
+        transportadoraExpress = Transportadora("Transportadora Express", 223000.0, [], [], [], [], None, terminal, None, [], [], None, 3.5)
+        transportadoraSegura = Transportadora("Transportadora Segura", 204000.0, [], [], [], [], None, terminal, None, [], [], None, 5.0)
+        transportadoraGlobal = Transportadora("Transportadora Global", 305000.0, [], [], [], [], None, terminal, None, [], [], None, 2.5)
+        transportadoraLocal = Transportadora("Transportadora Local", 250000.0, [], [], [], [], None, terminal, None, [], [], None, 4.7)
+        # Crear lista de transportadoras
+        transportadoras = [
+            transportadoraRapida,
+            transportadoraEficiente,
+            transportadoraExpress,
+            transportadoraSegura,
+            transportadoraGlobal,
+            transportadoraLocal
+        ]
+        # Asignar la lista de transportadoras a la terminal
+        Terminal.setTransportadoras(transportadoras)
 
     @staticmethod
     def crearObjetos():
@@ -166,7 +192,7 @@ class Serializador():
         # Transportadora6
         # tallerLocal = Taller(transportadoraLocal, transportadoraLocal.getDestinoAsignado(), "Taller Local", 10)
 
-        # MECANICOS
+        """# MECANICOS
         mecanicos1 = []
         mecanicos2 = []
         mecanicos3 = []
@@ -224,7 +250,7 @@ class Serializador():
         mecanico137 = Mecanico(137, 33, "Eduardo Díaz", 'M', [], 6, 1600.0, [], tallerEficiente, None, True, 15, 210)
 
         mecanicos6.append(mecanico136)
-        mecanicos6.append(mecanico137)
+        mecanicos6.append(mecanico137)"""
 
         #VEHICULOS
         # Crear listas de vehículos para cada transportadora
