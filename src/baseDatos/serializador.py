@@ -44,7 +44,7 @@ class Serializador():
         Serializador.serializar("reservas", Terminal.getReservas())  # VIAJES EN RESERVA
         Serializador.serializar("facturas", Terminal.getFacturas())  # FACTURAS ASOCIADAS
         #Serializador.serializar("pasajeros", Terminal.getPasajeros())  # PASAJEROS --- O solo pasajeros sin viaje??????????
-        #Serializador.serializar("tiempoObjetos", Tiempo.getTiempos())  # OBJETOS TIEMPO - PROGRESO DEL TIEMPO
+        Serializador.serializar("tiempoObjetos", Tiempo.getTiempos())  # OBJETOS TIEMPO - PROGRESO DEL TIEMPO
         #Serializador.serializar("personas", Persona.getSerializarPersonas())  # OBJETOS TIPO PERSONA ---- Aun no se crea el método
         Serializador.serializar("facturas", Factura.getFacturasCreadas())  # OBJETOS TIPO FACTURA
         Serializador.serializar("talleres", Taller.getListaTalleres())  # OBJETOS TIPO TALLER
@@ -78,7 +78,7 @@ class Serializador():
 
     @staticmethod
     def crearObjetos():
-        Tiempo()
+        Tiempo(1)
 
         #TERMINAL
         terminal = Terminal("Terminal del norte", 99999999, 500, 1, 20, None, None, 0, Destino.MEDELLIN)
@@ -996,9 +996,9 @@ class Serializador():
         reservas = []
 
         # TRANSPORTADORA 1
-        lista.append(Viaje(terminal, "8:0", "3/1/2024", conductores1[1].getVehiculo(), conductores1[1], Destino.CARTAGENA, Destino.MEDELLIN))
-        lista.append(Viaje(terminal, "10:0", "5/1/2024", conductores1[3].getVehiculo(), conductores1[3], Destino.BARRANQUILLA, Destino.MEDELLIN))
-        lista.append(Viaje(terminal, "12:0", "7/1/2024", conductores1[7].getVehiculo(), conductores1[7], Destino.BELLO, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "8:0", "2/1/2024", conductores1[1].getVehiculo(), conductores1[1], Destino.CARTAGENA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "10:0", "2/1/2024", conductores1[3].getVehiculo(), conductores1[3], Destino.BARRANQUILLA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "12:0", "2/1/2024", conductores1[7].getVehiculo(), conductores1[7], Destino.BELLO, Destino.MEDELLIN))
         a = Viaje(terminal, "14:0", "14/1/2024", conductores1[9].getVehiculo(), conductores1[9], Destino.SANTAMARTA, Destino.MEDELLIN)
 
         lista.append(a)

@@ -12,6 +12,7 @@ class Viaje:
     # Constructor
     def __init__(self, terminal, horaSalida, fechaSalida, vehiculo, conductor, llegada, salida):
         from gestorAplicacion.administrativo.terminal import Terminal
+        from gestorAplicacion.tiempo.tiempo import Tiempo
 
         self._terminal = terminal
         self._id = Viaje._totalViajes
@@ -23,17 +24,17 @@ class Viaje:
         self._salida = salida
         self._estado = False # Estado por defecto (False); Significa: Sin salir
         self._pasajeros = []
-        self._transportadora = None # Verificar con el Vehiculo o el Destino
-        self._dia = None
-        self._distancia = None # Tiempo.calcularDia(fecha)
-        self._duracion = None # Viaje.calcularDistancia(salida, llegada)
+        self._transportadora = conductor.getTransportadora() # Verificar con el Vehiculo o el Destino
+        self._dia = Tiempo.dia
+        self._distancia = self.calcularDistancia()  
+        self._duracion = self.calcularDuracion()
+        self._fechaLlegada = "" # Lo calcula el metodo inferior
         self._horaLlegada = self.calcularHoraLlegada()
-        self._fechaLlegada = None # calcularFechaLlegada() --- Se asigna automáticamenente
-        self._tarifa = None # calcularTarifa ()
+        self._tarifa = self.calcularTarifa()
         self._asientosDisponibles = None # Replantear la forma de calcularlos
         Terminal.getViajes().append(self)
-        #self._conductor.getTransportadora().append(self)
-        #self._conductor.getHorario().append(self)
+        #self._conductor.getTransportadora().getViajesAsignados().append(self)
+        self._conductor.getHorario().append(self)
         Viaje._totalViajes += 1
     
     # Metodos necesarios para inicializar
@@ -108,7 +109,7 @@ class Viaje:
         minutosSalida = int(partes[1])
         
         # Dividir la fecha en día, mes y año
-        fechaPartes = self.fecha.split("/")
+        fechaPartes = self._fechaSalida.split("/")
         dia = int(fechaPartes[0])
         mes = int(fechaPartes[1])
         año = int(fechaPartes[2])
@@ -200,7 +201,7 @@ class Viaje:
         else:
             Terminal.getViajesEnCurso().append(self)
             self.setEstado(True)
-            self.getVehiculo().viaje(int(self.getDistancia()))
+            #self.getVehiculo().viaje(int(self.getDistancia())) #TODO : RECORDAR ARREGLAR ESTE ERROR
             Terminal.getViajes().remove(self)
             if (self in Terminal.getReservas()):
                 Terminal.getReservas().remove(self)

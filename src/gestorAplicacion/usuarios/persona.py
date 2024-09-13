@@ -16,6 +16,7 @@ from gestorAplicacion.usuarios.pasajero import Pasajero"""
 
 
 class Persona(ABC, Incentivo):
+    listapersonas = []
     
     @multimethod
     def __init__(self, id : int, edad: int, nombre: str, genero: str, historial: list, experiencia: int, dinero: float, facturas: list, diasRestantesContr: int, diasTrabajados: int):
@@ -30,6 +31,7 @@ class Persona(ABC, Incentivo):
         self.facturas = facturas
         self.diasRestantesContr = diasRestantesContr
         self.diasTrabajados = diasTrabajados
+        Persona.listapersonas.append(self)
     
     @multimethod
     def __init__(self, id: int, edad: int, nombre: str, genero: str, dinero: float):
@@ -39,6 +41,7 @@ class Persona(ABC, Incentivo):
         self.nombre = nombre
         self.genero = genero
         self.dinero = dinero
+        Persona.listapersonas.append(self)
         
     @multimethod
     def __init__(self, id: int, edad: int, nombre: str):
@@ -47,6 +50,7 @@ class Persona(ABC, Incentivo):
         self.id = id
         self.edad = edad
         self.nombre = nombre
+        Persona.listapersonas.append(self)
 
     def aumentarDinero(self, dinero):
         
@@ -378,6 +382,13 @@ class Persona(ABC, Incentivo):
     def getDiasTrabajados(self):
         return self.diasTrabajados
                     
+    @classmethod
+    def getSerializarPersonas(cls):
+        return cls.listapersonas
+    
+    @classmethod
+    def setSerializarPersonas(cls, lista):
+        cls.listapersonas = lista
                     
                 
                 

@@ -31,14 +31,13 @@ def mostrarDescripcion():
     label_frame_top.config(text= "Terminal Creations es una plataforma integral de administración y seguimineto,\n que optimiza las operaciones de terminales. Permite administrar transportadoras, \nprogramar viajes, controlar tarifas y gestionar facturación desde un sistema \ncentralizado. Con monitoreo en tiempo real y generación de informes personalizados, \nfacilita la toma de decisiones y mejora la eficiencia operativa, maximizando la productividad \ny controlando todas las operaciones en un solo lugar.", font = "Century", )
 
 # FUNCIÓN PARA SALIR DE LA APLICACIÓN Y APAGAR EL TIEMPO
-#Tiempo(1) # Solo para las pruebas
-
-Serializador.objetosPrueba()
-#Serializador.crearObjetos()
-#Deserializador.deserializarListas()
-
+if __name__ == "__main__":
+    #Tiempo(1) # Solo para las pruebas
+    #Serializador.objetosPrueba()
+    Serializador.crearObjetos()
+    #Deserializador.deserializarListas()
+    
 tiempo = Tiempo.tiempos[0] # 
-
 
 def salir():
     global tiempo
@@ -46,9 +45,6 @@ def salir():
         tiempo.detener()
     #Serializador.serializarListas()
     root.quit()
-
-#
-#if __name__ == "__main__":
 
 # CREAR OBJETO DE TIPO VENTANA
 root = tk.Tk()
@@ -185,5 +181,6 @@ label_rb_bl.pack(expand=True, fill="both", padx=2, pady=2)
 
 label_rb_br = tk.Label(frame_rb_br, width= 230, height=230,relief="solid", image = photoImagenes[3])
 label_rb_br.pack(expand=True, fill="both", padx=2, pady=2)
+
 
 root.mainloop()

@@ -34,8 +34,8 @@ class Deserializador():
         Deserializador.deserializar("reservas", Terminal.setReservas)
         Deserializador.deserializar("facturas", Terminal.setFacturas)
         #Deserializador.deserializar("pasajeros", Terminal.setPasajeros)
-        #Deserializador.deserializar("tiempoObjetos", Tiempo.setTiempos)
-        # Serializador.deserializar("personas", Persona.setPersonas)  # Aún no se crea el método
+        Deserializador.deserializar("tiempoObjetos", Tiempo.setTiempos)
+        #Serializador.deserializar("personas", Persona.setPersonas)  # Aún no se crea el método
         Deserializador.deserializar("facturas", Factura.setFacturasCreadas)
         Deserializador.deserializar("talleres", Taller.setListaTalleres)
         Deserializador.deserializar("vehiculos", Vehiculo.setListaVehiculos)

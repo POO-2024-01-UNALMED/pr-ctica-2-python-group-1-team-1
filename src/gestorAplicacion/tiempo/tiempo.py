@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 #--------------------------------------------------------------------------------------
 
 from gestorAplicacion.constantes.dia import Dia
-#from gestorAplicacion.administrativo.terminal import Terminal
+from gestorAplicacion.administrativo.terminal import Terminal
 #from gestorAplicacion.administrativo.viaje import Viaje
 
 
@@ -18,6 +18,7 @@ class Tiempo:
     # Salida - - Formatos
     salidaFecha = ""
     salidaHora = ""
+    dia = ""
     # Lista para la Serializacón
     tiempos = []
 
@@ -47,11 +48,12 @@ class Tiempo:
         self.calcularDia() # Calcula el dia de la Semana
         self.calcularSalidaHora() # Define el formato de salida de la hora sirve para hacer validaciones.
         self.calcularSalidaFecha() # Define el formato de salida de la fecha sirve para hacer validaciones.
-        # print(self.mostrarTiempo()) # Pruebas 
+        self.modificarDia()
+        #print(self.mostrarTiempo()) # Pruebas 
         
         # MÉTODOS PARA ADMINISTRAR LOS VIAJES
-        #self.comprobarViajes()
-        #self.comprobarViajesEnCurso()
+        self.comprobarViajes()
+        self.comprobarViajesEnCurso()
 
         # MÉTODOS PARA ADMINISTRAR EL TALLER
 
@@ -78,6 +80,9 @@ class Tiempo:
         Actualiza la hora, los minutos, los días, los meses y los años de acuerdo con el paso del tiempo.
         Este método incrementa los minutos y realiza ajustes para las horas, días, meses y años con el paso del tiempo durante la ejecucion.
     """
+    def modificarDia(self):
+        Tiempo.dia = self.Dia
+
     def calcularHora(self):
         self.minutos += 1
         #print(str(Tiempo.minutos) + " Min")
@@ -140,15 +145,17 @@ class Tiempo:
     	 * 3. Para cada viaje, se compara la fecha y la hora del viaje con la fecha y hora actuales.
     	 * 4. Si el viaje coincide con la fecha y hora actuales, se llama al método `validacion()` del viaje.
         """
-        viajes = Terminal.getViajes()
+        viajesOriginal = Terminal.getViajes()
+        viajes = viajesOriginal.copy()
         if (viajes is not None):
             for i in range(len(viajes)):
                 viaje = viajes[i]
                 if (viaje.getFecha() == Tiempo.salidaFecha):
                     if not (viaje.getPasajeros()):
-                        pass
-                        #viaje.asignarPasajerosAViaje(Terminal.getPasajeros)
+                        viaje.asignarPasajerosAViaje(Terminal.getPasajeros())
                     if (viaje.getHora() == Tiempo.salidaHora):
+                        print(f"Salio: {viaje.getId()}")
+                        print(f"Lista Pasajeros: {viaje.getPasajeros()}")
                         viaje.validacion()
 
     def comprobarViajesEnCurso(self):
@@ -167,6 +174,8 @@ class Tiempo:
                 viaje = viajes[i]
                 if (viaje.getFecha() == Tiempo.salidaFecha):
                     if (viaje.getHora() == Tiempo.salidaHora):
+                        print(f"llego: {viaje.getId()}")
+                        print(Terminal.getHistorial())
                         viaje.programacionAutomatica()
 
     def mecanicosDisponibles (self):
@@ -236,6 +245,20 @@ class Tiempo:
     @staticmethod
     def setTiempos(nuevos_tiempos):
         Tiempo.tiempos = nuevos_tiempos  # Setea la lista tiempos con nuevos datos
+
+    # MÉTODO PARA SERIALIZAR EL TIEMPO SIN EL ATRIBUTO QUE CONTIENE AL HILO 
+    def __getstate__(self):
+        # EXCLUIR EL TIMER 
+        state = self.__dict__.copy()
+        state['timer'] = None  # DARLE UN VALOR NONE
+        return state
+
+    # MÉTODO PARA DESERIALIZAR EL HILO Y PONERLO EN MARCHA
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+        # REINICIAR
+        self.ejecutando = True
+        self.ejecutarPeriodicamente()
     
 
 #PRUEBAS
