@@ -38,7 +38,7 @@ class Terminal:
         Terminal._historial = []
         self._destinos = destinos # Propios de cada terminal
         self.vehiculosTerminal = [] # Propios de cada terminal
-        self._comision = comision
+        self.COMISION = comision
         self._ubicacion = ubicacion
         self._administrador = administrador
         Terminal.cantidadSedes += 1
@@ -55,7 +55,7 @@ class Terminal:
         Terminal._historial = []
         self._destinos = destinos # Propios de cada terminal
         self.vehiculosTerminal = [] # Propios de cada terminal
-        self._comision = comision
+        self.COMISION= comision
         self._ubicacion = ubicacion
         Terminal.cantidadSedes += 1
 
