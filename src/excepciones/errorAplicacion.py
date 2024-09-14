@@ -1,12 +1,9 @@
+from tkinter import messagebox
+
 class ErrorAplicacion(Exception):
     
     def __init__(self, msg):
         
         self.msg = msg
-        self.mesagge = self.getmsg()
-        super().__init__("Prueba excepción")
-        
-        
-    def getmsg(self):
-        
-        print(self.msg)
+        messagebox.showerror("Alerta!",f" Manejo de errores de la aplicacion: {msg}")
+    

@@ -2,16 +2,24 @@ from errorAplicacion import ErrorAplicacion
 
 class exceptionError2(ErrorAplicacion):
     
+    msg = "error2"
+    
     def __init__(self):
         
-        super().__init__("w")
-    
-    def lanzarExepcion(self):
+        super().__init__(exceptionError2.msg)
         
-        raise exceptionError2()
-    
+
+    def mensaje(self):
+        
+        print("prueba")
 
 if __name__ == "__main__":
     
-    raise exceptionError2()
+    try:
+        raise exceptionError2()
+    
+    except exceptionError2 as f:
+        
+        f.mensaje()
+    
     
