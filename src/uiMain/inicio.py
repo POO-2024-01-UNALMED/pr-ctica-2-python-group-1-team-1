@@ -36,7 +36,7 @@ if __name__ == "__main__":
     #Serializador.objetosPrueba()
     Serializador.crearObjetos()
     #Deserializador.deserializarListas()
-    
+
 tiempo = Tiempo.tiempos[0] # 
 
 def salir():

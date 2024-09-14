@@ -2,7 +2,17 @@ import tkinter as tk
 from tkinter import ttk # SOLO PARA UTILIZAR EL COMBOBOX
 import principal
 
-colors = principal.colors
+# PALETA DE COLORES
+colors = {
+        "background": "#0c1424",
+        "text": "#f5f5f5",
+        "naranja": "#ff350a",
+        "amarillo": "#ffbf00",
+        "grisClaro": "#d1d1d1",
+        "grisOscuro": "#4a5568",
+        "azul" : "#2d9bfb",
+        "accent": "#2e3b49"
+}
 
 class TablaFrame(tk.Frame):
     """
@@ -17,6 +27,7 @@ class TablaFrame(tk.Frame):
     # INICIALIZADOR DE LA TABLA QUE MOSTRARA LA LISTA DE INSTANCIA DE UNA CLASE X
 
     def __init__(self, tituloCriterios, atributos, parent, lista, habilitado=None):
+
         super().__init__(parent, bg=colors["background"], padx=10, pady=10)
         self.parent = parent
         self.atributos = atributos
@@ -92,20 +103,21 @@ personas = [
     Persona("Juzman", 28, "Masculino", "SPM", "POO")
 ]
 
-root = tk.Tk()
+if __name__ == "__main__":
+    root = tk.Tk()
 
-# Lista de títulos para las columnas
-titulos_columnas = ["ID", "Nombre", "Edad", "Género", "Colegio", "Pandemia"]
+    # Lista de títulos para las columnas
+    titulos_columnas = ["ID", "Nombre", "Edad", "Género", "Colegio", "Pandemia"]
 
-# Instanciar TablaFrame con los atributos que queremos mostrar
-tablaFrame = TablaFrame(
-    tituloCriterios=titulos_columnas,  # Títulos de las columnas
-    atributos=["nombre", "edad", "genero", "colegio", "pandemia"],  # Atributos a mostrar
-    parent=root,
-    lista=personas,
-    habilitado=[False, False, False, False, False]  # Ningún campo editable en este caso
-)
+    # Instanciar TablaFrame con los atributos que queremos mostrar
+    tablaFrame = TablaFrame(
+        tituloCriterios=titulos_columnas,  # Títulos de las columnas
+        atributos=["nombre", "edad", "genero", "colegio", "pandemia"],  # Atributos a mostrar
+        parent=root,
+        lista=personas,
+        habilitado=[False, False, False, False, False]  # Ningún campo editable en este caso
+    )
 
-tablaFrame.pack(padx=10, pady=10)
+    tablaFrame.pack(padx=10, pady=10)
 
-root.mainloop()
+    root.mainloop()

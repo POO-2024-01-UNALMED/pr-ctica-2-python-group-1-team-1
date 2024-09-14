@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-import principal
 
-colors = principal.colors
 
 def alertWarn(title, message):
     messagebox.showwarning(title, message)
@@ -24,6 +22,8 @@ class FieldFrame(tk.Frame):
     """
 
     def __init__(self, tituloCriterios, criterios, tituloValores, valores, habilitado, parent, enviado):
+        import principal
+        colors = principal.colors
         super().__init__(parent, bg=colors["background"], padx=10, pady=10)
         self.parent = parent
         self.criterios = criterios
@@ -32,6 +32,12 @@ class FieldFrame(tk.Frame):
         self.habilitado = habilitado
         self.datos = {}
         self.formularioDatos = {}
+
+        # Configura la cuadrícula del formulario
+        self.grid_rowconfigure(0, weight=1)  # Fila de títulos
+        self.grid_rowconfigure(len(criterios)+1, weight=1)  # Fila de botones
+        self.grid_columnconfigure(0, weight=1)  # Columna de criterios
+        self.grid_columnconfigure(1, weight=1)  # Columna de valores
 
         # CREACIÓN LABELS TITULOS
         label_titulo_criterio = tk.Label(self, text=tituloCriterios, font=("Century", 17, "bold"), bg = colors["amarillo"], relief="ridge", bd= 3)
