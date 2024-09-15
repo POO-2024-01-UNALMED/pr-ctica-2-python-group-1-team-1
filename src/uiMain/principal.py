@@ -747,6 +747,31 @@ def interfazPrincipal(ventanaInicio):
 
                 # Agregar el nuevo frame debajo de la tabla
                 fieldFrameInferior.grid(row=1, column=0, sticky="nsew")
+    
+    
+    def estructura_frames(titulo,descripcion):
+        frame_top.destroy()
+        frame_bottom.destroy()
+
+        new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+        new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+        new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+
+        new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+        new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+        new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+
+        label_top_center = tk.Label(new_frame_top, text=titulo, font=("Segoe Script", 35, "bold"), fg=colors["amarillo"], bd=3, bg=colors["background"], relief="ridge")
+        label_center_center = tk.Label(new_frame_center, text=descripcion, font=("Arial", 10, "bold"), fg=colors["text"], bd=3, bg=colors["background"])
+
+        label_top_center.place(relx=0.5,rely=0.5, anchor="center")
+        label_center_center.place(relx=0.5,rely=0.5, anchor="center")
+
+        return [new_frame_bottom,label_top_center,label_center_center] #Retorna el frame de abajo, con el cual se haran los respectivos procesos y consultas
+        #lista[0] es el frame de abajo
+        #lista[1] es el titulo grande de arriba
+        #lista[2] es la descripcion
+    
 
 
 
