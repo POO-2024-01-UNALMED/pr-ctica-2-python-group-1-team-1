@@ -52,8 +52,8 @@ def interfazPrincipal(ventanaInicio):
     menuConsultas = tk.Menu(menuBar, tearoff=False,bg="white")
     menuBar.add_cascade(menu=menuConsultas, label="Procesos y Consultas")
     menuConsultas.add_command(label="Venta de Viajes", command= lambda: funcionalidad1())
-    menuConsultas.add_command(label="Facturacion y Finanzas", command= lambda: funcionalidad2())
-    menuConsultas.add_command(label="Conductores y Vehiculos", command= lambda: funcionalidad3())
+    menuConsultas.add_command(label="Gestión de Conductores", command= lambda: funcionalidad2())
+    menuConsultas.add_command(label="Facturacion y Finanzas", command= lambda: funcionalidad3())
     menuConsultas.add_command(label="Talleres y Mecanicos", command= lambda: funcionalidad4())
     menuConsultas.add_command(label="Programación de Viajes", command= lambda: funcionalidad5())
 
@@ -169,11 +169,37 @@ def interfazPrincipal(ventanaInicio):
         frame_bottom.grid_columnconfigure(0, weight=1)
 
     def funcionalidad2():
-        label_top_center.configure(text="Facturacion y Finanzas")
+        from src.gestorAplicacion.administrativo.transportadora import Transportadora
+        frame_top.destroy()
+        frame_bottom.destroy()
+
+        new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+        new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+        new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+
+        new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+        new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+        new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+
+        label_top_center = tk.Label(new_frame_top, text="Gestion de conductores", font=("Segoe Script", 35, "bold"), fg=colors["amarillo"], bd=3, bg=colors["background"], relief="ridge")
+        label_center_center = tk.Label(new_frame_center, text="Elija la transportadora a la cual le administrara los conductores", font=("Arial", 10, "bold"), fg=colors["text"], bd=3, bg=colors["background"])
+
+        label_top_center.place(relx=0.5,rely=0.5, anchor="center")
+        label_center_center.place(relx=0.5,rely=0.5, anchor="center")
+
+        #print(Transportadora.getTransportadoras()[0].getNombre())
+
+        tabla_frame = TablaFrame(["Opcion","Transportadora"], ["Nombre"], new_frame_bottom, Transportadora.getTransportadoras(), [False])
+        tabla_frame.place(relx=0.5, rely=0.5, anchor="center")
+        
+        #def tres_opciones():
+            
+
+        #tabla_frame.getBoton
             
 
     def funcionalidad3():
-        label_top_center.configure(text="Conductores y Vehiculos")
+        label_top_center.configure(text="Facturacion y Finanzas")
             
 
     def funcionalidad4():
