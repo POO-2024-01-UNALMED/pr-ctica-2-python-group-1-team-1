@@ -135,7 +135,12 @@ def interfazPrincipal(ventanaInicio):
 
     def funcionalidad2():
         from src.gestorAplicacion.administrativo.transportadora import Transportadora
-        frame_top.destroy()
+
+        lista = estructura_frames("Gestion de conductores","Elija la transportadora a la cual le administrara los conductores")
+        new_frame_bottom = lista[0]
+        label_top_center = lista[1]
+        label_center_center = lista[2]
+        """frame_top.destroy()
         frame_bottom.destroy()
 
         new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
@@ -150,17 +155,173 @@ def interfazPrincipal(ventanaInicio):
         label_center_center = tk.Label(new_frame_center, text="Elija la transportadora a la cual le administrara los conductores", font=("Arial", 10, "bold"), fg=colors["text"], bd=3, bg=colors["background"])
 
         label_top_center.place(relx=0.5,rely=0.5, anchor="center")
-        label_center_center.place(relx=0.5,rely=0.5, anchor="center")
+        label_center_center.place(relx=0.5,rely=0.5, anchor="center")"""
 
         #print(Transportadora.getTransportadoras()[0].getNombre())
 
-        tabla_frame = TablaFrame(["Opcion","Transportadora"], ["Nombre"], new_frame_bottom, Transportadora.getTransportadoras(), [False])
-        tabla_frame.place(relx=0.5, rely=0.5, anchor="center")
-        
-        #def tres_opciones():
+        def devolucion_transportadora(valor):
+            true_value = int(valor.split(" ")[2])
+
+            transportadora = Transportadora.getTransportadoras()[true_value-1]
+
+            new_frame_bottom.destroy()
+
+            label_center_center.config(text="Seleccione una opcion")
+            new2_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+            new2_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+
+            criterios = ["Opciones de conductor"]
+            valores_iniciales = ["Despedir conductor","Contratar conductor","Modificar conductor"]
+            habilitado = [False, False, False]
+
+            datos = {}
+
+            def devolucion_llamado(formularioDatos):
+
+                datos = formularioDatos
+                print(formularioDatos)
+
+                new2_frame_bottom.destroy()
+
+                new3_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new3_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+
+                print(datos)
+
+                def devolucion_contratar(valor):
+                    true_value = int(valor.split(" ")[2])
+                    label_center_center.config(text="Haz contratado al conductor: " + transportadora.getConductoresRegistrados()[true_value-1].getNombre())
+
+                def devolucion_despedir(valor):
+                    true_value = int(valor.split(" ")[2])
+
+                def devolucion_modificar(valor):
+                    true_value = int(valor.split(" ")[2])
+
+                    conductor = transportadora.getConductores()[true_value-1]
+
+                    new3_frame_bottom.destroy()
+
+                    label_center_center.config(text="Seleccione que desea modificarle al conductor")
+
+                    new4_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                    new4_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+
+                    criterios = ["Modificaciones"]
+                    valores_iniciales = ["Viaje","Vehiculo","Modificar conductor"]
+                    habilitado = [False, False, False]
+
+                    def devolucion_viaje(valor):
+                        
+                        new4_frame_bottom.destroy()
+
+                        new5_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                        new5_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)    
+
+                        if valor["Modificaciones"] == "Viaje":
+
+                            if (len(conductor.getHorario()) == 0 ):
+                                
+                                criterios = ["Modificar viaje"]
+                                valores_iniciales = ["Asignar viaje"]
+                                habilitado = [False]
+
+                                def devolucion_asignar_viaje(valor):
+                                    
+                                    new5_frame_bottom.destroy()
+
+                                    new6_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                                    new6_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)    
+
+                                    viajes_disponibles_tabla = TablaFrame(["Opcion","Destino","Fecha","Hora llegada"], ["Llegada","Fecha","Hora"], new6_frame_bottom, transportadora.getViajesAsignados(), [False,False,False], devolucionLlamado=devolucion_modificar)
+                                    viajes_disponibles_tabla.place(relx=0.5,rely=0.5,anchor="center")
+
+                                
+                                viajes_disponibles = FieldFrame(
+                                parent=new5_frame_bottom,
+                                tituloCriterios="Opciones",
+                                criterios=criterios,
+                                tituloValores="Seleccion",
+                                valores=valores_iniciales,
+                                habilitado=habilitado,
+                                devolucionLlamado=devolucion_asignar_viaje
+                                )                         
+
+                                viajes_disponibles.place(relx=0.5,rely=0.5, anchor="center")   
+
+                                
+
+
+                    opciones_de_modificar = FieldFrame(
+                        parent=new4_frame_bottom,
+                        tituloCriterios="Opciones",
+                        criterios=criterios,
+                        tituloValores="Seleccion",
+                        valores=valores_iniciales,
+                        habilitado=habilitado,
+                        devolucionLlamado=devolucion_viaje
+                    )
+
+                    opciones_de_modificar.place(relx=0.5,rely=0.5, anchor="center")
+                    
+
+
+
+
+                if datos["Opciones de conductor"] == "Despedir conductor":
+                    label_center_center.config(text="Seleccione el conductor que desea despedir")
+
+                    fire_tabla = TablaFrame(["Opcion","Nombre","Experiencia"], ["Nombre","Experiencia"], new3_frame_bottom, transportadora.getConductores(), [False,False], devolucionLlamado=devolucion_despedir)
+                    fire_tabla.place(relx=0.5,rely=0.5,anchor="center")
+
+                if datos["Opciones de conductor"] == "Contratar conductor":
+                    label_center_center.config(text="Seleccione el conductor que desea contratar")
+
+                    hire_tabla = TablaFrame(["Opcion","Nombre","Experiencia","Licencia"], ["Nombre","Experiencia","Licencia"], new3_frame_bottom, transportadora.getConductoresRegistrados(), [False,False,False], devolucionLlamado=devolucion_contratar)
+                    hire_tabla.place(relx=0.5,rely=0.5,anchor="center")
+
+                if datos["Opciones de conductor"] == "Modificar conductor":
+                    label_center_center.config(text="Seleccione el conductor que desea modificar")
+                    
+                    modify_tabla = TablaFrame(["Opcion","Nombre","Experiencia"], ["Nombre","Experiencia"], new3_frame_bottom, transportadora.getConductores(), [False,False], devolucionLlamado=devolucion_modificar)
+                    modify_tabla.place(relx=0.5,rely=0.5,anchor="center")
+
+                
+
+
+
+
+
+            tabla_second_window = FieldFrame(
+                parent=new2_frame_bottom,
+                tituloCriterios="Opciones",
+                criterios=criterios,
+                tituloValores="Seleccion",
+                valores=valores_iniciales,
+                habilitado=habilitado,
+                devolucionLlamado=devolucion_llamado
+            )
+
+            tabla_second_window.place(relx=0.5,rely=0.5, anchor="center")
+
             
 
-        #tabla_frame.getBoton
+
+        tabla_frame = TablaFrame(["Opcion","Transportadora"], ["Nombre"], new_frame_bottom, Transportadora.getTransportadoras(), [False], devolucionLlamado=devolucion_transportadora)
+        tabla_frame.place(relx=0.5, rely=0.5, anchor="center")
+        
+
+
+
+    
+
+      
+    
+
+
+            
+
+       
             
 
     def funcionalidad3():
@@ -200,6 +361,28 @@ def interfazPrincipal(ventanaInicio):
         frame_bottom.grid_columnconfigure(0, weight=1)
 
 
+    def estructura_frames(titulo,descripcion):
+        frame_top.destroy()
+        frame_bottom.destroy()
+
+        new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+        new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+        new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+
+        new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+        new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+        new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+
+        label_top_center = tk.Label(new_frame_top, text=titulo, font=("Segoe Script", 35, "bold"), fg=colors["amarillo"], bd=3, bg=colors["background"], relief="ridge")
+        label_center_center = tk.Label(new_frame_center, text=descripcion, font=("Arial", 10, "bold"), fg=colors["text"], bd=3, bg=colors["background"])
+
+        label_top_center.place(relx=0.5,rely=0.5, anchor="center")
+        label_center_center.place(relx=0.5,rely=0.5, anchor="center")
+
+        return [new_frame_bottom,label_top_center,label_center_center] #Retorna el frame de abajo, con el cual se haran los respectivos procesos y consultas
+        #lista[0] es el frame de abajo
+        #lista[1] es el titulo grande de arriba
+        #lista[2] es la descripcion
 
 
 
