@@ -1,13 +1,16 @@
 import tkinter as tk
 from tkinter import messagebox
 from FieldFrame import FieldFrame
-from TablasFieldFrame import TablaFrame
+from TablasFieldFrame import TablaFrame, TablaFrameDinamica, ResultadosOperacion
 
 import sys
 import os
 sys.path.append(os.path.join(os.path.abspath("src"), ".."))
 
 from src.gestorAplicacion.constantes.destino import Destino
+from src.gestorAplicacion.administrativo.terminal import Terminal
+from src.gestorAplicacion.tiempo.tiempo import Tiempo
+from src.gestorAplicacion.administrativo.viaje import Viaje
 
 def alertWarn(title, message):
     messagebox.showwarning(title, message)
@@ -333,56 +336,417 @@ def interfazPrincipal(ventanaInicio):
             
 
     def funcionalidad5():
-        label_top_center.configure(text="Venta de Viajes")
+        label_top_center.configure(text="Programación de Viajes")
 
         def devolucionLlamado(formularioDatos):
-            print (formularioDatos)
-        
+            if (formularioDatos[criterios[0]] == "Programación de Viajes"):
+                programacionViaje()
+            elif (formularioDatos[criterios[0]] == "Administración de Reservas"):    
+                administraciondeReservas()
+            elif (formularioDatos[criterios[0]] ==  "Aministracion de Viajes"):
+                administracionViaje()
+            elif (formularioDatos[criterios[0]]== "Administración de Historial"):
+                administracionHistorial()
+            
         criterios = ["Tipos de acciones de Programación"]
-        valores_iniciales = ["Programación de Viajes", "Administración de Reservas", "Aministracion de Viajes"]
+        valores_iniciales = ["Programación de Viajes", "Administración de Reservas", "Aministracion de Viajes", "Administración de Historial"]
         habilitado = [False, False, False]
 
 
-        # Create the FieldFrame widget
-        field_frame = FieldFrame(
-            parent=frame_bottom,
-            tituloCriterios="Opciones",
-            criterios=criterios,
-            tituloValores="Selección",
-            valores=valores_iniciales,
-            habilitado=habilitado,
-            devolucionLlamado= devolucionLlamado
-            )
+            # Create the FieldFrame widget
+        field_frame = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
 
-
-        # UBICACIÓN DEL FIELD FRAME
+            # UBICACIÓN DEL FIELD FRAME
         field_frame.grid(row=0, column=0, sticky="nsew")
         frame_bottom.grid_rowconfigure(0, weight=1)
         frame_bottom.grid_columnconfigure(0, weight=1)
+            
+
+        def programacionViaje():
+            label_top_center.configure(text="Programando un viaje...")
+
+            # LISTA DE DESTINOS DEL ENUMERADO
+            valores_iniciales = list(Destino)
+            destinos = []
+            for i in valores_iniciales:
+                destinos.append(i.name)
+
+            criterios = ["Destino"]
+            habilitado = [False, False, False]
+
+            def devolucionLlamado(formularioDatos): # TRANSPORTADORAS POR DESTINO
+                global destinoSelect
+                destinoNombre = formularioDatos[criterios[0]]
+                listaTransportadoras = None
+
+                for i in valores_iniciales:
+                    if (i.name == destinoNombre):
+                        listaTransportadoras = Terminal.transportadorasViajeDisponible(i)
+                        destinoSelect = i
+                
+                # PASAR A LA SEGUNDA VENTANA
+                seleccionTransportadora(listaTransportadoras)
+                
+            def seleccionTransportadora(transportadoras):
+                label_top_center.configure(text="Seleccionando Transportadora...")
+
+                # LISTA DE TRANSPORTADORAS POR NOMBRE
+                nombresTransportadoras = []
+                for i in transportadoras:
+                    nombresTransportadoras.append(i.getNombre())
+                
+                criterios = ["Transportadora"]
+                habilitado = [False, False, False]
+
+                def devolucionLlamado(formularioDatosTransportadora):
+                    transportadoraNombre = formularioDatosTransportadora[criterios[0]]
+                    global transportadoraSelect
+                    for i in transportadoras:
+                        if (i.getNombre() == transportadoraNombre):
+                            transportadoraSelect = i
+                    
+                    # PASAR A SELECCIONAR LA FECHA  Y HORA
+                    seleccionFecha()
+
+                    print(transportadoraNombre)
+                
+                field_frame = FieldFrame(parent=frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=nombresTransportadoras, habilitado=habilitado, devolucionLlamado=devolucionLlamado)
+
+                # UBICACIÓN DEL FIELD FRAME
+                field_frame.grid(row=0, column=0, sticky="nsew")
+                frame_bottom.grid_rowconfigure(0, weight=1)
+                frame_bottom.grid_columnconfigure(0, weight=1)
+
+                def seleccionFecha():
+                    label_top_center.configure(text="Seleccionando Fecha del Viaje...")
+                    fechaActual = Tiempo.salidaFecha
+                    fechasDisponibles = Terminal.fechasDisponibles(fechaActual)
+
+                    criterios = ["Fechas Disponibles"]
+
+                    def devolucionLlamado(formularioDatosFechas):
+                        global fechaSelect
+                        fechaSelect = formularioDatosFechas[criterios[0]]
+                    
+                        print(fechaSelect)
+
+                        # PASAR A SELECCIONAR LA HORA
+                        seleccionHora(fechaSelect)
+                    
+                    field_frame = FieldFrame(parent=frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=fechasDisponibles, habilitado=habilitado, devolucionLlamado=devolucionLlamado)
+
+                    # UBICACIÓN DEL FIELD FRAME
+                    field_frame.grid(row=0, column=0, sticky="nsew")
+                    frame_bottom.grid_rowconfigure(0, weight=1)
+                    frame_bottom.grid_columnconfigure(0, weight=1)
+
+                    def seleccionHora(fechaSeleccionada):
+                        label_top_center.configure(text="Seleccionando Hora del Viaje...")
+                        horasDisponibles = Terminal.horasDisponibles(fechaSeleccionada)
+                        criterios = ["Horas Disponibles"]
+
+                        def devolucionLlamado(formularioDatosHoras):
+                            global horaSelect
+                            horaSelect = formularioDatosHoras[criterios[0]]
+
+                            print(horaSelect)
+
+                            # PASAR A SELECCIONAR EL TIPO DE VEHICULO
+                            seleccionTipoVehiculo()
+                        
+                        field_frame = FieldFrame(parent=frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=horasDisponibles, habilitado=habilitado, devolucionLlamado=devolucionLlamado)
+
+                        # UBICACIÓN DEL FIELD FRAME
+                        field_frame.grid(row=0, column=0, sticky="nsew")
+                        frame_bottom.grid_rowconfigure(0, weight=1)
+                        frame_bottom.grid_columnconfigure(0, weight=1)
+                        
+                        def seleccionTipoVehiculo():
+                            tiposDisponibles = transportadoraSelect.tiposVehiculosDisponible()
+                            tiposPorNombre = []
+                            for i in tiposDisponibles:
+                                tiposPorNombre.append(i.name)
+                            criterios = ["Tipo de Vehiculo"]
+
+                            def devolucionLlamado(formularioDatosTipoVehiculo):
+                                label_top_center.configure(text="Seleccionando tipo de Vehiculo...")
+                                global tipoVehiculoSelect
+                                seleccionNombre = formularioDatosTipoVehiculo[criterios[0]]  # Try, si las listas son vacias
+                                for i in tiposDisponibles:
+                                    if (i.name == seleccionNombre):
+                                        tipoVehiculoSelect = i
+
+                                # PASAR A SELECCIONAR EL CONDUCTOR
+                                seleccionConductor()
+
+                                print(tiposPorNombre)
+
+                            field_frame = FieldFrame(parent=frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=tiposPorNombre, habilitado=habilitado, devolucionLlamado=devolucionLlamado)
+
+                            # UBICACIÓN DEL FIELD FRAME
+                            field_frame.grid(row=0, column=0, sticky="nsew")
+                            frame_bottom.grid_rowconfigure(0, weight=1)
+                            frame_bottom.grid_columnconfigure(0, weight=1)
+
+                            def seleccionConductor():
+                                label_top_center.configure(text="Tipo de selección del conductor...")
+                                def devolucionLlamado(formularioDatos):
+                                    if (formularioDatos[criterios[0]] == "Selección Manual"):
+                                        seleccionManual()
+                                    elif (formularioDatos[criterios[0]] == "Selección Semi-Automática"):    
+                                        seleccionAutomática()
+                                    
+                                criterios = ["Modo de Selección"]
+                                valores_iniciales = ["Selección Manual", "Selección Semi-Automática"]
+                                habilitado = [False, False]
 
 
-    def estructura_frames(titulo,descripcion):
-        frame_top.destroy()
-        frame_bottom.destroy()
+                                    # Create the FieldFrame widget
+                                field_frame = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
 
-        new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
-        new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
-        new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                                    # UBICACIÓN DEL FIELD FRAME
+                                field_frame.grid(row=0, column=0, sticky="nsew")
+                                frame_bottom.grid_rowconfigure(0, weight=1)
+                                frame_bottom.grid_columnconfigure(0, weight=1)
 
-        new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
-        new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
-        new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+                                def seleccionManual():
+                                    conductores = transportadoraSelect.conductoresDisponibles(fechaSelect, tipoVehiculoSelect)
+                                    conductoresNombre = []
 
-        label_top_center = tk.Label(new_frame_top, text=titulo, font=("Segoe Script", 35, "bold"), fg=colors["amarillo"], bd=3, bg=colors["background"], relief="ridge")
-        label_center_center = tk.Label(new_frame_center, text=descripcion, font=("Arial", 10, "bold"), fg=colors["text"], bd=3, bg=colors["background"])
+                                    if (conductoresNombre):
+                                        for i in conductores:
+                                            conductoresNombre.append(i.getNombre())
+                                        criterios = ["Conductores Disponibles"]
 
-        label_top_center.place(relx=0.5,rely=0.5, anchor="center")
-        label_center_center.place(relx=0.5,rely=0.5, anchor="center")
+                                        def devolucionLlamado(formularioDatosConductores):
 
-        return [new_frame_bottom,label_top_center,label_center_center] #Retorna el frame de abajo, con el cual se haran los respectivos procesos y consultas
-        #lista[0] es el frame de abajo
-        #lista[1] es el titulo grande de arriba
-        #lista[2] es la descripcion
+                                            global conductorSelect
+                                            conductorSelect = formularioDatosConductores
+                                        
+                                        field_frame = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=conductoresNombre, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
+
+                                        # UBICACIÓN DEL FIELD FRAME
+                                        field_frame.grid(row=0, column=0, sticky="nsew")
+                                        frame_bottom.grid_rowconfigure(0, weight=1)
+                                        frame_bottom.grid_columnconfigure(0, weight=1)
+
+                                    else:
+                                        print ("No hay conductores disponibles...") # Buen lugar para las excepciones --- Solucionar errores
+                                        seleccionTipoVehiculo()
+                                        
+                                    print(conductores)
+
+                                def seleccionAutomática():
+                                    global viaje
+                                    viaje = Terminal.programarViaje(destinoSelect, tipoVehiculoSelect, fechaSelect, horaSelect, Destino.MEDELLIN)
+
+                                    if (isinstance(viaje, Viaje)):
+                                        print("Programación exitosa")
+                                        # AGREGAR PANTALLA DE RESULTADOS
+                                    else:
+                                        print("Programación en proceso")
+                                        # AGREGAR PANTALLA DE RESULTADOS
+            
+            field_frame = FieldFrame(parent=frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=destinos, habilitado=habilitado, devolucionLlamado=devolucionLlamado)
+
+            # UBICACIÓN DEL FIELD FRAME
+            field_frame.grid(row=0, column=0, sticky="nsew")
+            frame_bottom.grid_rowconfigure(0, weight=1)
+            frame_bottom.grid_columnconfigure(0, weight=1)
+            print("1")
+
+        def administraciondeReservas():
+            label_top_center.configure(text="Administrando Reservas...")
+            reservas = Terminal.getReservas()
+            
+            def devolucionLlamado(formularioReservas):
+                partes = formularioReservas.split(":")
+                indiceSeleccionado = int(partes[1].strip())
+                global viajeSelect
+                viajeSelect = reservas[indiceSeleccionado-1]
+                print(f"indiceSeleccionado: {indiceSeleccionado} Viaje: {viajeSelect.getId()}")
+
+                # CREAR UN NUEVO FORMULARIO.
+                seleccionAdministrarReserva()
+
+            def seleccionAdministrarReserva():
+                def devolucionLlamado(formularioDatosAdministrar):
+                    if (formularioDatosAdministrar[criterios[0]] == "Ver detalles Reserva"):
+                        verDetallesReserva()
+                    elif (formularioDatosAdministrar[criterios[0]] == "Cancelar Reserva"):    
+                        cancelarReserva()
+
+                def verDetallesReserva():
+                    print("ver Detalles Reserva")
+                    label_top_center.configure(text=f"Detalles del Viaje con ID = {viajeSelect.getId()}")
+                    print(Terminal.getHistorial())
+                    def devolucionLlamado():
+                        pass # ResultFrame
+
+                def cancelarReserva():
+                    print("Cancelar Viajes")
+                    def devolucionLlamado():
+                        pass # ResultFrame
+
+                criterios = [f"Administrar Reserva con ID : {viajeSelect.getId()}"]
+                valores_iniciales = ["Ver detalles Reserva", "Cancelar Reserva"]
+                habilitado = [False, False]
+
+                # Create the FieldFrame widget
+                field_frame = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
+
+                # Agregar el nuevo frame debajo de la tabla
+                field_frame.grid(row=1, column=0, sticky="nsew")
+                frame_bottom.grid_rowconfigure(1, weight=1)  # Configurar peso para la fila del nuevo frame
+                frame_bottom.update_idletasks()  # Actualizar el layout
+            
+            titulo_criterios = ["Opción", "Id", "Llegada", "Fecha", "Hora", "Transportadora", "Vehiculo"]
+            atributos  = ["getId", "getLlegada", "getFecha", "getHora", "getTransportadora.getNombre", "getVehiculo.getTipo"]
+            habilitado = [False, False, False, False, False, False, False]
+
+            tabla = TablaFrameDinamica(tituloCriterios= titulo_criterios, atributos = atributos, parent = frame_bottom, lista = reservas, habilitado=habilitado, devolucionLlamado = devolucionLlamado)
+            # Ubica la tabla en el centro del frame
+            # UBICACIÓN DEL FIELD FRAME
+            tabla.grid(row=0, column=0, sticky="nsew")
+            frame_bottom.grid_rowconfigure(0, weight=1)
+            frame_bottom.grid_columnconfigure(0, weight=1)
+
+
+        def administracionViaje():
+            label_top_center.configure(text="Administrando Viajes...")
+            viajes = Terminal.getViajes()
+            
+            def devolucionLlamado(formularioViajes):
+                partes = formularioViajes.split(":")
+                indiceSeleccionado = int(partes[1].strip())
+                global viajeSelect
+                viajeSelect = viajes[indiceSeleccionado-1]
+                print(f"indiceSeleccionado: {indiceSeleccionado} Viaje: {viajeSelect.getId()}")
+
+                # CREAR UN NUEVO FORMULARIO.
+                seleccionAdministrarViaje()
+
+
+            titulo_criterios = ["Opción", "Id", "Llegada", "Fecha", "Hora", "Transportadora", "Vehiculo"]
+            atributos  = ["getId", "getLlegada", "getFecha", "getHora", "getTransportadora.getNombre", "getVehiculo.getTipo"]
+            habilitado = [False, False, False, False, False, False, False]
+
+            tabla = TablaFrameDinamica(tituloCriterios= titulo_criterios, atributos = atributos, parent = frame_bottom, lista = viajes, habilitado=habilitado, devolucionLlamado = devolucionLlamado)
+            # UBICACIÓN DE LA TABLA
+            tabla.grid(row=0, column=0, sticky="nsew")
+            frame_bottom.grid_rowconfigure(0, weight=1)
+            frame_bottom.grid_columnconfigure(0, weight=1)
+
+            def seleccionAdministrarViaje():
+                def devolucionLlamado(formularioDatosAdministrar):
+                    if (formularioDatosAdministrar[criterios[0]] == "Ver detalles"):
+                        verDetalles()
+                    elif (formularioDatosAdministrar[criterios[0]] == "Cancelar"):    
+                        cancelarViaje()
+
+                def verDetalles():
+                    print("ver Detalles")
+                    label_top_center.configure(text=f"Detalles del Viaje con ID = {viajeSelect.getId()}")
+                    def devolucionLlamado():
+                        pass
+
+                    mostrar = ["ID", "Llegada", "Fecha", "Hora", "Vehiculo", "Conductor"] # ASIENTOS -- P1
+                    valores = ["getId", "getLlegada", "getFecha", "getHora", "getVehiculo.getModelo", "getConductor.getNombre"]
+
+                    resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del viaje", objeto=viajeSelect, criterios=mostrar, valores=valores, parent= frame_bottom)
+
+                    resultadosOperacion.grid(row=0, column=0, sticky="nsew")
+                    frame_bottom.grid_rowconfigure(0, weight=1)
+                    frame_bottom.grid_columnconfigure(0, weight=1)
+
+                def cancelarViaje():
+                    print("Cancelar Viajes")
+                    def devolucionLlamado():
+                        pass # ResultFrame
+
+                criterios = [f"Administrar viaje con ID : {viajeSelect.getId()}"]
+                valores_iniciales = ["Ver detalles", "Cancelar"]
+                habilitado = [False, False]
+
+                # Create the FieldFrame widget
+                field_frame = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
+
+                # Agregar el nuevo frame debajo de la tabla
+                field_frame.grid(row=1, column=0, sticky="nsew")
+                frame_bottom.grid_rowconfigure(1, weight=1)  # Configurar peso para la fila del nuevo frame
+                frame_bottom.update_idletasks()  # Actualizar el layout
+
+        def administracionHistorial():
+            label_top_center.configure(text="Administrando Historial...")
+            viajesHistorial = Tiempo.retornarListas()
+            print(viajesHistorial)
+            
+            def devolucionLlamado(formularioViajes):
+                partes = formularioViajes.split(":")
+                indiceSeleccionado = int(partes[1].strip())
+                global viajeSelect
+                viajeSelect = viajesHistorial[indiceSeleccionado-1]
+                print(f"indiceSeleccionado: {indiceSeleccionado} Viaje: {viajeSelect.getId()}")
+
+                # CREAR UN NUEVO FORMULARIO.
+                seleccionAdministrarViaje()
+
+
+            titulo_criterios = ["Opción", "Id", "Llegada", "Fecha", "Hora", "Transportadora", "Vehiculo"]
+            atributos  = ["getId", "getLlegada", "getFecha", "getHora", "getTransportadora.getNombre", "getVehiculo.getTipo"]
+            habilitado = [False, False, False, False, False, False, False]
+
+            tabla = TablaFrameDinamica(tituloCriterios= titulo_criterios, atributos = atributos, parent = frame_bottom, lista = viajesHistorial, habilitado=habilitado, devolucionLlamado = devolucionLlamado)
+            # UBICACIÓN DE LA TABLA
+            tabla.grid(row=0, column=0, sticky="nsew")
+            frame_bottom.grid_rowconfigure(0, weight=1)
+            frame_bottom.grid_columnconfigure(0, weight=1)
+
+            def seleccionAdministrarViaje():
+                global fieldFrameInferior
+                def devolucionLlamado(formularioDatosAdministrar):
+                    if (formularioDatosAdministrar[criterios[0]] == "Reprogramar"):
+                        reprogramar()
+                    elif (formularioDatosAdministrar[criterios[0]] == "Ver más información"):    
+                        verInformación()
+                    elif (formularioDatosAdministrar[criterios[0]] == "Ver pasajeros"):
+                        verPasajeros()
+                    
+                    # ELIMINAR EL FIELD FRAME INFERIOR
+                    if fieldFrameInferior:
+                        fieldFrameInferior.destroy()
+                        fieldFrameInferior = None
+
+                def verPasajeros():
+                    label_top_center.configure(text=f"Pasajeros del Viaje con ID = {viajeSelect.getId()}")
+                    def devoluciónLlamado():
+                        pass
+
+                    
+                    
+
+                def verInformación():
+                    label_top_center.configure(text=f"Detalles del Viaje con ID = {viajeSelect.getId()}")
+                    def devolucionLlamado():
+                        pass # ResultFrame
+                    
+
+                    informacion = ()
+
+                def reprogramar():
+                    label_top_center.configure(text=f"Reprogramación del Viaje con ID = {viajeSelect.getId()}")
+                    def devolucionLlamado():
+                        pass # ResultFrame
+
+                criterios = [f"Administrar viaje con ID : {viajeSelect.getId()}"]
+                valores_iniciales = ["Reprogramar", "Ver más información", "Ver pasajeros"]
+                habilitado = [False, False]
+
+                # Create the FieldFrame widget
+                fieldFrameInferior = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
+
+                # Agregar el nuevo frame debajo de la tabla
+                fieldFrameInferior.grid(row=1, column=0, sticky="nsew")
 
 
 
