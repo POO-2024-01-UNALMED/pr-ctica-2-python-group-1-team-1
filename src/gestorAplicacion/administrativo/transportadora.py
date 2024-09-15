@@ -232,6 +232,27 @@ class Transportadora (Incentivo):
             mensaje += "Nombre: " + conductor.getNombre()+ "  #ID: " + str(conductor.getId()) + "\n"
         
         return mensaje
+    
+    def tiposVehiculosDisponible(self):
+        tipos_disponibles = []  # Lista para almacenar los tipos de vehículos disponibles
+        for vehiculo in self.getVehiculos():
+            if vehiculo.disponibilidad():
+                tipo = vehiculo.getTipo()
+                if tipo not in tipos_disponibles:
+                    tipos_disponibles.append(tipo)
+        return tipos_disponibles
+    
+    def conductoresDisponibles(self, fecha, tipo):
+        conductoresDis = []  # Lista para almacenar los conductores disponibles
+        
+        for conductor in self._conductores:
+            if conductor.getVehiculo().getTipo() == tipo:
+                #if conductor.disponibleFecha(fecha):  # Verificar si el conductor está disponible en la fecha dada
+                conductoresDis.append(conductor)  # Si está disponible, agregarlo a la lista
+        
+        return conductoresDis
+
+
 
     # Métodos get
 
@@ -287,7 +308,7 @@ class Transportadora (Incentivo):
     def getEstrellas(self):
         return self._estrellas
     
-    def detDestinos(self):
+    def getDestinos(self):
         return self._destinos
     
     @classmethod

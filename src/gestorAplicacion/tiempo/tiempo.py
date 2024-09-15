@@ -168,7 +168,8 @@ class Tiempo:
     	 * 4. Si el viaje coincide con la fecha y hora actuales, se llama al método `programacionAutomatica()` del viaje.
     	 */
         """
-        viajes = Terminal.getViajesEnCurso()
+        viajesOriginal = Terminal.getViajesEnCurso()
+        viajes = viajesOriginal.copy()
         if (viajes is not None):
             for i in range(len(viajes)):
                 viaje = viajes[i]
