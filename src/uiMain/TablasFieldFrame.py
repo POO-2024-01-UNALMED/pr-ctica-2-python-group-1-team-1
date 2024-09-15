@@ -50,7 +50,7 @@ class TablaFrame(tk.Frame):
                     label.grid(row=i+1, column=j+1, padx=5, pady=5)
 
         # Crear un combobox para seleccionar un índice
-        self.combobox = ttk.Combobox(self, values=[f"Opción {i+1}, {lista[i].getNombre()}" for i in range(len(lista))], font=("Century", 12), state="readonly")
+        self.combobox = ttk.Combobox(self, values=[f"Opción {i+1}" for i in range(len(lista))], font=("Century", 12), state="readonly")
         self.combobox.grid(row=len(lista)+1, column=1, padx=10, pady=5)
 
         # Crear un botón para confirmar la selección
