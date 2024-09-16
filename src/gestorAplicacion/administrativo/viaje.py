@@ -1,18 +1,18 @@
 import math
 import random
-# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+"""# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
 import sys
 import os
 sys.path.append(os.path.abspath("src"))
-#--------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------"""
 
 
 class Viaje:
     _totalViajes = 1 # Atributo de clase
     # Constructor
     def __init__(self, terminal, horaSalida, fechaSalida, vehiculo, conductor, llegada, salida):
-        from gestorAplicacion.administrativo.terminal import Terminal
-        from gestorAplicacion.tiempo.tiempo import Tiempo
+        from src.gestorAplicacion.administrativo.terminal import Terminal
+        from src.gestorAplicacion.tiempo.tiempo import Tiempo
 
         self._terminal = terminal
         self._id = Viaje._totalViajes
@@ -152,9 +152,9 @@ class Viaje:
         total, dependiendo las condiciones establecidas: duración y tipo de vehiculo.
     """
     def calcularTarifa(self):
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
-        from gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
-        from gestorAplicacion.administrativo.transportadora import Transportadora
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
+        from src.gestorAplicacion.administrativo.transportadora import Transportadora
 
         costoPorMinuto = 0
         total = 0
@@ -191,10 +191,10 @@ class Viaje:
         str: Mensaje indicando el estado del viaje.
     """
     def validacion(self):
-        from gestorAplicacion.administrativo.terminal import Terminal
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
-        from uiMain.principal import listViajes, listReservas, removeViaje, removeReserva
+        from src.gestorAplicacion.administrativo.terminal import Terminal
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.uiMain.principal import listViajes, listReservas, removeViaje, removeReserva
         
         viajes = Terminal.getViajesEnCurso()
         disponibles = listViajes()
@@ -220,10 +220,10 @@ class Viaje:
     fecha ajustada.
     """
     def programacionAutomatica(self):
-        from gestorAplicacion.administrativo.terminal import Terminal
-        from gestorAplicacion.usuarios.conductor import Conductor
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from uiMain.principal import listViajesCurso, listViajesHistorial
+        from src.gestorAplicacion.administrativo.terminal import Terminal
+        from src.gestorAplicacion.usuarios.conductor import Conductor
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.uiMain.principal import listViajesCurso, listViajesHistorial
 
         viaje = Terminal.getViajesEnCurso()
         self.getConductor().getHorario().remove(self)
@@ -316,8 +316,8 @@ class Viaje:
         de los que puede acomodar el vehículo.
     """
     def verificarAsientos(self):
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
-        from gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
 
         capacidadVehiculo = self._vehiculo.getTipo().getCapacidad()
         asientosOcupados = len(self._pasajeros)

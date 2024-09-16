@@ -1252,7 +1252,7 @@ def interfazPrincipal(ventanaInicio):
 
         def administracionHistorial():
             label_top_center.configure(text="Administrando Historial...")
-            viajesHistorial = Tiempo.listahistorial()
+            viajesHistorial = Terminal.getHistorial()
             
             def devolucionLlamado(formularioViajes):
                 partes = formularioViajes.split(":")

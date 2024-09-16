@@ -1,5 +1,5 @@
-from gestorAplicacion.constantes.incentivo import Incentivo
-from gestorAplicacion.usuarios.persona import Persona
+from src.gestorAplicacion.constantes.incentivo import Incentivo
+from src.gestorAplicacion.usuarios.persona import Persona
 from multimethod import multimethod
 class Transportadora (Incentivo):
 

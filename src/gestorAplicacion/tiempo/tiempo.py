@@ -2,14 +2,14 @@
 import threading
 import time
 
-# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+"""# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 #--------------------------------------------------------------------------------------"""
 
-from gestorAplicacion.constantes.dia import Dia
-from gestorAplicacion.administrativo.terminal import Terminal
+from src.gestorAplicacion.constantes.dia import Dia
+from src.gestorAplicacion.administrativo.terminal import Terminal
 #from gestorAplicacion.administrativo.viaje import Viaje
 
 
@@ -137,7 +137,7 @@ class Tiempo:
         return tiempo
     
     def comprobarViajes(self):
-        from uiMain.principal import listViajes
+        from src.uiMain.principal import listViajes
         """
         Revisa todos los viajes programados en la terminal y valida aquellos que coincidan con la fecha y hora actuales.
         La lógica es la siguiente:
@@ -153,14 +153,15 @@ class Tiempo:
                 viaje = viajes[i]
                 if (viaje.getFecha() == Tiempo.salidaFecha):
                     if not (viaje.getPasajeros()):
-                        viaje.asignarPasajerosAViaje(Terminal.getPasajeros())
+                        #viaje.asignarPasajerosAViaje(Terminal.getPasajeros())
+                        pass
                     if (viaje.getHora() == Tiempo.salidaHora):
                         print(f"Salio: {viaje.getId()}")
                         print(f"Lista Pasajeros: {viaje.getPasajeros()}")
                         viaje.validacion()
 
     def comprobarViajesEnCurso(self):
-        from uiMain.principal import listViajesCurso, listViajesHistorial
+        from src.uiMain.principal import listViajesCurso, listViajesHistorial
         """
         Revisa todos los viajes en curso en la terminal y ejecuta la programación automática para aquellos que llegan a la hora actual.
         La lógica es la siguiente:

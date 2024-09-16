@@ -1,14 +1,14 @@
-# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
+"""# SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
 import sys
 import os
 sys.path.append(os.path.abspath("src"))
-#--------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------"""
 
 # Importaciones:
 from multimethod import multimethod
-from gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
-from gestorAplicacion.constantes.destino import Destino
-from gestorAplicacion.usuarios.conductor import Conductor
+from src.gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
+from src.gestorAplicacion.constantes.destino import Destino
+from src.gestorAplicacion.usuarios.conductor import Conductor
 """from gestorAplicacion.administrativo.transportadora import Transportadora
 from gestorAplicacion.administrativo.vehiculo import Vehiculo
 from gestorAplicacion.administrativo.viaje import Viaje
@@ -27,7 +27,7 @@ class Terminal:
     listaTerminales = [] # Para serializar
     
     # Inicializador
-    def __init__(self, nombre, dinero, capacidadVehiculos, transportadoras, viajes, viajesEnCurso, destinos, comision, ubicacion, administrador):
+    """def __init__(self, nombre, dinero, capacidadVehiculos, transportadoras, viajes, viajesEnCurso, destinos, comision, ubicacion, administrador):
         self._nombre = nombre
         self._dinero = dinero
         self._capacidadVehiculos = capacidadVehiculos
@@ -41,7 +41,7 @@ class Terminal:
         self.COMISION = comision
         self._ubicacion = ubicacion
         self._administrador = administrador
-        Terminal.cantidadSedes += 1
+        Terminal.cantidadSedes += 1"""
 
     # Sobrecarga de Inicializadores (Sin administrador)
     def __init__(self, nombre, dinero, capacidadVehiculos, transportadoras, viajes, viajesEnCurso, destinos, comision, ubicacion):
@@ -69,7 +69,7 @@ class Terminal:
     def viajesDestino(destino):
         """Encontrar viajes disponibles con un destino en específico
         la idea es que solo en este se verifique si esta en la terminal 'getEstado()'"""
-        from gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.viaje import Viaje
 
         viajesDisponibles = []
 
@@ -85,7 +85,7 @@ class Terminal:
         Returns:
             Lista de las transportadoras a dicho destino.         
         """
-        from gestorAplicacion.administrativo.transportadora import Transportadora
+        from src.gestorAplicacion.administrativo.transportadora import Transportadora
         
         transportadorasPorDestino = []
         for transportadora in cls.getTransportadoras():
@@ -98,7 +98,7 @@ class Terminal:
         Return:
             Lista de las transportadoras a dicho destino.         
         """
-        from gestorAplicacion.administrativo.transportadora import Transportadora
+        from src.gestorAplicacion.administrativo.transportadora import Transportadora
         
         transportadoras = []
         for viaje in viajes:
@@ -113,8 +113,8 @@ class Terminal:
     
     @staticmethod
     def masRapido(viajes):
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 
         viajeMasRapido = None
 
@@ -131,8 +131,8 @@ class Terminal:
     @staticmethod
     def masEconomico(viajes):
         """Este método permite encontrar el viaje mas barato en una lista de viajes previamente seleccionados"""
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 
         viajeMasBarato = None
 
@@ -147,8 +147,8 @@ class Terminal:
     @multimethod
     def viajesParaRegularesYDiscapacitados(cantidad : int, viajes : list):
         """Método para filtrar viajes por cantidad de asientos solicitados"""
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.constantes.tipoPasajero import TipoPasajero
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.constantes.tipoPasajero import TipoPasajero
 
         viajesDisponibles = []
 
@@ -163,8 +163,8 @@ class Terminal:
     @multimethod
     def viajesParaRegularesYDiscapacitados(tipoVehiculo : TipoVehiculo, viajes : list):
         """Método para filtrar viajes por el tipo de vehiculo"""
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 
         viajesDisponibles = []
 
@@ -180,8 +180,8 @@ class Terminal:
     @multimethod
     def viajesParaVips(cantidad : int, viajes : list):
         """Método para filtrar viajes por cantidad de asientos solicitados"""
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 
         viajesDisponibles = []
 
@@ -196,8 +196,8 @@ class Terminal:
     @multimethod
     def viajesParaVips(tipoVehiculo : TipoVehiculo, viajes : list):
         """Método para filtrar viajes por el tipo de vehiculo"""
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 
         viajesDisponibles = []
 
@@ -212,7 +212,7 @@ class Terminal:
     # Sobrecarga
     @multimethod
     def viajesParaEstudiantes(viajes : list):
-        from gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.viaje import Viaje
 
         viajesDisponibles = []
 
@@ -225,8 +225,8 @@ class Terminal:
     @multimethod
     def viajesParaEstudiantes(viajes: list, tipoVehiculo: str):
         """Método para filtrar viajes por el tipo de vehiculo"""
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 
         viajesDisponibles = []
 
@@ -241,9 +241,9 @@ class Terminal:
     @multimethod
     #@classmethod
     def programarViaje(cls, llegada: Destino, tipoVehiculo: TipoVehiculo, fecha: str, hora: str, salida: Destino):
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.administrativo.transportadora import Transportadora
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.transportadora import Transportadora
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 
         for transportadora in cls.getTransportadoras():
             if llegada in transportadora.getDestinos():
@@ -266,9 +266,9 @@ class Terminal:
     @multimethod
     #@classmethod
     def programarViaje(cls, llegada: Destino, conductor = Conductor, tipoVehiculo = TipoVehiculo, fecha = str, hora = str, salida = Destino):
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.administrativo.transportadora import Transportadora
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.transportadora import Transportadora
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 
         for transportadora in cls.getTransportadoras:
             if llegada in transportadora.getDestinos():
@@ -297,8 +297,8 @@ class Terminal:
         Returns:
             String: Un mensaje que indica el resultado de la operación, en este caso, siempre retorna "Viaje cancelado".
         """
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.usuarios.pasajero import Pasajero
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.usuarios.pasajero import Pasajero
 
         cadena = "El viaje no tenía pasajeros" # Valor por default
         pasajeros = viaje.getPasajeros()
@@ -323,8 +323,8 @@ class Terminal:
         Método de cancelación de viajes que verifica si hay viajes con caracteristicas similares donde se puedan reubicar los pasajeros del viaje a cancelar
         en caso afirmativo los reubica, de lo contrario reembolsa el dinero a los pasajeros involucrados.
         """
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.usuarios.pasajero import Pasajero
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.usuarios.pasajero import Pasajero
 
         pasajeros = viaje.getPasajeros()
         reubicados = False
@@ -349,8 +349,8 @@ class Terminal:
         """
         Método para saber si hay asientos disponibles en un viaje
         """
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 
         capacidadVehiculo = viaje.getVehiculo().getTipo().getCapacidad()
         asientosOcupados = len(viaje.getPasajeros())
@@ -370,9 +370,9 @@ class Terminal:
                 "Los pasajeros han sido reubicados en otro viaje." si se ha encontrado un viaje adecuado para reubicar a los pasajeros.
                 "Los pasajeros han sido reembolsados." si no se ha encontrado un viaje adecuado y se ha procedido a reembolsar a los pasajeros.
         """
-        from gestorAplicacion.administrativo.viaje import Viaje
-        from gestorAplicacion.usuarios.pasajero import Pasajero
-        from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from src.gestorAplicacion.administrativo.viaje import Viaje
+        from src.gestorAplicacion.usuarios.pasajero import Pasajero
+        from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 
         pasajeros = viaje.getPasajeros()
         reubicados = False

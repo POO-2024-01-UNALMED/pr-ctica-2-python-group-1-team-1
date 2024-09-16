@@ -1,11 +1,11 @@
 # SOLUCIÓN IMPORTACIONES --------------------------------------------------------------
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from gestorAplicacion.constantes.incentivo import Incentivo
+"""sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))"""
+from src.gestorAplicacion.constantes.incentivo import Incentivo
 #--------------------------------------------------------------------------------------
 
-from gestorAplicacion.usuarios.persona import Persona
+from src.gestorAplicacion.usuarios.persona import Persona
 
 class Conductor(Persona, Incentivo):
     conductores = []

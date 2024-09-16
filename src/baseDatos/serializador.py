@@ -2,7 +2,7 @@ import pickle
 
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+"""sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))"""
 
 from src.gestorAplicacion.administrativo.terminal import Terminal
 from src.gestorAplicacion.administrativo.viaje import Viaje
@@ -38,7 +38,7 @@ class Serializador():
         Serializador.serializar("transportadora", Transportadora.getTransportadoras())  # OBJETOS DE TRANSPORTADORA
         Serializador.serializar("transportadorasAsociadas", Terminal.getTransportadoras())  # OBJETOS TRANSPORTADORA ASOCIADOS A LA TERMINAL
         Serializador.serializar("terminal", Terminal.getListaTerminales())  # OBJETO TERMINAL
-        Serializador.serializar("historialViajes", Tiempo.listahistorial())  # VIAJES TERMINADOS - HISTORIAL
+        Serializador.serializar("historialViajes", Terminal.getHistorial())  # VIAJES TERMINADOS - HISTORIAL
         Serializador.serializar("viajesEnCurso", Terminal.getViajesEnCurso())  # VIAJES SIN TERMINAR - EN CURSO
         Serializador.serializar("viajesDisponibles", Terminal.getViajes())  # VIAJES SIN SALIR - DISPONIBLES
         Serializador.serializar("reservas", Terminal.getReservas())  # VIAJES EN RESERVA
@@ -80,7 +80,7 @@ class Serializador():
     def crearObjetos():
 
         #TERMINAL
-        terminal = Terminal("Terminal del norte", 99999999, 500, 1, 20, None, None, 0, Destino.MEDELLIN)
+        terminal = Terminal("Terminal del norte", 99999999, 500, 1, [], [], [], 0, Destino.MEDELLIN)
 
         #TRANSPORTADORAS
         transportadoraRapida = Transportadora("Transportadora Rapida", 196000.0, [], [], [], [], [], terminal, None, [], [], None, 4.5)
