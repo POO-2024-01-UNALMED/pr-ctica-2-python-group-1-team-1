@@ -3,6 +3,15 @@ from gestorAplicacion.usuarios.persona import Persona
 from multimethod import multimethod
 class Transportadora (Incentivo):
 
+            # /**
+    #  * 	Autores: Jaime Luis Osorio Gómez, Santiago Ochoa Cardona, Juan Camilo Marín Valencia, Johan Ramírez Marín, Jonathan David Osorio Restrepo.
+    #  *La clase Transportadora gestiona diversos aspectos relacionados con una empresa de transporte, abarcando la administración de conductores,
+    #  *vehículos, viajes, pasajeros y las finanzas asociadas. Proporciona métodos para la contratación y el despido de conductores, asegurando 
+    #  *que se cumplan los requisitos necesarios y que se maneje adecuadamente la relación con cada conductor. También incluye funcionalidades 
+    #  *para calcular descuentos y bonificaciones basados en el rendimiento de los viajes y el cumplimiento de condiciones específicas, así como para
+    #  *mostrar y manejar la información sobre viajes, conductores y pasajeros de manera efectiva.
+    #  */  
+
     _transportadoras = [] #No se utiliza
 
     def __init__(self, nombre, dinero, conductores, conductoresRegistrados, pasajeros, vehiculos,

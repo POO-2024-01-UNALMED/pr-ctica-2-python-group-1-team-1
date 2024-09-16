@@ -93,6 +93,18 @@ class Terminal:
                 transportadorasPorDestino.append(transportadora)
         return transportadorasPorDestino
             
+    def transportadorasViaje(viajes):
+        """Encuentra las transportadoras de la lista de viajes sin repetir.
+        Return:
+            Lista de las transportadoras a dicho destino.         
+        """
+        from gestorAplicacion.administrativo.transportadora import Transportadora
+        
+        transportadoras = []
+        for viaje in viajes:
+            if (viaje.getVehiculo().getTransportadora() not in transportadoras):
+                transportadoras.append(viaje.getVehiculo().getTransportadora())
+        return transportadoras
 
     @staticmethod
     def viajesDisponibles(): # Para que se usa???
@@ -125,7 +137,7 @@ class Terminal:
         viajeMasBarato = None
 
         for viaje in viajes:
-            if viaje.getVehiculo().getTipo()==TipoVehiculo.BUS and not viaje.getEstado():
+            if viaje.getVehiculo().getTipo()==TipoVehiculo.BUS:
                 if viaje is None or viaje.getTarifa() < viajeMasBarato.getTarifa():
                     viajeMasBarato = viaje
         
@@ -136,13 +148,14 @@ class Terminal:
     def viajesParaRegularesYDiscapacitados(cantidad : int, viajes : list):
         """Método para filtrar viajes por cantidad de asientos solicitados"""
         from gestorAplicacion.administrativo.viaje import Viaje
+        from gestorAplicacion.constantes.tipoPasajero import TipoPasajero
 
         viajesDisponibles = []
 
         for viaje in viajes:
             if viaje == None:
                 continue
-            if viaje.verificarAsientos()>=cantidad and not viaje.getEstado():
+            if viaje.verificarAsientos()>=cantidad:
                 viajesDisponibles.append(viaje)  
 
         return viajesDisponibles
@@ -158,7 +171,7 @@ class Terminal:
         for viaje in viajes:
             if viaje is None:
                 continue
-            if viaje.getVehiculo().getTipo()==tipoVehiculo and not viaje.getEstado():
+            if viaje.getVehiculo().getTipo()==tipoVehiculo:
                 viajesDisponibles.append(viaje)  
 
         return viajesDisponibles
@@ -175,7 +188,7 @@ class Terminal:
         for viaje in viajes:
             if viaje == None:
                 continue
-            if viaje.verificarAsientos()>=cantidad and viaje.getVehiculo().getTipo() is not TipoVehiculo.ESCALERA and not viaje.getEstado():
+            if viaje.verificarAsientos()>=cantidad and viaje.getVehiculo().getTipo() is not TipoVehiculo.ESCALERA:
                 viajesDisponibles.append(viaje)  
 
         return viajesDisponibles
@@ -191,22 +204,26 @@ class Terminal:
         for viaje in viajes:
             if viaje is None:
                 continue
-            if viaje.getVehiculo().getTipo()==tipoVehiculo and not viaje.getEstado():
+            if viaje.getVehiculo().getTipo()==tipoVehiculo:
                 viajesDisponibles.append(viaje)  
 
         return viajesDisponibles
 
     # Sobrecarga
+    @multimethod
     def viajesParaEstudiantes(viajes : list):
         from gestorAplicacion.administrativo.viaje import Viaje
 
+        viajesDisponibles = []
+
         for viaje in viajes:
-            if viaje.verificarAsientos()>=1 and not viaje.getEstado():
-                return True
+            if viaje.verificarAsientos()>=1 and viaje.getVehiculo().getTipo().name != 'TAXI':
+                viajesDisponibles.append(viaje)
 
-        return False
+        return viajesDisponibles
 
-    def viajesParaEstudiantes(tipoVehiculo : TipoVehiculo, viajes : list):
+    @multimethod
+    def viajesParaEstudiantes(viajes: list, tipoVehiculo: str):
         """Método para filtrar viajes por el tipo de vehiculo"""
         from gestorAplicacion.administrativo.viaje import Viaje
         from gestorAplicacion.administrativo.vehiculo import Vehiculo
@@ -214,8 +231,9 @@ class Terminal:
         viajesDisponibles = []
 
         for viaje in viajes:
-            if viaje.verificarAsientos()>=1 and not viaje.getEstado() and viaje.getVehiculo().getTipo() is tipoVehiculo:
-                viajesDisponibles.append(viaje)
+            if viaje.getVehiculo().getTipo().getCapacidad()>=1:
+                if viaje.getVehiculo().getTipo().name == tipoVehiculo:
+                    viajesDisponibles.append(viaje)
 
         return viajesDisponibles
         
