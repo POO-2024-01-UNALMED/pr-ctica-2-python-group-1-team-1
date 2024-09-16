@@ -203,7 +203,7 @@ class ResultadosOperacion(tk.Frame):
         marco (tkinter.Frame): El marco que contiene los elementos de la interfaz de usuario.
     """
 
-    def __init__(self, tituloResultados, objeto, criterios, valores, parent):
+    def __init__(self, tituloResultados, objeto, criterios, valores, parent, nombreMetodos,metodo1, metodo2):
         """
         Inicializa un objeto de la clase ObjectResultFrame.
 
@@ -246,8 +246,15 @@ class ResultadosOperacion(tk.Frame):
             elementoValue.grid(row=index+1, column=1, padx=5, pady=5)
             marco.grid_rowconfigure(index+1, weight=1)
             marco.grid_columnconfigure(1, weight=1)
-
+        
         self.nextFreeRow = index + 2
+        # Agregar los botones para ejecutar los métodos
+        boton1 = tk.Button(marco, text=nombreMetodos[0], command=metodo1, bg=colors["naranja"])
+        boton1.grid(row=self.nextFreeRow, column=0, padx=5, pady=10, sticky="ew")
+        
+        boton2 = tk.Button(marco, text=nombreMetodos[1], command=metodo2, bg=colors["azul"])
+        boton2.grid(row=self.nextFreeRow, column=1, padx=5, pady=10, sticky="ew")
+
         self.marco = marco
     
     def delete(self):

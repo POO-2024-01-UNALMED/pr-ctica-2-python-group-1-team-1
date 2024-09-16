@@ -78,8 +78,9 @@ class FieldFrame(tk.Frame):
         botonEnviar = tk.Button(self, text="Enviar", font=("Century", 12), bg=colors["azul"], fg=colors["text"], relief="ridge", bd= 3, command=lambda: self.guardarDatos(devolucionLlamado))
         botonEnviar.grid(row=len(criterios)+1, column=1, padx=5, pady=5)
 
-        botonLimpiar = tk.Button(self, text="Limpiar", font=("Century", 12), bg=colors["naranja"], fg=colors["text"], relief="ridge", bd= 3, command=self.limpiarCasillas)
-        botonLimpiar.grid(row=len(criterios)+1, column=0, padx=5, pady=5)
+        if tituloCriterios != "Opciones":
+            botonLimpiar = tk.Button(self, text="Limpiar", font=("Century", 12), bg=colors["naranja"], fg=colors["text"], relief="ridge", bd= 3, command=self.limpiarCasillas)
+            botonLimpiar.grid(row=len(criterios)+1, column=0, padx=5, pady=5)
         
 
     # MÉTODOS DE LA CLASE

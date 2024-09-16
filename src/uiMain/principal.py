@@ -786,7 +786,13 @@ def interfazPrincipal(ventanaInicio):
             
 
     def funcionalidad5():
+        lista = estructura_frames("Gestion de conductores","Elija la transportadora a la cual le administrara los conductores")
+        frame_bottom = lista[0]
+        label_top_center = lista[1]
+        label_center_center = lista[2]
+
         label_top_center.configure(text="Programación de Viajes")
+        label_center_center.config(text = "Funcionalidad 5")
 
         def devolucionLlamado(formularioDatos):
             if (formularioDatos[criterios[0]] == "Programación de Viajes"):
@@ -1003,7 +1009,6 @@ def interfazPrincipal(ventanaInicio):
             field_frame.grid(row=0, column=0, sticky="nsew")
             frame_bottom.grid_rowconfigure(0, weight=1)
             frame_bottom.grid_columnconfigure(0, weight=1)
-            print("1")
 
         def administraciondeReservas():
             label_top_center.configure(text="Administrando Reservas...")
@@ -1029,14 +1034,54 @@ def interfazPrincipal(ventanaInicio):
                 def verDetallesReserva():
                     print("ver Detalles Reserva")
                     label_top_center.configure(text=f"Detalles del Viaje con ID = {viajeSelect.getId()}")
-                    print(Terminal.getHistorial())
-                    def devolucionLlamado():
-                        pass # ResultFrame
+
+                    mostrar = ["ID", "Llegada", "Fecha", "Hora", "Vehiculo", "Conductor"] # ASIENTOS -- P1
+                    valores = ["getId", "getLlegada", "getFecha", "getHora", "getVehiculo.getModelo", "getConductor.getNombre"]
+                    nombreMetodos = ["Administrar otra Reserva", "Terminar Proceso"]
+
+                    resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles de la reserva", objeto=viajeSelect, criterios=mostrar, valores=valores, parent= frame_bottom, nombreMetodos=nombreMetodos, metodo1= administraciondeReservas, metodo2= funcionalidad5)
+
+                    resultadosOperacion.grid(row=0, column=0, sticky="nsew")
+                    frame_bottom.grid_rowconfigure(0, weight=1)
+                    frame_bottom.grid_columnconfigure(0, weight=1)
 
                 def cancelarReserva():
                     print("Cancelar Viajes")
-                    def devolucionLlamado():
-                        pass # ResultFrame
+                    label_top_center.configure(text=f"Cancelar el Viaje con ID = {viajeSelect.getId()}")
+
+                    mostrar = ["ID", "Llegada", "Fecha", "Hora", "Vehiculo", "Conductor"] # ASIENTOS -- P1
+                    valores = ["getId", "getLlegada", "getFecha", "getHora", "getVehiculo.getModelo", "getConductor.getNombre"]
+                    nombreMetodos = ["Regresar", "Cancelar"]
+
+                    resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles de la reserva", objeto=viajeSelect, criterios=mostrar, valores=valores, parent= frame_bottom, nombreMetodos=nombreMetodos, metodo1= administraciondeReservas, metodo2= cancelar)
+
+                    resultadosOperacion.grid(row=0, column=0, sticky="nsew")
+                    frame_bottom.grid_rowconfigure(0, weight=1)
+                    frame_bottom.grid_columnconfigure(0, weight=1)
+
+                def cancelar():
+                    try:
+                        a = Terminal.cancelarViajeAbsoluto(viajeSelect)
+                            
+                        if a == "El viaje no tenía pasajeros":
+                                
+                                # Ventana emergente confirmando que no había pasajeros
+                                messagebox.showinfo("Información", "Reserva Cancelada")
+                                funcionalidad5()
+                            
+                        elif a == "Viaje cancelado":
+                            # Ventana emergente confirmando que el viaje fue cancelado
+                            messagebox.showinfo("Confirmación", "La reserva ha sido cancelado exitosamente.")
+                            funcionalidad5()
+                        else:
+                            # Ventana emergente para mostrar un mensaje de error
+                            messagebox.showerror("Error", "No se pudo cancelar la Reserva. Por favor, intente nuevamente.")
+                            cancelarReserva()
+                        
+                    except Exception as e:
+                        # Manejo de excepciones y ventana emergente para errores
+                        messagebox.showerror("Error", f"Ocurrió un error: {e}")
+                        cancelarReserva()
 
                 criterios = [f"Administrar Reserva con ID : {viajeSelect.getId()}"]
                 valores_iniciales = ["Ver detalles Reserva", "Cancelar Reserva"]
@@ -1046,9 +1091,9 @@ def interfazPrincipal(ventanaInicio):
                 field_frame = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
 
                 # Agregar el nuevo frame debajo de la tabla
-                field_frame.grid(row=1, column=0, sticky="nsew")
-                frame_bottom.grid_rowconfigure(1, weight=1)  # Configurar peso para la fila del nuevo frame
-                frame_bottom.update_idletasks()  # Actualizar el layout
+                field_frame.grid(row=0, column=0, sticky="nsew")
+                frame_bottom.grid_rowconfigure(0, weight=1)
+                frame_bottom.grid_columnconfigure(0, weight=1)
             
             titulo_criterios = ["Opción", "Id", "Llegada", "Fecha", "Hora", "Transportadora", "Vehiculo"]
             atributos  = ["getId", "getLlegada", "getFecha", "getHora", "getTransportadora.getNombre", "getVehiculo.getTipo"]
@@ -1102,34 +1147,68 @@ def interfazPrincipal(ventanaInicio):
 
                     mostrar = ["ID", "Llegada", "Fecha", "Hora", "Vehiculo", "Conductor"] # ASIENTOS -- P1
                     valores = ["getId", "getLlegada", "getFecha", "getHora", "getVehiculo.getModelo", "getConductor.getNombre"]
+                    nombreMetodos = ["Administrar Otro Viaje", "Terminar Proceso"]
 
-                    resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del viaje", objeto=viajeSelect, criterios=mostrar, valores=valores, parent= frame_bottom)
+                    resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del viaje", objeto=viajeSelect, criterios=mostrar, valores=valores, parent= frame_bottom, nombreMetodos= nombreMetodos, metodo1=administracionViaje , metodo2 = funcionalidad5)
+
+                    resultadosOperacion.grid(row=0, column=0, sticky="nsew")
+                    frame_bottom.grid_rowconfigure(0, weight=1)
+                    frame_bottom.grid_columnconfigure(0, weight=1)
+                    
+
+                def cancelarViaje():
+                    print("Cancelar Viajes")
+
+                    label_top_center.configure(text=f"Cancelar el Viaje con ID = {viajeSelect.getId()}")
+
+                    mostrar = ["ID", "Llegada", "Fecha", "Hora", "Vehiculo", "Conductor"] # ASIENTOS -- P1
+                    valores = ["getId", "getLlegada", "getFecha", "getHora", "getVehiculo.getModelo", "getConductor.getNombre"]
+                    nombreMetodos = ["Regresar", "Cancelar"]
+
+                    resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del viaje", objeto=viajeSelect, criterios=mostrar, valores=valores, parent= frame_bottom, nombreMetodos= nombreMetodos, metodo1=administracionViaje , metodo2 = cancelar)
 
                     resultadosOperacion.grid(row=0, column=0, sticky="nsew")
                     frame_bottom.grid_rowconfigure(0, weight=1)
                     frame_bottom.grid_columnconfigure(0, weight=1)
 
-                def cancelarViaje():
-                    print("Cancelar Viajes")
-                    def devolucionLlamado():
-                        pass # ResultFrame
+                def cancelar():
+                    try:
+                        a = Terminal.cancelarViajeAbsoluto(viajeSelect)
+                                
+                        if a == "El viaje no tenía pasajeros":
+                                    
+                                # Ventana emergente confirmando que no había pasajeros
+                                messagebox.showinfo("Información", "El viaje no tenía pasajeros.")
+                                funcionalidad5()
+                                
+                        elif a == "Viaje cancelado":
+                            # Ventana emergente confirmando que el viaje fue cancelado
+                            messagebox.showinfo("Confirmación", "El viaje ha sido cancelado exitosamente.")
+                            funcionalidad5()
+                        else:
+                            # Ventana emergente para mostrar un mensaje de error
+                            messagebox.showerror("Error", "No se pudo cancelar el viaje. Por favor, intente nuevamente.")
+                            cancelarViaje()
+                            
+                    except Exception as e:
+                        # Manejo de excepciones y ventana emergente para errores
+                        messagebox.showerror("Error", f"Ocurrió un error: {e}")
+                        cancelarViaje()
 
                 criterios = [f"Administrar viaje con ID : {viajeSelect.getId()}"]
                 valores_iniciales = ["Ver detalles", "Cancelar"]
                 habilitado = [False, False]
 
-                # Create the FieldFrame widget
+                
                 field_frame = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
 
-                # Agregar el nuevo frame debajo de la tabla
-                field_frame.grid(row=1, column=0, sticky="nsew")
-                frame_bottom.grid_rowconfigure(1, weight=1)  # Configurar peso para la fila del nuevo frame
-                frame_bottom.update_idletasks()  # Actualizar el layout
+                field_frame.grid(row=0, column=0, sticky="nsew")
+                frame_bottom.grid_rowconfigure(0, weight=1)
+                frame_bottom.grid_columnconfigure(0, weight=1)
 
         def administracionHistorial():
             label_top_center.configure(text="Administrando Historial...")
-            viajesHistorial = Tiempo.retornarListas()
-            print(viajesHistorial)
+            viajesHistorial = Tiempo.listahistorial()
             
             def devolucionLlamado(formularioViajes):
                 partes = formularioViajes.split(":")
@@ -1161,11 +1240,17 @@ def interfazPrincipal(ventanaInicio):
                         verInformación()
                     elif (formularioDatosAdministrar[criterios[0]] == "Ver pasajeros"):
                         verPasajeros()
+
+                criterios = [f"Administrar viaje con ID : {viajeSelect.getId()}"]
+                valores_iniciales = ["Reprogramar", "Ver más información", "Ver pasajeros"]
+                habilitado = [False, False, False]
+
+                field_frame = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
+
+                field_frame.grid(row=0, column=0, sticky="nsew")
+                frame_bottom.grid_rowconfigure(0, weight=1)
+                frame_bottom.grid_columnconfigure(0, weight=1)
                     
-                    # ELIMINAR EL FIELD FRAME INFERIOR
-                    if fieldFrameInferior:
-                        fieldFrameInferior.destroy()
-                        fieldFrameInferior = None
 
                 def verPasajeros():
                     label_top_center.configure(text=f"Pasajeros del Viaje con ID = {viajeSelect.getId()}")
@@ -1177,11 +1262,16 @@ def interfazPrincipal(ventanaInicio):
 
                 def verInformación():
                     label_top_center.configure(text=f"Detalles del Viaje con ID = {viajeSelect.getId()}")
-                    def devolucionLlamado():
-                        pass # ResultFrame
-                    
 
-                    informacion = ()
+                    mostrar = ["ID", "Llegada", "Fecha", "Hora", "Vehiculo", "Conductor"] # ASIENTOS -- P1
+                    valores = ["getId", "getLlegada", "getFecha", "getHora", "getVehiculo.getModelo", "getConductor.getNombre"]
+                    nombreMetodos = ["Administrar Otro Viaje", "Terminar Proceso"]
+
+                    resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del viaje", objeto=viajeSelect, criterios=mostrar, valores=valores, parent= frame_bottom, nombreMetodos= nombreMetodos, metodo1=administracionHistorial , metodo2 = funcionalidad5)
+
+                    resultadosOperacion.grid(row=0, column=0, sticky="nsew")
+                    frame_bottom.grid_rowconfigure(0, weight=1)
+                    frame_bottom.grid_columnconfigure(0, weight=1)
 
                 def reprogramar():
                     label_top_center.configure(text=f"Reprogramación del Viaje con ID = {viajeSelect.getId()}")
@@ -1195,8 +1285,9 @@ def interfazPrincipal(ventanaInicio):
                 # Create the FieldFrame widget
                 fieldFrameInferior = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
 
-                # Agregar el nuevo frame debajo de la tabla
-                fieldFrameInferior.grid(row=1, column=0, sticky="nsew")
+                field_frame.grid(row=0, column=0, sticky="nsew")
+                frame_bottom.grid_rowconfigure(0, weight=1)
+                frame_bottom.grid_columnconfigure(0, weight=1)
     
     
     def estructura_frames(titulo,descripcion):

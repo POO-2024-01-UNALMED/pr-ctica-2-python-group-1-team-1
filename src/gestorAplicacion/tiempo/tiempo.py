@@ -6,7 +6,7 @@ import time
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-#--------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------"""
 
 from gestorAplicacion.constantes.dia import Dia
 from gestorAplicacion.administrativo.terminal import Terminal
@@ -176,7 +176,7 @@ class Tiempo:
                 if (viaje.getFecha() == Tiempo.salidaFecha):
                     if (viaje.getHora() == Tiempo.salidaHora):
                         print(f"llego: {viaje.getId()}")
-                        print(Terminal.getHistorial())
+                        print(f"HISTORIAL DESDE TIEMPO : {Terminal.getHistorial()}")
                         viaje.programacionAutomatica()
 
     def mecanicosDisponibles (self):
@@ -224,22 +224,6 @@ class Tiempo:
 
                     #vehiculo.getTransportadora().getTaller().venderVehiculo(vehiculo)
                     #vehiculo.setReparando(False)
-    
-    def tener_dia(self):
-        if self.Dia == "LUN":
-            return Dia.LUN
-        elif self.Dia == "MAR":
-            return Dia.MAR
-        elif self.Dia == "MIER":
-            return Dia.MIER
-        elif self.Dia == "JUE":
-            return Dia.JUE
-        elif self.Dia == "VIE":
-            return Dia.VIE
-        elif self.Dia == "SAB":
-            return Dia.SAB
-        elif self.Dia == "DOM":
-            return Dia.DOM
                 
 
     
@@ -262,6 +246,12 @@ class Tiempo:
     @staticmethod
     def setTiempos(nuevos_tiempos):
         Tiempo.tiempos = nuevos_tiempos  # Setea la lista tiempos con nuevos datos
+
+
+    @staticmethod
+    def listahistorial():
+        copia = Terminal.getHistorial().copy()
+        return copia
 
     # MÉTODO PARA SERIALIZAR EL TIEMPO SIN EL ATRIBUTO QUE CONTIENE AL HILO 
     def __getstate__(self):
