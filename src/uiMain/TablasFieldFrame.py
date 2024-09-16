@@ -41,8 +41,8 @@ class TablaFrame(tk.Frame):
                     valor = metodo_get()
 
                 # Si es un valor enum, obtener el .name
-                if isinstance(valor, Enum):  # Verifica si es una instancia de Enum
-                    valor = valor.name  # Obtine el nombre del valor enum
+                    if isinstance(valor, Enum):  # Verifica si es una instancia de Enum
+                        valor = valor.name  # Obtine el nombre del valor enum
 
                 else:
                     valor = "noReconoce"
