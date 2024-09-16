@@ -182,5 +182,6 @@ label_rb_bl.pack(expand=True, fill="both", padx=2, pady=2)
 label_rb_br = tk.Label(frame_rb_br, width= 230, height=230,relief="solid", image = photoImagenes[3])
 label_rb_br.pack(expand=True, fill="both", padx=2, pady=2)
 
+root.protocol("WM_DELETE_WINDOW", salir)
 
 root.mainloop()

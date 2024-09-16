@@ -38,6 +38,7 @@ tipoPasajero = None
 tipoVehiculo = None
 viajesDisponibles= []
 viajeSeleccionado = None
+cantidad = 0
 
 def interfazPrincipal(ventanaInicio):
     """
@@ -114,6 +115,8 @@ def interfazPrincipal(ventanaInicio):
     label_bottom_right_tp.place(relx=0.5, rely=0.05, anchor="n")
     label_bottom_right_bt.place(relx=0.5, rely=0.2, anchor="n")
     label_bottom_right_extra.place(relx=0.5, rely=0.65, relwidth=0.9, relheight=0.3, anchor="n")
+
+    ventanaPrincipal.protocol("WM_DELETE_WINDOW", lambda: salir(ventanaPrincipal, ventanaInicio))
 
     # FUNCIONALIDADES
     def funcionalidad1():
