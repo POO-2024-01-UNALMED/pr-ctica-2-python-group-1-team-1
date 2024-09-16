@@ -18,6 +18,7 @@ class Conductor(Persona, Incentivo):
         self._horario = horario
         self._numeroDePagosRecibidos = len(self.getFacturas())
         Conductor.conductores.append(self)
+        self._licencia = "Activa" if self._estadoLicencia else "Vencida"
 
 
     def identificarse(self):
@@ -80,8 +81,8 @@ class Conductor(Persona, Incentivo):
 
         if (len(self._horario) == 0):
 
-            if (len(self._vehiculo().getConductores()) >= 2):
-                self._vehiculo.quitarVehiculo(self.id)
+            if (len(self._vehiculo.getConductores()) >= 2):
+                self._vehiculo.quitarConductor(self)
                 self._vehiculo = None
                 return "Se ha desvinculado el vehiculo a " + self.nombre
             else:
@@ -142,8 +143,11 @@ class Conductor(Persona, Incentivo):
     
     
 
-    def bonoBienvenida(transportadora):
+    def bonoBienvenida(self, transportadora):
         """Metodo que le da un bono de bienvenida al conductor contratado"""
+
+        transportadora.setDinero(transportadora.getDinero() - 10000)
+        self.dinero += 10000
 
     #Getters and setters
 
@@ -186,6 +190,9 @@ class Conductor(Persona, Incentivo):
     def getNumeroDePagosRecibidos(self):
         """Obtiene el número de pagos recibidos por el conductor."""
         return self._numeroDePagosRecibidos
+    
+    def getLicencia(self):
+        return self._licencia
     
     @classmethod
     def getConductores(cls):

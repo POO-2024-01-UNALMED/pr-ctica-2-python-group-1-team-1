@@ -224,6 +224,22 @@ class Tiempo:
 
                     #vehiculo.getTransportadora().getTaller().venderVehiculo(vehiculo)
                     #vehiculo.setReparando(False)
+    
+    def tener_dia(self):
+        if self.Dia == "LUN":
+            return Dia.LUN
+        elif self.Dia == "MAR":
+            return Dia.MAR
+        elif self.Dia == "MIER":
+            return Dia.MIER
+        elif self.Dia == "JUE":
+            return Dia.JUE
+        elif self.Dia == "VIE":
+            return Dia.VIE
+        elif self.Dia == "SAB":
+            return Dia.SAB
+        elif self.Dia == "DOM":
+            return Dia.DOM
                 
 
     

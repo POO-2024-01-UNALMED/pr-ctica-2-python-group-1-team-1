@@ -1,4 +1,5 @@
 from gestorAplicacion.constantes.incentivo import Incentivo
+from gestorAplicacion.usuarios.persona import Persona
 from multimethod import multimethod
 class Transportadora (Incentivo):
 
@@ -50,17 +51,13 @@ class Transportadora (Incentivo):
                 return viaje
 
     
-    def despedirConductor(self, id):
+    def despedirConductor(self, conductor):
         """Metodo para despedir conductor al cual se le remueve el vehiculo,
 	    se le remueve de la lista de conductores de la transportadora.
 	    Para esto, primero se verifica que no tenga viajes programados y 
 	    que su vehiculo tenga almenos 2 conductores. Si existe algun inconveniente
 	    el metodo devolvera un valor diferente para cada caso.
         """
-        from gestorAplicacion.usuarios.conductor import Conductor
-
-        conductor : Conductor = self.encontrarConductor(id)
-
         if (len(conductor.getHorario()) == 0):
             
             if conductor.getVehiculo() is None:
@@ -87,21 +84,15 @@ class Transportadora (Incentivo):
         for conductor in self._conductoresRegistrados:
             mensaje += "Nombre: " + conductor.getNombre() + "#Id: " + str(conductor.getId()) + "\n"
 
-    @multimethod
-    def contratarConductorId(self, id: int):
-        from gestorAplicacion.usuarios.conductor import Conductor
-        conductor : Conductor = None
-
-        for driver in self._conductoresRegistrados:
-
-            if driver.getId() == id:
-                index = self._conductoresRegistrados.index(driver)
-                conductor = self._conductoresRegistrados[index]
-        
-        return Transportadora.contratarConductor(conductor)
+    def mostrarVehiculosDisponibles(self):
+        vehiculosDisponibles = []
+        for i in self._vehiculos:
+            if len(i.getConductores()) < 3:
+                vehiculosDisponibles.append(i)
+        return vehiculosDisponibles            
     
-    @multimethod
-    def contratarConductor(self, conductor): #Solucionar error de importacion para hacer la sobrecarga
+
+    def contratarConductor(self, conductor : Persona): #Solucionar error de importacion para hacer la sobrecarga
         """Metodo para contratar un conductor el cual se agregara
 	    a la lista de conductores de la transportadora."""
 
@@ -187,13 +178,13 @@ class Transportadora (Incentivo):
         viajesDisponibles = []
 
         for viaje in self.getViajesAsignados():
-            if ((abs(viaje.getValue() - digitoDia) >= 1) and (viaje.getVehiculo().getTipo == tipoVehiculo)):
+            if ((abs(int(viaje.getFechaSalida().split("/")[0]) - digitoDia) >= 1) and (viaje.getVehiculo().getTipo == tipoVehiculo)):
                 if viaje in conductor.getHorario():
                     continue
                 viajesDisponibles.append(viaje)
                 mensaje += "\n" + viaje.detallesViaje()
         
-        return mensaje
+        return viajesDisponibles
     
     def conductoresDisponibles(self, viaje):
         """ Metodo que muestra los conductores disponibles de la terminal

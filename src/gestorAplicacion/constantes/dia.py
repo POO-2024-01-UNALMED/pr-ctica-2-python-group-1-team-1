@@ -15,3 +15,6 @@ class Dia(Enum):
 
     def getValue(self):
         return self.value
+    
+    def getName(self):
+        return self.name

@@ -59,3 +59,6 @@ class Destino(Enum):
     @staticmethod
     def esDestinoValido(destinoDeseado):
         return destinoDeseado in Destino.__members__
+    
+    def getName(self):
+        return self.name

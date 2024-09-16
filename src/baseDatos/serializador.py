@@ -84,12 +84,12 @@ class Serializador():
         terminal = Terminal("Terminal del norte", 99999999, 500, 1, 20, None, None, 0, Destino.MEDELLIN)
 
         #TRANSPORTADORAS
-        transportadoraRapida = Transportadora("Transportadora Rapida", 196000.0, [], [], [], [], None, terminal, None, [], [], None, 4.5)
-        transportadoraEficiente = Transportadora("Transportadora Eficiente", 189000.0, [], [], [], [], None, terminal, None, [], [], None, 4.0)
-        transportadoraExpress = Transportadora("Transportadora Express", 223000.0, [], [], [], [], None, terminal, None, [], [], None, 3.5)
-        transportadoraSegura = Transportadora("Transportadora Segura", 204000.0, [], [], [], [], None, terminal, None, [], [], None, 5.0)
-        transportadoraGlobal = Transportadora("Transportadora Global", 305000.0, [], [], [], [], None, terminal, None, [], [], None, 2.5)
-        transportadoraLocal = Transportadora("Transportadora Local", 250000.0, [], [], [], [], None, terminal, None, [], [], None, 4.7)
+        transportadoraRapida = Transportadora("Transportadora Rapida", 196000.0, [], [], [], [], [], terminal, None, [], [], None, 4.5)
+        transportadoraEficiente = Transportadora("Transportadora Eficiente", 189000.0, [], [], [], [], [], terminal, None, [], [], None, 4.0)
+        transportadoraExpress = Transportadora("Transportadora Express", 223000.0, [], [], [], [], [], terminal, None, [], [], None, 3.5)
+        transportadoraSegura = Transportadora("Transportadora Segura", 204000.0, [], [], [], [], [], terminal, None, [], [], None, 5.0)
+        transportadoraGlobal = Transportadora("Transportadora Global", 305000.0, [], [], [], [], [], terminal, None, [], [], None, 2.5)
+        transportadoraLocal = Transportadora("Transportadora Local", 250000.0, [], [], [], [], [], terminal, None, [], [], None, 4.7)
         # Crear lista de transportadoras
         transportadoras = [
             transportadoraRapida,
@@ -1005,10 +1005,10 @@ class Serializador():
         reservas.append(a)
 
         # TRANSPORTADORA 2
-        lista.append(Viaje(terminal, "8:30", "3/1/2024", conductores2[1].getVehiculo(), conductores1[1], Destino.GUARNE, Destino.MEDELLIN))
-        lista.append(Viaje(terminal, "10:30", "5/1/2024", conductores2[3].getVehiculo(), conductores1[3], Destino.LAPINTADA, Destino.MEDELLIN))
-        lista.append(Viaje(terminal, "12:30", "7/1/2024", conductores2[7].getVehiculo(), conductores1[7], Destino.GUATAPE, Destino.MEDELLIN))
-        b = Viaje(terminal, "14:30", "18/1/2024", conductores2[9].getVehiculo(), conductores1[9], Destino.BARBOSA, Destino.MEDELLIN)
+        lista.append(Viaje(terminal, "8:30", "3/1/2024", conductores2[1].getVehiculo(), conductores2[1], Destino.GUARNE, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "10:30", "5/1/2024", conductores2[3].getVehiculo(), conductores2[3], Destino.LAPINTADA, Destino.MEDELLIN))
+        lista.append(Viaje(terminal, "12:30", "7/1/2024", conductores2[7].getVehiculo(), conductores2[7], Destino.GUATAPE, Destino.MEDELLIN))
+        b = Viaje(terminal, "14:30", "18/1/2024", conductores2[9].getVehiculo(), conductores2[9], Destino.BARBOSA, Destino.MEDELLIN)
 
         lista.append(a)
         reservas.append(a)
