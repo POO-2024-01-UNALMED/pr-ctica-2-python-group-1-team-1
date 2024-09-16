@@ -145,16 +145,16 @@ def interfazPrincipal(ventanaInicio):
     # AGREGAR LOS LABELS A CADA FRAME INFERIOR
     label_bottom_left_tp = tk.Label(frame_bottom_left, text="¿Cómo usar nuestro sistema?", font=("Small fonts", 20), fg=colors["text"], bd=3, bg=colors["naranja"])
     label_bottom_left_bt = tk.Label(frame_bottom_left, text="En nuestro sistema inteligente de podras administrar tu  terminal de\ntransportes dentro de las operaciones se encuentran la venta de viajes,\nfacturación y finanzas, gestión de conductores, talleres y vehiculos\npara la reparación de los mismos y programación y seguimientos de\nviajes. Tambien podrás consultar acerca de los desarrolladores en la\npestaña (Ayuda) del menu superior.", font=("Century", 13), fg=colors["text"], bd=3, bg=colors["background"])
-    label_bottom_left_extra = tk.Label(frame_bottom_left, text="ESPACIO IMG", font=("Century", 11), fg=colors["text"], bd=3, bg=colors["background"], relief="solid")
+    label_bottom_left_extra = tk.Label(frame_bottom_left, text="💸", font=("Century", 180), fg=colors["text"], bd=0, bg=colors["background"])
 
     label_bottom_right_tp = tk.Label(frame_bottom_right, text="¿Qué puede hacer?", font=("Small fonts", 20), fg=colors["text"], bd=3, bg=colors["naranja"])
     label_bottom_right_bt = tk.Label(frame_bottom_right, text="Para utilizar tus diferentes funcionalidades de administración debes\nir a la barra superior de menús, en la pestaña (Procesos y consultas)\nse desplegarán todas la operaciones que puedes realizar al seleccionar\nalguna de estas opciones se mostrará la interfaz respectiva, donde se\ndara una breve descripción y los diferentes formularios necesarios\npara la ejecución de la misma.\n\nRecuerda que en la pestaña (Archivo) tienes las opciones de (Aplicación)\nla cual te dara información acerca del sistema, y (Salir) te regresará al\na la ventana de Inicio.", font=("Century", 13), fg=colors["text"], bd=3, bg=colors["background"])
-    label_bottom_right_extra = tk.Label(frame_bottom_right, text="ESPACIO IMG", font=("Century", 11), fg=colors["text"], bd=3, bg=colors["background"], relief="solid")
+    label_bottom_right_extra = tk.Label(frame_bottom_right, text="🚌", font=("Century", 130), fg=colors["text"], bd=0, bg=colors["background"])
 
     # UBICAR LOS LABELS INFERIORES EN CADA FRAME CON .place()
     label_bottom_left_tp.place(relx=0.5, rely=0.05, anchor="n")
     label_bottom_left_bt.place(relx=0.5, rely=0.2, anchor="n")
-    label_bottom_left_extra.place(relx=0.5, rely=0.65, relwidth=0.9, relheight=0.3, anchor="n")
+    label_bottom_left_extra.place(relx=0.5, rely=0.45, relwidth=0.9, relheight=0.5, anchor="n")
 
     label_bottom_right_tp.place(relx=0.5, rely=0.05, anchor="n")
     label_bottom_right_bt.place(relx=0.5, rely=0.2, anchor="n")
@@ -835,8 +835,8 @@ def interfazPrincipal(ventanaInicio):
         label_top_center = lista[1]
         label_center_center = lista[2]
 
-        label_top_center.configure(text="Programación de Viajes")
-        label_center_center.config(text = "Funcionalidad 5")
+        label_top_center.configure(text="🚍  Programación de Viajes  🚍")
+        label_center_center.config(text = "Esta funcionalidad permite al usuario gestionar todo lo relacionado con la programación de viajes, la administración de reservas, la \n gestión de viajes ya creados, y la consulta y manejo del historial de viajes pasados. A través de una interfaz intuitiva, el usuario \n puede seleccionar el tipo de acción que desea realizar desde una lista de opciones y, en función de la selección, se le redirige a la \n operación específica correspondiente.")
 
         def devolucionLlamado(formularioDatos):
             if (formularioDatos[criterios[0]] == "Programación de Viajes"):
@@ -863,7 +863,7 @@ def interfazPrincipal(ventanaInicio):
             
 
         def programacionViaje():
-            label_top_center.configure(text="Programando un viaje...")
+            label_top_center.configure(text="📅 Programando un viaje... 📅")
 
             # LISTA DE DESTINOS DEL ENUMERADO
             valores_iniciales = list(Destino)
@@ -888,7 +888,7 @@ def interfazPrincipal(ventanaInicio):
                 seleccionTransportadora(listaTransportadoras)
                 
             def seleccionTransportadora(transportadoras):
-                label_top_center.configure(text="Seleccionando Transportadora...")
+                label_top_center.configure(text="🏢 Seleccionando Transportadora... 🏢")
 
                 # LISTA DE TRANSPORTADORAS POR NOMBRE
                 nombresTransportadoras = []
@@ -918,7 +918,7 @@ def interfazPrincipal(ventanaInicio):
                 frame_bottom.grid_columnconfigure(0, weight=1)
 
                 def seleccionFecha():
-                    label_top_center.configure(text="Seleccionando Fecha del Viaje...")
+                    label_top_center.configure(text="📅 Seleccionando Fecha del Viaje... 📅")
                     fechaActual = Tiempo.salidaFecha
                     fechasDisponibles = Terminal.fechasDisponibles(fechaActual)
 
@@ -941,7 +941,7 @@ def interfazPrincipal(ventanaInicio):
                     frame_bottom.grid_columnconfigure(0, weight=1)
 
                     def seleccionHora(fechaSeleccionada):
-                        label_top_center.configure(text="Seleccionando Hora del Viaje...")
+                        label_top_center.configure(text="⏰ Seleccionando Hora del Viaje... ⏰")
                         horasDisponibles = Terminal.horasDisponibles(fechaSeleccionada)
                         criterios = ["Horas Disponibles"]
 
@@ -962,6 +962,7 @@ def interfazPrincipal(ventanaInicio):
                         frame_bottom.grid_columnconfigure(0, weight=1)
                         
                         def seleccionTipoVehiculo():
+                            label_top_center.configure(text="🚍 Seleccionando Tipo Vehiculo... 🚍")
                             tiposDisponibles = transportadoraSelect.tiposVehiculosDisponible()
                             tiposPorNombre = []
                             for i in tiposDisponibles:
@@ -969,7 +970,7 @@ def interfazPrincipal(ventanaInicio):
                             criterios = ["Tipo de Vehiculo"]
 
                             def devolucionLlamado(formularioDatosTipoVehiculo):
-                                label_top_center.configure(text="Seleccionando tipo de Vehiculo...")
+                                label_top_center.configure(text="🚗 Seleccionando tipo de Vehiculo... 🚗")
                                 global tipoVehiculoSelect
                                 seleccionNombre = formularioDatosTipoVehiculo[criterios[0]]  # Try, si las listas son vacias
                                 for i in tiposDisponibles:
@@ -989,7 +990,7 @@ def interfazPrincipal(ventanaInicio):
                             frame_bottom.grid_columnconfigure(0, weight=1)
 
                             def seleccionConductor():
-                                label_top_center.configure(text="Tipo de selección del conductor...")
+                                label_top_center.configure(text="🤹 Tipo de selección del conductor... 🤹")
                                 def devolucionLlamado(formularioDatos):
                                     if (formularioDatos[criterios[0]] == "Selección Manual"):
                                         seleccionManual()
@@ -1055,7 +1056,7 @@ def interfazPrincipal(ventanaInicio):
             frame_bottom.grid_columnconfigure(0, weight=1)
 
         def administraciondeReservas():
-            label_top_center.configure(text="Administrando Reservas...")
+            label_top_center.configure(text="📅 Administrando Reservas... 📅")
             reservas = Terminal.getReservas()
             
             def devolucionLlamado(formularioReservas):
@@ -1077,7 +1078,7 @@ def interfazPrincipal(ventanaInicio):
 
                 def verDetallesReserva():
                     print("ver Detalles Reserva")
-                    label_top_center.configure(text=f"Detalles del Viaje con ID = {viajeSelect.getId()}")
+                    label_top_center.configure(text=f"🗈 Detalles del Viaje con ID = {viajeSelect.getId()}")
 
                     mostrar = ["ID", "Llegada", "Fecha", "Hora", "Vehiculo", "Conductor"] # ASIENTOS -- P1
                     valores = ["getId", "getLlegada", "getFecha", "getHora", "getVehiculo.getModelo", "getConductor.getNombre"]
@@ -1091,7 +1092,7 @@ def interfazPrincipal(ventanaInicio):
 
                 def cancelarReserva():
                     print("Cancelar Viajes")
-                    label_top_center.configure(text=f"Cancelar el Viaje con ID = {viajeSelect.getId()}")
+                    label_top_center.configure(text=f"🗈 Cancelar el Viaje con ID = {viajeSelect.getId()}")
 
                     mostrar = ["ID", "Llegada", "Fecha", "Hora", "Vehiculo", "Conductor"] # ASIENTOS -- P1
                     valores = ["getId", "getLlegada", "getFecha", "getHora", "getVehiculo.getModelo", "getConductor.getNombre"]
@@ -1152,7 +1153,7 @@ def interfazPrincipal(ventanaInicio):
 
 
         def administracionViaje():
-            label_top_center.configure(text="Administrando Viajes...")
+            label_top_center.configure(text="🏢 Administrando Viajes... 🏢")
             viajes = Terminal.getViajes()
             
             def devolucionLlamado(formularioViajes):
@@ -1185,7 +1186,7 @@ def interfazPrincipal(ventanaInicio):
 
                 def verDetalles():
                     print("ver Detalles")
-                    label_top_center.configure(text=f"Detalles del Viaje con ID = {viajeSelect.getId()}")
+                    label_top_center.configure(text=f"🗈 Detalles del Viaje con ID = {viajeSelect.getId()}")
                     def devolucionLlamado():
                         pass
 
@@ -1203,7 +1204,7 @@ def interfazPrincipal(ventanaInicio):
                 def cancelarViaje():
                     print("Cancelar Viajes")
 
-                    label_top_center.configure(text=f"Cancelar el Viaje con ID = {viajeSelect.getId()}")
+                    label_top_center.configure(text=f"🗈 Cancelar el Viaje con ID = {viajeSelect.getId()}")
 
                     mostrar = ["ID", "Llegada", "Fecha", "Hora", "Vehiculo", "Conductor"] # ASIENTOS -- P1
                     valores = ["getId", "getLlegada", "getFecha", "getHora", "getVehiculo.getModelo", "getConductor.getNombre"]
@@ -1251,7 +1252,7 @@ def interfazPrincipal(ventanaInicio):
                 frame_bottom.grid_columnconfigure(0, weight=1)
 
         def administracionHistorial():
-            label_top_center.configure(text="Administrando Historial...")
+            label_top_center.configure(text="🗈 Administrando Historial... 🗈")
             viajesHistorial = Terminal.getHistorial()
             
             def devolucionLlamado(formularioViajes):
@@ -1297,7 +1298,7 @@ def interfazPrincipal(ventanaInicio):
                     
 
                 def verPasajeros():
-                    label_top_center.configure(text=f"Pasajeros del Viaje con ID = {viajeSelect.getId()}")
+                    label_top_center.configure(text=f"👪 Pasajeros del Viaje con ID = {viajeSelect.getId()}")
                     def devoluciónLlamado():
                         pass
 
@@ -1305,7 +1306,7 @@ def interfazPrincipal(ventanaInicio):
                     
 
                 def verInformación():
-                    label_top_center.configure(text=f"Detalles del Viaje con ID = {viajeSelect.getId()}")
+                    label_top_center.configure(text=f"🗈 Detalles del Viaje con ID = {viajeSelect.getId()}")
 
                     mostrar = ["ID", "Llegada", "Fecha", "Hora", "Vehiculo", "Conductor"] # ASIENTOS -- P1
                     valores = ["getId", "getLlegada", "getFecha", "getHora", "getVehiculo.getModelo", "getConductor.getNombre"]
@@ -1318,11 +1319,11 @@ def interfazPrincipal(ventanaInicio):
                     frame_bottom.grid_columnconfigure(0, weight=1)
 
                 def reprogramar():
-                    label_top_center.configure(text=f"Reprogramación del Viaje con ID = {viajeSelect.getId()}")
+                    label_top_center.configure(text=f"🗈 Reprogramación del Viaje con ID = {viajeSelect.getId()}")
                     def devolucionLlamado():
                         pass # ResultFrame
 
-                criterios = [f"Administrar viaje con ID : {viajeSelect.getId()}"]
+                criterios = [f"🗈 Administrar viaje con ID : {viajeSelect.getId()}"]
                 valores_iniciales = ["Reprogramar", "Ver más información", "Ver pasajeros"]
                 habilitado = [False, False]
 

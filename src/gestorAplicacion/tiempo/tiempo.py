@@ -173,7 +173,7 @@ class Tiempo:
         """
         
         historial = listViajesHistorial()
-        viajes = Terminal.getViajesEnCurso()
+        viajes = Terminal.getViajesEnCurso().copy()
 
         if (viajes is not None):
             for i in range(len(viajes)):
