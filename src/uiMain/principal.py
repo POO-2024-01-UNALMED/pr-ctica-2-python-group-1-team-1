@@ -1323,7 +1323,7 @@ def interfazPrincipal(ventanaInicio):
                     def devolucionLlamado():
                         pass # ResultFrame
 
-                criterios = [f"🗈 Administrar viaje con ID : {viajeSelect.getId()}"]
+                criterios = [f"Administrar viaje con ID : {viajeSelect.getId()}"]
                 valores_iniciales = ["Reprogramar", "Ver más información", "Ver pasajeros"]
                 habilitado = [False, False]
 
