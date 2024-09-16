@@ -137,6 +137,7 @@ class Tiempo:
         return tiempo
     
     def comprobarViajes(self):
+        from uiMain.principal import listViajes
         """
         Revisa todos los viajes programados en la terminal y valida aquellos que coincidan con la fecha y hora actuales.
         La lógica es la siguiente:
@@ -145,7 +146,7 @@ class Tiempo:
     	 * 3. Para cada viaje, se compara la fecha y la hora del viaje con la fecha y hora actuales.
     	 * 4. Si el viaje coincide con la fecha y hora actuales, se llama al método `validacion()` del viaje.
         """
-        viajesOriginal = Terminal.getViajes()
+        viajesOriginal = listViajes()
         viajes = viajesOriginal.copy()
         if (viajes is not None):
             for i in range(len(viajes)):
@@ -159,6 +160,7 @@ class Tiempo:
                         viaje.validacion()
 
     def comprobarViajesEnCurso(self):
+        from uiMain.principal import listViajesCurso, listViajesHistorial
         """
         Revisa todos los viajes en curso en la terminal y ejecuta la programación automática para aquellos que llegan a la hora actual.
         La lógica es la siguiente:
@@ -168,15 +170,16 @@ class Tiempo:
     	 * 4. Si el viaje coincide con la fecha y hora actuales, se llama al método `programacionAutomatica()` del viaje.
     	 */
         """
-        viajesOriginal = Terminal.getViajesEnCurso()
-        viajes = viajesOriginal.copy()
+        
+        historial = listViajesHistorial()
+        viajes = Terminal.getViajesEnCurso()
+
         if (viajes is not None):
             for i in range(len(viajes)):
                 viaje = viajes[i]
                 if (viaje.getFecha() == Tiempo.salidaFecha):
                     if (viaje.getHora() == Tiempo.salidaHora):
                         print(f"llego: {viaje.getId()}")
-                        print(f"HISTORIAL DESDE TIEMPO : {Terminal.getHistorial()}")
                         viaje.programacionAutomatica()
 
     def mecanicosDisponibles (self):
@@ -252,6 +255,16 @@ class Tiempo:
     def listahistorial():
         copia = Terminal.getHistorial().copy()
         return copia
+    
+    @staticmethod
+    def listaviajes():
+        copia = Terminal.getViajes().copy()
+        return copia
+    
+    @staticmethod
+    def listaEncurso():
+        copia = Terminal.getViajesEnCurso().copy()
+        return copia
 
     # MÉTODO PARA SERIALIZAR EL TIEMPO SIN EL ATRIBUTO QUE CONTIENE AL HILO 
     def __getstate__(self):
@@ -266,6 +279,7 @@ class Tiempo:
         # REINICIAR
         self.ejecutando = True
         self.ejecutarPeriodicamente()
+        print("serializo")
     
 
 #PRUEBAS

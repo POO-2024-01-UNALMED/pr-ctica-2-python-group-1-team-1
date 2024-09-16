@@ -22,6 +22,50 @@ def on_submit(formData):
     for key, value in formData.items():
         print(f"{key}: {value}")
 
+# CONSULTAR LAS LISTAS 
+def listViajes():
+    return Terminal.getViajes()
+
+def listViajesCurso():
+    return Terminal.getViajesEnCurso()
+
+def listViajesHistorial():
+    return Terminal.getHistorial()
+
+def listReservas():
+    return Terminal.getReservas()
+
+# REMOVER ELEMEMNTOS DE ESTAS LISTAS
+
+# Método para eliminar un viaje de la lista de viajes de la Terminal
+def removeViaje(viaje):
+    viajes = Terminal.getViajes()  # Obtener la lista de viajes
+    if viaje in viajes:  # Verificar que el viaje esté en la lista
+        viajes.remove(viaje)  # Eliminar el viaje
+        Terminal.setViajes(viajes)  # Actualizar la lista en Terminal
+
+# Método para eliminar un viaje en curso de la lista de viajes en curso de la Terminal
+def removeViajeCurso(viaje):
+    viajesCurso = Terminal.getViajesEnCurso()  # Obtener la lista de viajes en curso
+    if viaje in viajesCurso:  # Verificar que el viaje esté en la lista
+        viajesCurso.remove(viaje)  # Eliminar el viaje
+        Terminal.setViajesEnCurso(viajesCurso)  # Actualizar la lista en Terminal
+
+# Método para eliminar un viaje del historial de la Terminal
+def removeViajeHistorial(viaje):
+    historial = Terminal.getHistorial()  # Obtener el historial de viajes
+    if viaje in historial:  # Verificar que el viaje esté en el historial
+        historial.remove(viaje)  # Eliminar el viaje
+        Terminal.setHistorial(historial)  # Actualizar el historial en Terminal
+
+# Método para eliminar una reserva de la lista de reservas de la Terminal
+def removeReserva(reserva):
+    reservas = Terminal.getReservas()  # Obtener la lista de reservas
+    if reserva in reservas:  # Verificar que la reserva esté en la lista
+        reservas.remove(reserva)  # Eliminar la reserva
+        Terminal.setReservas(reservas)  # Actualizar la lista en Terminal
+
+
 # PALETA DE COLORES
 colors = {
         "background": "#0c1424",

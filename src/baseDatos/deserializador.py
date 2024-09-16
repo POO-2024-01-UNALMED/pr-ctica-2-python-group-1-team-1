@@ -6,7 +6,7 @@ from src.gestorAplicacion.administrativo.transportadora import Transportadora
 from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
 from src.gestorAplicacion.administrativo.taller import Taller
 from src.gestorAplicacion.administrativo.factura import Factura
-from src.gestorAplicacion.usuarios.persona import Persona # Falta verificar que funcione como en Java que si hereda automaticamente se serializa
+from src.gestorAplicacion.usuarios.persona import Persona
 from src.gestorAplicacion.tiempo.tiempo import Tiempo
 
 class Deserializador():
@@ -18,7 +18,7 @@ class Deserializador():
         objetos = pickle.load(picklefile) # Deserializar la lista
         
         listaSet(objetos) # Aplicar el Seteo de los objetos
-
+        #print(objetos)
         picklefile.close() # Cerrar el archivo
 
     @staticmethod
@@ -33,10 +33,10 @@ class Deserializador():
         Deserializador.deserializar("viajesDisponibles", Terminal.setViajes)
         Deserializador.deserializar("reservas", Terminal.setReservas)
         Deserializador.deserializar("facturas", Terminal.setFacturas)
-        #Deserializador.deserializar("pasajeros", Terminal.setPasajeros)
-        Deserializador.deserializar("tiempoObjetos", Tiempo.setTiempos)
-        #Serializador.deserializar("personas", Persona.setPersonas)  # Aún no se crea el método
+        Deserializador.deserializar("pasajeros", Terminal.setPasajeros)
+        Deserializador.deserializar("personas", Persona.setSerializarPersonas)
         Deserializador.deserializar("facturas", Factura.setFacturasCreadas)
         Deserializador.deserializar("talleres", Taller.setListaTalleres)
         Deserializador.deserializar("vehiculos", Vehiculo.setListaVehiculos)
+        Deserializador.deserializar("tiempoObjetos", Tiempo.setTiempos)
 

@@ -32,10 +32,8 @@ def mostrarDescripcion():
 
 # FUNCIÓN PARA SALIR DE LA APLICACIÓN Y APAGAR EL TIEMPO
 if __name__ == "__main__":
-    #Tiempo(1) # Solo para las pruebas
-    #Serializador.objetosPrueba()
-    Serializador.crearObjetos()
-    #Deserializador.deserializarListas()
+    #Serializador.crearObjetos()
+    Deserializador.deserializarListas()
 
 tiempo = Tiempo.tiempos[0] # 
 
@@ -43,7 +41,7 @@ def salir():
     global tiempo
     if tiempo:
         tiempo.detener()
-    #Serializador.serializarListas()
+    Serializador.serializarListas()
     root.quit()
 
 # CREAR OBJETO DE TIPO VENTANA

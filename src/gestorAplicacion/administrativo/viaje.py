@@ -194,18 +194,23 @@ class Viaje:
         from gestorAplicacion.administrativo.terminal import Terminal
         from gestorAplicacion.administrativo.viaje import Viaje
         from gestorAplicacion.administrativo.vehiculo import Vehiculo
+        from uiMain.principal import listViajes, listReservas, removeViaje, removeReserva
         
         viajes = Terminal.getViajesEnCurso()
+        disponibles = listViajes()
+        reservas = listReservas()
+
         if (self in viajes):
             return "El viaje ya esta en curso"
         else:
-            Terminal.getViajesEnCurso().append(self)
+            viajes.append(self)
             self.setEstado(True)
             #self.getVehiculo().viaje(int(self.getDistancia())) #TODO : RECORDAR ARREGLAR ESTE ERROR
-            Terminal.getViajes().remove(self)
-            if (self in Terminal.getReservas()):
-                Terminal.getReservas().remove(self)
+            removeViaje(self)
+            if (self in reservas):
+                removeReserva(self)
             return "El viaje está en Curso"
+        
 
     """
     Maneja la programación automática del viaje, gestionando la continuidad del viaje o su cancelación. 
@@ -218,6 +223,7 @@ class Viaje:
         from gestorAplicacion.administrativo.terminal import Terminal
         from gestorAplicacion.usuarios.conductor import Conductor
         from gestorAplicacion.administrativo.viaje import Viaje
+        from uiMain.principal import listViajesCurso, listViajesHistorial
 
         viaje = Terminal.getViajesEnCurso()
         self.getConductor().getHorario().remove(self)

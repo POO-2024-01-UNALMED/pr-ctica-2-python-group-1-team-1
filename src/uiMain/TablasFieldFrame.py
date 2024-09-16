@@ -215,6 +215,7 @@ class ResultadosOperacion(tk.Frame):
             parent (tkinter.Tk): La ventana principal de la aplicación.
             colors (dict): Diccionario con los colores a utilizar en la interfaz.
         """
+        super().__init__(parent)  # Llamada al constructor de tk.Frame
         self.parent = parent
         
         # Crea el marco donde van a estar los elementos

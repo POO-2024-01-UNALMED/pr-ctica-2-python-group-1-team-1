@@ -558,7 +558,7 @@ class Terminal:
     # Get y Set para viajesEnCurso
     @classmethod
     def getViajesEnCurso(cls):
-        return cls.viajesEnCurso
+            return cls.viajesEnCurso
 
     @classmethod
     def setViajesEnCurso(cls, viajesEnCurso):
