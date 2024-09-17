@@ -21,6 +21,7 @@ class Tiempo:
     dia = ""
     # Lista para la Serializacón
     tiempos = []
+    fechaHora = 0
 
     # Inicializador
     def __init__(self, intervalo_ms=1000):
@@ -49,6 +50,7 @@ class Tiempo:
         self.calcularSalidaHora() # Define el formato de salida de la hora sirve para hacer validaciones.
         self.calcularSalidaFecha() # Define el formato de salida de la fecha sirve para hacer validaciones.
         self.modificarDia()
+        self.getFechaHora()
         #print(self.mostrarTiempo()) # Pruebas 
         
         # MÉTODOS PARA ADMINISTRAR LOS VIAJES
@@ -76,6 +78,11 @@ class Tiempo:
 
     
     # Métodos Repetitivos
+
+    def getFechaHora(self):
+
+        Tiempo.FechaHora = ((525600 * self.año) + (43800 * self.meses) + (10950 * self.semana) + (1440 + self.dias) + (60 * self.horas)) 
+
     """
         Actualiza la hora, los minutos, los días, los meses y los años de acuerdo con el paso del tiempo.
         Este método incrementa los minutos y realiza ajustes para las horas, días, meses y años con el paso del tiempo durante la ejecucion.
@@ -181,6 +188,7 @@ class Tiempo:
                         viaje.programacionAutomatica()
 
     def mecanicosDisponibles (self):
+        from src.gestorAplicacion.usuarios.mecanico import Mecanico
 
         for i in Mecanico.getMecanicos():
 
@@ -192,7 +200,8 @@ class Tiempo:
 
                 i.setEstado (False)
 
-    def verificarVehiculos ():
+    def verificarVehiculos (self):
+        from src.gestorAplicacion.administrativo.taller import Taller
 
         for taller in Taller.getListaTalleres():
 
@@ -208,7 +217,8 @@ class Tiempo:
 
                     #vehiculo.getMecanicoAsociado().repararVehiculo(vehiculo)
     
-    def verificarVehiculosVenta ():
+    def verificarVehiculosVenta (self):
+        from src.gestorAplicacion.administrativo.taller import Taller
 
         for taller in Taller.getListaTalleres():
 
@@ -228,11 +238,6 @@ class Tiempo:
                 
 
     
-
-    @classmethod
-    def getFechaHora(cls):
-
-        return((525600 * cls.año) + (43800 * cls.meses) + (10950 * cls.semana) + (1440 + cls.dias) + (60 * cls.horas))
     
     def calcularSalidaHora(self):
         Tiempo.salidaHora = f"{self.horas}:{self.minutos}"

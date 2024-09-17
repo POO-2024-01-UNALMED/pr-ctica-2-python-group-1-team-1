@@ -50,7 +50,13 @@ class Terminal:
         self._nombre = nombre
         self._dinero = dinero
         self._capacidadVehiculos = capacidadVehiculos
-        Terminal.transportadoras = transportadoras
+        self._cantidadVehiculos = self.calcularCantidadVehiculos()
+        if transportadoras !=None:
+
+            Terminal.transportadoras = transportadoras
+        
+        else:
+            Terminal.transportadoras = []
         Terminal.viajes = viajes
         Terminal.viajesEnCurso = viajesEnCurso
         Terminal._reservas = []
@@ -60,6 +66,25 @@ class Terminal:
         self.COMISION= comision
         self._ubicacion = ubicacion
         Terminal.cantidadSedes += 1
+    
+    @classmethod
+    def agregarTransportadora (cls, transportadora):
+
+        cls.transportadoras.append(transportadora)
+        
+
+    def calcularCantidadVehiculos (self):
+
+        i = 0
+        for transportadora in self.transportadoras:
+
+            for vehiculo in transportadora.getVehiculos():
+
+                i+=1
+
+        self._cantidadVehiculos = i
+
+
 
     def transportadorasViajeDisponible():
         pass
@@ -426,12 +451,12 @@ class Terminal:
     def agregarVehiculoTerminal(self, vehiculo):
         "Agrega el vehiculo a la terminal y actualiza la capacidad de los mismos"
         self.vehiculosTerminal.append(vehiculo)
-        self._capacidadVehiculos -= 1
+        #self._capacidadVehiculos -= 1
 
     def removerVehiculoTerminal(self, vehiculo):
         "Remueve el vehiculo de la terminal y actualiza la capacidad de los mismos"
         self.vehiculosTerminal.remove(vehiculo)
-        self._capacidadVehiculos +=1
+        #self._capacidadVehiculos +=1
 
     @classmethod
     def fechasDisponibles(cls,salidaFecha):
@@ -509,6 +534,14 @@ class Terminal:
         return horarios
 
     # Métodos Get y Set
+
+    def getCantidadVehiculos (self):
+
+        return self._cantidadVehiculos
+    
+    def setCantidadVehiculos (self, cant):
+
+        self._cantidadVehiculos = cant
 
     # Get y Set para nombre
     def getNombre(self):

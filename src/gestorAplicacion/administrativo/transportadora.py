@@ -1,5 +1,10 @@
 from src.gestorAplicacion.constantes.incentivo import Incentivo
 from src.gestorAplicacion.usuarios.persona import Persona
+import sys
+import os
+sys.path.append(os.path.join(os.path.abspath("src"), ".."))
+
+from src.gestorAplicacion.administrativo.terminal import Terminal
 from multimethod import multimethod
 class Transportadora (Incentivo):
 
@@ -16,13 +21,21 @@ class Transportadora (Incentivo):
 
     def __init__(self, nombre, dinero, conductores, conductoresRegistrados, pasajeros, vehiculos,
                 viajesAsignados, destinoAsignado, terminal, taller, viajesTerminados, dueño, estrellas):
+        
+        if vehiculos == None:
+
+            self._vehiculos = []
+        
+        else:
+
+            self._vehiculos = vehiculos
+        
         self._nombre = nombre
         self._dinero = dinero
         self._conductores = conductores
         self._conductoresRegistrados = conductoresRegistrados
         self._pasajeros = pasajeros
         self._estadoPago = self.calcularEstadoPago()
-        self._vehiculos = vehiculos
         self._viajesAsignados = viajesAsignados
         self._destinoAsignado = destinoAsignado
         self._terminal = terminal
@@ -33,6 +46,21 @@ class Transportadora (Incentivo):
         Transportadora._transportadoras.append(self)
         self._conductoresDespedidos = []
         self._destinos=[]
+
+        if not(self in terminal.getTransportadoras()):
+            
+            terminal.agregarTransportadora(self)
+
+    def agregarVehiculo (self, vehiculo):
+
+        self._vehiculos.append (vehiculo)
+        self._terminal.agregarVehiculoTerminal(vehiculo)
+        self.reducirDinero(vehiculo.getPrecio())
+
+    def removerVehiculo (self, vehiculo):
+
+        self._vehiculos.remove(vehiculo)
+        self._terminal.removerVehiculoTerminal(vehiculo)
 
 
     def encontrarConductor(self,id):
@@ -253,6 +281,10 @@ class Transportadora (Incentivo):
             return True
         
         return False
+    
+    def reducirDinero (self, dinero):
+
+        self._dinero = self._dinero - dinero
 
     # Métodos get
 

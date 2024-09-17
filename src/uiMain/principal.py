@@ -1391,7 +1391,941 @@ def interfazPrincipal(ventanaInicio):
             
 
     def funcionalidad4():
-        label_top_center.configure(text="Talleres y Mecanicos")
+
+    #Funciones extras
+
+    #Funcionalidad4
+
+        def administrarVehiculos (transportadora):
+
+            def accionVehiculo(vehiculo):
+
+  
+
+
+                def verificarIntegridad (vehiculo):
+                    messagebox.showinfo (title= "Integridad", message= f"La integridad del vehiculo es: {vehiculo.getIntegridad()}")
+
+                #def repararVehiculo (vehiculo):
+                    #repararVehiculo(vehiculo)
+                
+                def administrarDisponibilidad (vehiculo):
+
+                    def agregar(vehiculo):
+
+                        if vehiculo in vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion() or vehiculo in vehiculo.getTransportadora().getTaller().getVehiculosEnVenta() or vehiculo.getIntegridad() == 0 or not vehiculo.disponibilidad():
+
+                            messagebox.showerror(title="No se puede agregar", message= "El vehiculo no puede ser agregado pues no esta disponible")
+
+                        else:
+
+                            if len(vehiculo.getConductores()) == 0:
+
+                                messagebox.showerror(title="No se puede agregar", message="El vehiculo no cuenta con ningun conductor")
+                            
+                            else:
+
+                                vehiculo.setEstado(True)
+                                messagebox.showinfo(title="Vehiculo agregado", message="El vehiculo fue agregado con exito")
+
+                    def quitar (vehiculo):
+
+                        vehiculo.setEstado(False)
+                        messagebox.showinfo(title="Vehiculo retirado", message="El vehiculo fue retirado con exito")
+
+                    def mostrar (vehiculo):
+
+                        #ListBox
+
+                        lb = tk.Listbox(new_frame_bottom_right)
+                        lb.place(relx= 0.2, rely = 0.1, relwidth=0.6, relheight=0.7)
+                        
+                        i = 0
+                        for vehiculo in vehiculo.getTransportadora().getVehiculos():
+
+                            if vehiculo.getEstado():
+
+                                lb.insert(i, f"{i+1}. Placa: {vehiculo.getPlaca()} Modelo: {vehiculo.getModelo()}")
+                                i += 1
+                        
+                        #ScrollBar
+
+                        sb = ttk.Scrollbar(new_frame_bottom_right, orient=tk.VERTICAL)
+                        sb.config(command=lb.yview)
+                        sb.place(relx=0.8, rely= 0.1, relwidth=0.02, relheight=0.7)
+
+                        def borrar():
+                            
+                            lb.destroy()
+                            sb.destroy()
+                            cerrarBoton.destroy()
+
+
+                        #button
+                        cerrarBoton = tk.Button(new_frame_bottom_right, text="Cerrar", font= "Century", command=borrar)
+                        #Emplacement
+                        cerrarBoton.place(relx= 0.333333, rely = 0.85, relwidth=0.33333, relheight=0.1)
+
+
+
+                    #Creacion de los nuevos frames
+                    new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                    new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                    new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                    new_frame_top_center = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+                    new_frame_top_left = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+                    new_frame_bottom_left = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+                    new_frame_bottom_right = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+                    new_frame_bottom_center = tk.Frame(new_frame_bottom, bd = 3, bg = colors["background"])
+
+                    #Ubicacion de los frames
+                    new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+                    new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+                    new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+                    new_frame_top_center.place (relx=0.2, rely=0.15, relwidth = 0.6, relheight=1)
+                    new_frame_top_left.place (relx = 0, rely = 0., relwidth= 0.2, relheight = 1)
+                        
+                    new_frame_bottom_left.place (relx = 0, rely = 0., relwidth = 0.2, relheight= 1)
+                    new_frame_bottom_right.place (relx = 0.8, rely = 0, relwidth = 0.2, relheight= 1)
+                    new_frame_bottom_center.place (relx = 0.2, rely = 0, relwidth = 0.6, relheight= 1)
+                
+                    #Labels
+                    new_label_center = tk.Label(new_frame_center, text = "Que desea hacer con el vehiculo", font= ("Segoe Script", 30, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                    new_label_top_right = tk.Label(new_frame_top_left, text="TC", bd=3, font=("Segoe Script", 60, "bold"), fg=colors["text"], bg=colors["background"])
+
+                    #Emplacement
+                    new_label_center.place (relx = 0.5, rely = 0.5, relwidth = 1, anchor="center")
+                    new_label_top_right.place(relx=0.0, rely=0.5, relwidth=1, anchor='w')
+
+                    botonAgregar = tk.Button(new_frame_bottom_center, text = "Marcar el vehiculo como disponible",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: agregar(vehiculo))
+                    botonQuitar = tk.Button(new_frame_bottom_center, text = "Quitar vehiculo de disponibilidad",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: quitar(vehiculo))
+                    botonMostrar = tk.Button(new_frame_bottom_center, text = "Mostrar disponibles",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: mostrar(vehiculo))
+                    botonCancelar = tk.Button(new_frame_bottom_center, text = "Cancelar",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: accionVehiculo(vehiculo))
+
+
+                    botonAgregar.place (relx = 0.33333, rely = 0.15, relwidth= 0.3333, relheight= 0.1)
+                    botonQuitar.place (relx = 0.33333, rely= 0.30, relwidth=0.3333, relheight=0.1 )
+                    botonMostrar.place (relx= 0.33333, rely= 0.45, relwidth= 0.3333, relheight= 0.1)
+                    botonCancelar.place (relx = 0.33333, rely = 0.60, relwidth=0.3333, relheight=0.1)
+
+
+
+                def verVehiculos (vehiculo):
+
+                    #ListBox
+
+                    lb1 = tk.Listbox(new_frame_bottom_right)
+                    lb2 = tk.Listbox(new_frame_bottom_left)
+                    lb1.place(relx= 0.2, rely = 0.1, relwidth=0.6, relheight=0.7)
+                    lb2.place(relx= 0.2, rely = 0.1, relwidth=0.6, relheight=0.7)
+                        
+                    i = 0
+                    for vehiculo in vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion():
+
+                        
+
+                        lb1.insert(i, f"{i+1}. Placa: {vehiculo.getPlaca()} Modelo: {vehiculo.getModelo()} Tiempo restante: {vehiculo.getFechaHoraReparacion()}")
+                        i += 1
+
+
+                    i = 0
+                    for vehiculo in vehiculo.getTransportadora().getTaller().getVehiculosEnVenta():
+
+                       
+
+                        lb2.insert(i, f"{i+1}. Placa: {vehiculo.getPlaca()} Modelo: {vehiculo.getModelo()} Tiempo restante: {vehiculo.getFechaHoraReparacion()}")
+                        i += 1
+                        
+                    #ScrollBar
+
+                    sb1 = ttk.Scrollbar(new_frame_bottom_right, orient=tk.VERTICAL)
+                    sb1.config(command=lb1.yview)
+                    sb1.place(relx=0.8, rely= 0.1, relwidth=0.02, relheight=0.7)
+                    sb11 = ttk.Scrollbar(new_frame_bottom_right, orient=tk.HORIZONTAL)
+                    sb11.config(command=lb1.xview)
+                    sb11.place(relx = 0.2, rely=0.8, relwidth=0.6, relheight=0.02 )
+
+                    sb2 = ttk.Scrollbar(new_frame_bottom_right, orient=tk.VERTICAL)
+                    sb2.config(command=lb2.yview)
+                    sb2.place(relx=0.8, rely= 0.1, relwidth=0.06, relheight=0.02)
+                    sb22 = ttk.Scrollbar(new_frame_bottom_left, orient=tk.HORIZONTAL)
+                    sb22.config(command=lb2.xview)
+                    sb22.place(relx = 0.2, rely=0.8, relwidth=0.6, relheight=0.02 )
+
+                    def borrar():
+                            
+                        lb1.destroy()
+                        lb2.destroy()
+                        sb1.destroy()
+                        sb11.destroy()
+                        sb2.destroy()
+                        sb22.destroy()
+                        cerrarBoton.destroy()
+
+                    #button
+                    cerrarBoton = tk.Button(new_frame_bottom_right, text="Cerrar", font= "Century", command=borrar)
+                    #Emplacement
+                    cerrarBoton.place(relx= 0.333333, rely = 0.85, relwidth=0.33333, relheight=0.1)
+                    
+
+                def venderVehiculo(vehiculo):
+
+                        if vehiculo in vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion() or vehiculo in vehiculo.getTransportadora().getTaller().getVehiculosEnVenta():
+
+                            messagebox.showerror(title="No se puede vender o desechar", message="El vehiculo se encuentra reparandose o vendiendose actualmente")
+
+                        else:
+
+                            answer = messagebox.askyesno(title="Vender o desechar",message="Desea vender el vehiculo?")
+
+                            if answer:
+
+                                vehiculo.getTransportadora().getTaller().agregarVehiculoVenta(vehiculo)
+                                messagebox.showinfo(title="Vehiculo vendiendose", message="El vehiculo se puso a la venta")
+
+                            else:
+
+                                answer = messagebox.askyesno(title= "Vender o desechar", message="Desea desechar el vehiculo?")
+
+                                if answer:
+
+                                    vehiculo.getTransportadora().removerVehiculo(vehiculo)
+                                    messagebox.showinfo(title="Vehiculo desechado", message="El vehiculo fue desechado")
+                                    ventanaInicial(transportadora)
+
+
+            #Creacion de los nuevos frames
+                new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_top_center = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+                new_frame_top_left = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+                new_frame_bottom_left = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+                new_frame_bottom_right = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+                new_frame_bottom_center = tk.Frame(new_frame_bottom, bd = 3, bg = colors["background"])
+
+                #Ubicacion de los frames
+                new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+                new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+                new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+                new_frame_top_center.place (relx=0.2, rely=0.15, relwidth = 0.6, relheight=1)
+                new_frame_top_left.place (relx = 0, rely = 0., relwidth= 0.2, relheight = 1)
+                    
+                new_frame_bottom_left.place (relx = 0, rely = 0., relwidth = 0.2, relheight= 1)
+                new_frame_bottom_right.place (relx = 0.8, rely = 0, relwidth = 0.2, relheight= 1)
+                new_frame_bottom_center.place (relx = 0.2, rely = 0, relwidth = 0.6, relheight= 1)
+            
+                #Labels
+                new_label_center = tk.Label(new_frame_center, text = "Que desea hacer con el vehiculo", font= ("Segoe Script", 30, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                new_label_top_right = tk.Label(new_frame_top_left, text="TC", bd=3, font=("Segoe Script", 60, "bold"), fg=colors["text"], bg=colors["background"])
+
+                #Emplacement
+                new_label_center.place (relx = 0.5, rely = 0.5, relwidth = 1, anchor="center")
+                new_label_top_right.place(relx=0.0, rely=0.5, relwidth=1, anchor='w')
+
+                botonVerificarIntegridad = tk.Button(new_frame_bottom_center, text = "Verificar integridad",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: verificarIntegridad(vehiculo))
+                botonRepararVehiculo = tk.Button(new_frame_bottom_center, text = "Reparar vehiculo",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: repararVehiculo(vehiculo))
+                botonAdministrarDisponibilidad = tk.Button(new_frame_bottom_center, text = "Administrar disponibilidad",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: administrarDisponibilidad(vehiculo))
+                botonVerVehiculos = tk.Button(new_frame_bottom_center, text = "Ver reparaciones y ventas",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: verVehiculos(vehiculo))
+                botonVenderDesechar = tk.Button(new_frame_bottom_center, text = "Vender o desechar", font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: venderVehiculo(vehiculo))
+                botonIrAtras = tk.Button(new_frame_bottom_center, text = "Ir atras",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command = lambda: ventanaInicial(transportadora))
+
+                botonVerificarIntegridad.place (relx = 0.33333, rely = 0.15, relwidth= 0.3333, relheight= 0.1)
+                botonRepararVehiculo.place (relx = 0.33333, rely= 0.30, relwidth=0.3333, relheight=0.1 )
+                botonAdministrarDisponibilidad.place (relx= 0.33333, rely= 0.45, relwidth= 0.3333, relheight= 0.1)
+                botonVerVehiculos.place (relx = 0.33333, rely = 0.60, relwidth=0.3333, relheight=0.1)
+                botonVenderDesechar.place (relx = 0.33333, rely = 0.75, relwidth=0.3333, relheight=0.1)
+                botonIrAtras.place (relx = 0.33333, rely = 0.90, relwidth=0.3333, relheight=0.1)
+
+
+
+            def elegirVehiculo():
+
+                Variables.vehiculo = transportadora.getVehiculos()[lb.curselection()[0]]
+                
+                accionVehiculo(Variables.vehiculo)
+
+            #Creacion de los nuevos frames
+            new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+            new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+            new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+            new_frame_top_center = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+            new_frame_top_left = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+            new_frame_bottom_left = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+            new_frame_bottom_right = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+            new_frame_bottom_center = tk.Frame(new_frame_bottom, bd = 3, bg = colors["background"])
+
+            #Ubicacion de los frames
+            new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+            new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+            new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+            new_frame_top_center.place (relx=0.2, rely=0.15, relwidth = 0.6, relheight=1)
+            new_frame_top_left.place (relx = 0, rely = 0., relwidth= 0.2, relheight = 1)
+                    
+            new_frame_bottom_left.place (relx = 0, rely = 0., relwidth = 0.2, relheight= 1)
+            new_frame_bottom_right.place (relx = 0.8, rely = 0, relwidth = 0.2, relheight= 1)
+            new_frame_bottom_center.place (relx = 0.2, rely = 0, relwidth = 0.6, relheight= 1)
+            
+            #Labels
+            new_label_center = tk.Label(new_frame_center, text = "Elija un vehiculo", font= ("Segoe Script", 30, "bold"), fg = "white", bd = 3, bg=colors["background"])
+            new_label_top_right = tk.Label(new_frame_top_left, text="TC", bd=3, font=("Segoe Script", 60, "bold"), fg=colors["text"], bg=colors["background"])
+
+            #Emplacement
+            new_label_center.place (relx = 0.5, rely = 0.5, relwidth = 1, anchor="center")
+            new_label_top_right.place(relx=0.0, rely=0.5, relwidth=1, anchor='w')
+
+            #ListBox
+
+            lb = tk.Listbox(new_frame_bottom_center)
+            lb.place(relx= 0.2, rely = 0.1, relwidth=0.6, relheight=0.7)
+            
+            i = 0
+            for vehiculo in transportadora.getVehiculos():
+
+                lb.insert(i, f"{i+1}. Placa: {vehiculo.getPlaca()} Modelo: {vehiculo.getModelo()}")
+                i += 1
+            
+            #ScrollBar
+
+            sb = ttk.Scrollbar(new_frame_bottom_center, orient=tk.VERTICAL)
+            sb.config(command=lb.yview)
+            sb.place(relx=0.8, rely= 0.1, relwidth=0.02, relheight=0.7)
+            
+            #button
+            elegirBoton = tk.Button(new_frame_bottom_center, text="Elegir", font= "Century", command=elegirVehiculo)
+            #Emplacement
+            elegirBoton.place(relx= 0.333333, rely = 0.85, relwidth=0.33333, relheight=0.1)
+
+            #Comand button
+
+
+        def repararVehiculo (vehiculo):
+            
+            if len(vehiculo.getTransportadora().getTaller().getMecanicos()) > 0:
+
+                cotizacion = vehiculo.getTransportadora().getTaller().generarCotizacion(vehiculo)
+                precio = int(cotizacion[0])
+                tiempo = int(cotizacion[1])
+
+                answer = messagebox.askyesno (title="Reparacion", message= f"El costo de la reparacion sera {precio}. Desea realizarla?")
+
+                if answer:
+
+                    if not vehiculo.isReparando():
+
+                        if vehiculo.getTransportadora().getDinero() >= precio:
+
+                            vehiculo.getTransportadora().getTaller().agregarVehiculoReparacion(vehiculo)
+                            vehiculo.getTransportadora().getTaller().aplicarGastos(vehiculo)
+
+                            messagebox.showinfo(title="Vehiculo en reparacion", message=f"Vehiculo agregado a la cola. Dinero {vehiculo.getTransportadora().getNombre()}: {vehiculo.getTransportadora().getDinero()}$")
+                        
+                        else:
+
+                            messagebox.showerror(title="Sin dinero suficiente", message="La transportadora no cuenta con el dinero suficiente")
+                            ventanaInicial(vehiculo.getTransportadora())
+                    
+                    else:
+
+                        messagebox.showerror(title="No se puede reparar", message="El vehiculo ya esta siendo reparado o vendido")
+                
+                else:
+
+                    ventanaInicial(vehiculo.getTransportadora())
+            else:
+
+                messagebox.showerror(title="No se puede reparar", message="El taller no cuenta con ningun mecanico. Agregue nuevos mecanicos para poder reparar")
+
+                
+
+
+
+        def agregarVehiculo (transportadora):
+            
+
+            
+            def agregar(transportadora):
+
+                #Creacion de los nuevos frames
+                new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_top_center = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+                new_frame_top_left = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+                new_frame_bottom_left = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+                new_frame_bottom_right = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+                new_frame_bottom_center = tk.Frame(new_frame_bottom, bd = 3, bg = colors["background"])
+
+                #Ubicacion de los frames
+                new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+                new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+                new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+                new_frame_top_center.place (relx=0.2, rely=0.15, relwidth = 0.6, relheight=1)
+                new_frame_top_left.place (relx = 0, rely = 0., relwidth= 0.2, relheight = 1)
+                    
+                new_frame_bottom_left.place (relx = 0, rely = 0., relwidth = 0.2, relheight= 1)
+                new_frame_bottom_right.place (relx = 0.8, rely = 0, relwidth = 0.2, relheight= 1)
+                new_frame_bottom_center.place (relx = 0.2, rely = 0, relwidth = 0.6, relheight= 1)
+                
+                #Labels
+                new_label_center = tk.Label(new_frame_center, text = "Ingrese los siguientes datos del vehiculo", font= ("Segoe Script", 30, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                new_label_top_right = tk.Label(new_frame_top_left, text="TC", bd=3, font=("Segoe Script", 60, "bold"), fg=colors["text"], bg=colors["background"])
+
+                label_placa = tk.Label(new_frame_bottom_center, text = "Placa", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                label_modelo = tk.Label(new_frame_bottom_center, text = "Modelo", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                label_precio = tk.Label(new_frame_bottom_center, text = "Precio", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                label_vel = tk.Label(new_frame_bottom_center, text = "Velocidad promedio", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                label_tipo = tk.Label(new_frame_bottom_center, text = "Tipo", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                #Ubicaciones
+                new_label_center.place (relx = 0.5, rely = 0.5, relwidth = 1, anchor="center")
+                new_label_top_right.place(relx=0.0, rely=0.5, relwidth=1, anchor='w')
+                label_placa.place (relx=0.2, rely = 0.1, relwidth= 0.3, relheight=0.1)
+                label_modelo.place (relx=0.2, rely = 0.25, relwidth= 0.3, relheight=0.1)
+                label_precio.place (relx=0.2, rely = 0.40, relwidth= 0.3, relheight=0.1)
+                label_vel.place (relx=0.2, rely = 0.55, relwidth= 0.3, relheight=0.1)
+                label_tipo.place (relx=0.2, rely = 0.70, relwidth= 0.3, relheight=0.1)
+
+                #Entrys
+
+                entry_placa = tk.Entry(new_frame_bottom_center, text = "KKK666", font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+                entry_modelo = tk.Entry(new_frame_bottom_center, font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+                entry_precio = tk.Entry(new_frame_bottom_center, font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+                entry_vel = tk.Entry(new_frame_bottom_center, font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+               
+
+                #Emplacement
+
+                entry_placa.place (relx = 0.5, rely = 0.1, relwidth= 0.3, relheight= 0.1)
+                entry_modelo.place (relx = 0.5, rely = 0.25, relwidth= 0.3, relheight= 0.1)
+                entry_precio.place (relx = 0.5, rely = 0.40, relwidth= 0.3, relheight= 0.1)
+                entry_vel.place (relx = 0.5, rely = 0.55, relwidth= 0.3, relheight= 0.1)
+
+                #ComboBox
+                desplegable = ttk.Combobox(new_frame_bottom, state = "readonly", values=("BUS","TAXI","VANS","ESCALERA"))
+                #Emplacement
+                desplegable.place (relx = 0.5, rely = 0.70, relwidth=0.2, relheight=0.1)
+
+                #Buttons
+                volverBoton = tk.Button(new_frame_bottom_right, text = "Volver",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= funcionalidad4)
+                
+                agregar_button = tk.Button(new_frame_bottom_center, text = "Agregar vehiculo",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: botonAgregar(transportadora) )
+                #Place
+                agregar_button.place(relx = 0.3333, rely= 0.85, relwidth= 0.3333, relheight=0.1)
+                volverBoton.place(relx = 0.3333, rely= 0.45, relwidth= 0.3333, relheight=0.1)
+
+                def botonAgregar (transportadora):
+
+
+
+                    try:
+                        placa = entry_placa.get()
+                        modelo = entry_modelo.get()
+                        precio = float(entry_precio.get())
+                        precio = round(precio)
+                        velocidad = float(entry_vel.get())
+                        velocidad = round(velocidad)
+                        tipo = TipoVehiculo [desplegable.get()]
+
+                        if precio >= transportadora.getDinero():
+
+                            messagebox.showerror(title="No cuenta con suficiente dinero", message= "La transportadora no tiene el suficiente dinero para realizar la compra")
+
+                        else:
+
+                            Variables.vehiculo = Vehiculo (placa, modelo, precio, velocidad, tipo, transportadora)
+
+                            if Variables.vehiculo.getIntegridad() < 100:
+
+                                answer = messagebox.askyesno(title= "Vehiculo agregado", message= f"El vehiculo tiene una integridad de {Variables.vehiculo.getIntegridad()}. Desera repararlo?")
+
+                                if answer:
+
+                                    repararVehiculo(Variables.vehiculo)
+
+                                else:
+
+                                    ventanaInicial(transportadora)
+                            
+                            else:
+                                
+                                messagebox.showinfo(title = "Vehiculo agregado", message="El vehiculo fue agregado con exito")
+                                ventanaInicial(transportadora)
+                        
+
+                    except (ValueError):
+
+                        messagebox.showerror(title=  "Valor incorrecto", message= "El precio y velocidad del vehiculo debe ser un numero")
+
+
+
+            #print (transportadora.getTerminal().getCapacidadVehiculos(), transportadora.getTerminal().getCantidadVehiculos() )
+            if (transportadora.getTerminal().getCapacidadVehiculos() > transportadora.getTerminal().getCantidadVehiculos()):
+
+                agregar(transportadora)
+
+
+
+
+
+
+                
+
+            
+            else:
+
+                messagebox.showerror(title="No es posible agregar un vehiculo", message= "No cuenta con espacio suficiente en la terminal")
+
+        def administrarMecanicos(transportadora):
+
+            def agregarMecanico (transportadora):
+
+                def agregarMec (transportadora):
+
+                    try:
+
+                        id = int(entry_id.get())
+                        edad = int(entry_edad.get())
+                        nombre = entry_nombre.get()
+                        genero = comboGenero.get()
+                        experiencia = int(comboExp.get())
+                        contrato = int(entry_contrato.get())
+
+                        Mecanico(id, edad, nombre, genero, [], experiencia, 1000.0, [], transportadora.getTaller(), contrato, 0)
+                        messagebox.showinfo(title="Mecanico agregado", message="El mecanico se agrego con exito")
+                        administrarMecanicos(transportadora)
+
+                    except ValueError:
+
+                        messagebox.showerror(title= "No se puede agregar", message="ID; Edad y contrato deben ser numeros enteros")
+
+
+
+                botonAgregarMecanico.destroy()
+                botonEliminarMecanico.destroy()
+                botonMostrarMecanicos.destroy()
+                botonIrAtras.destroy()
+
+                label_id = tk.Label(new_frame_bottom_center, text = "ID", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                label_edad = tk.Label(new_frame_bottom_center, text = "Edad", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                label_nombre = tk.Label(new_frame_bottom_center, text = "nombre", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                label_genero = tk.Label(new_frame_bottom_center, text = "genero", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                label_experiencia = tk.Label(new_frame_bottom_center, text = "Experiencia", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                label_contrato = tk.Label(new_frame_bottom_center, text = "Dias de contrato", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                
+                #Ubicaciones
+                label_id.place (relx=0.2, rely = 0.1, relwidth= 0.3, relheight=0.1)
+                label_edad.place (relx=0.2, rely = 0.25, relwidth= 0.3, relheight=0.1)
+                label_nombre.place (relx=0.2, rely = 0.40, relwidth= 0.3, relheight=0.1)
+                label_genero.place (relx=0.2, rely = 0.55, relwidth= 0.3, relheight=0.1)
+                label_experiencia.place (relx=0.2, rely = 0.70, relwidth= 0.3, relheight=0.1)
+                label_contrato.place (relx=0.2, rely = 0.85, relwidth= 0.3, relheight=0.1)
+
+                #Entrys
+
+                entry_id = tk.Entry(new_frame_bottom_center, font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+                entry_edad = tk.Entry(new_frame_bottom_center, font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+                entry_nombre = tk.Entry(new_frame_bottom_center, font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+                #entry_experiencia = tk.Entry(new_frame_bottom_center, font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+                entry_contrato = tk.Entry(new_frame_bottom_center, font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+
+                #Emplacement
+
+                entry_id.place (relx = 0.5, rely = 0.1, relwidth= 0.3, relheight= 0.1)
+                entry_edad.place (relx = 0.5, rely = 0.25, relwidth= 0.3, relheight= 0.1)
+                entry_nombre.place (relx = 0.5, rely = 0.40, relwidth= 0.3, relheight= 0.1)
+                #entry_experiencia.place (relx = 0.5, rely = 0.70, relwidth= 0.3, relheight= 0.1)
+                entry_contrato.place (relx = 0.5, rely = 0.85, relwidth= 0.3, relheight= 0.1)
+
+                #ComboBox
+
+                comboExp = ttk.Combobox(new_frame_bottom_center, state="readonly", values=(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20))
+                comboGenero = ttk.Combobox(new_frame_bottom_center, state="readonly", values=("M", "F"))
+                #Emplacement
+
+                comboExp.place(relx= 0.5, rely = 0.7, relwidth= 0.3, relheight=0.1)
+                comboGenero.place(relx= 0.5, rely = 0.55, relwidth= 0.3, relheight=0.1)
+
+                #Boton
+
+                botonAgregar = tk.Button(new_frame_bottom_right, text = "Agregar mecanico",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: agregarMec(transportadora) )
+                
+                #Emplacement
+                botonAgregar.place(relx=0.33333,rely=0.45,relwidth=0.33333,relheight=0.1)
+
+            def eliminarMecanico (transportadora):
+
+                botonAgregarMecanico.destroy()
+                botonEliminarMecanico.destroy()
+                botonMostrarMecanicos.destroy()
+                botonIrAtras.destroy()
+
+                #ListBox
+
+                lb = tk.Listbox(new_frame_bottom_center)
+                lb.place(relx= 0.2, rely = 0.1, relwidth=0.6, relheight=0.7)
+                
+                i = 0
+                for mecanico in transportadora.getTaller().getMecanicos():
+
+                    lb.insert(i, f"{i+1}. ID: {mecanico.getId()} Nombre: {mecanico.getNombre()}")
+                    i += 1
+                
+                #ScrollBar
+
+                sb = ttk.Scrollbar(new_frame_bottom_center, orient=tk.VERTICAL)
+                sb.config(command=lb.yview)
+                sb.place(relx=0.8, rely= 0.1, relwidth=0.02, relheight=0.7)
+
+                #button
+                cerrarBoton = tk.Button(new_frame_bottom_center, text="Cancelar", font= "Century", command= lambda: administrarMecanicos(transportadora))
+                eliminarBoton = tk.Button(new_frame_bottom_center, text="Elegir", font= "Century", command= lambda: eliminar(transportadora))
+                #Emplacement
+                cerrarBoton.place(relx= 0.2, rely = 0.85, relwidth=0.3, relheight=0.1)
+                eliminarBoton.place(relx= 0.5, rely = 0.85, relwidth=0.3, relheight=0.1)
+
+                def eliminar (transportadora):
+                    mecanico = transportadora.getTaller().getMecanicos()[lb.curselection()[0]]
+
+                    if mecanico.getEstado():
+
+                        transportadora.getTaller().removerMecanico(mecanico)
+                        messagebox.showinfo(title="Mecanico removido", message="El mecanico se removio correctamente")
+                        administrarMecanicos(transportadora)
+                    
+                    else:
+
+                        messagebox.showerror(title="No se puede eliminar", message="No es posible eliminar al mecanico pues tiene reparaciones pendientes")
+            
+            def mostrarMecanicos(transportadora):
+
+                botonAgregarMecanico.destroy()
+                botonEliminarMecanico.destroy()
+                botonMostrarMecanicos.destroy()
+                botonIrAtras.destroy()
+
+                #ListBox
+
+                lb = tk.Listbox(new_frame_bottom_center)
+                lb.place(relx= 0.2, rely = 0.1, relwidth=0.6, relheight=0.7)
+                
+                i = 0
+                for mecanico in transportadora.getTaller().getMecanicos():
+
+                    lb.insert(i, f"{i+1}. ID: {mecanico.getId()} Nombre: {mecanico.getNombre()}")
+                    i += 1
+                
+                #ScrollBar
+
+                sb = ttk.Scrollbar(new_frame_bottom_center, orient=tk.VERTICAL)
+                sb.config(command=lb.yview)
+                sb.place(relx=0.8, rely= 0.1, relwidth=0.02, relheight=0.7)
+
+                #button
+                cerrarBoton = tk.Button(new_frame_bottom_center, text="Cancelar", font= "Century", command= lambda: administrarMecanicos(transportadora))
+                #Emplacement
+                cerrarBoton.place(relx= 0.33333, rely = 0.85, relwidth=0.333333, relheight=0.1)
+
+
+
+
+            #Creacion de los nuevos frames
+            new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+            new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+            new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+            new_frame_top_center = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+            new_frame_top_left = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+            new_frame_bottom_left = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+            new_frame_bottom_right = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+            new_frame_bottom_center = tk.Frame(new_frame_bottom, bd = 3, bg = colors["background"])
+
+            #Ubicacion de los frames
+            new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+            new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+            new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+            new_frame_top_center.place (relx=0.2, rely=0.15, relwidth = 0.6, relheight=1)
+            new_frame_top_left.place (relx = 0, rely = 0., relwidth= 0.2, relheight = 1)
+                
+            new_frame_bottom_left.place (relx = 0, rely = 0., relwidth = 0.2, relheight= 1)
+            new_frame_bottom_right.place (relx = 0.8, rely = 0, relwidth = 0.2, relheight= 1)
+            new_frame_bottom_center.place (relx = 0.2, rely = 0, relwidth = 0.6, relheight= 1)
+            
+            #Labels
+            new_label_center = tk.Label(new_frame_center, text = "Que accion desea realizar", font= ("Segoe Script", 30, "bold"), fg = "white", bd = 3, bg=colors["background"])
+            new_label_top_right = tk.Label(new_frame_top_left, text="TC", bd=3, font=("Segoe Script", 60, "bold"), fg=colors["text"], bg=colors["background"])
+
+            #Emplacement
+            new_label_center.place (relx = 0.5, rely = 0.5, relwidth = 1, anchor="center")
+            new_label_top_right.place(relx=0.0, rely=0.5, relwidth=1, anchor='w')
+
+            botonAgregarMecanico = tk.Button(new_frame_bottom_center, text = "Agregar mecanico",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: agregarMecanico(transportadora))
+            botonEliminarMecanico = tk.Button(new_frame_bottom_center, text = "Eliminar mecanico",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: eliminarMecanico(transportadora))
+            botonMostrarMecanicos = tk.Button(new_frame_bottom_center, text = "Mostrar mecanicos",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: mostrarMecanicos(transportadora))
+            botonIrAtras = tk.Button(new_frame_bottom_center, text = "Ir atras",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command = lambda: ventanaInicial(transportadora))
+
+            botonAgregarMecanico.place (relx = 0.33333, rely = 0.15, relwidth= 0.3333, relheight= 0.1)
+            botonEliminarMecanico.place (relx = 0.33333, rely= 0.30, relwidth=0.3333, relheight=0.1 )
+            botonMostrarMecanicos.place (relx= 0.33333, rely= 0.45, relwidth= 0.3333, relheight= 0.1)
+            botonIrAtras.place (relx = 0.33333, rely = 0.6, relwidth=0.3333, relheight=0.1)
+        
+        def cambiarTaller (transportadora):
+
+    
+            def cambio (transportadora):
+
+                #Creacion de los nuevos frames
+                new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_top_center = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+                new_frame_top_left = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+                new_frame_bottom_left = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+                new_frame_bottom_right = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+                new_frame_bottom_center = tk.Frame(new_frame_bottom, bd = 3, bg = colors["background"])
+
+                #Ubicacion de los frames
+                new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+                new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+                new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+                new_frame_top_center.place (relx=0.2, rely=0.15, relwidth = 0.6, relheight=1)
+                new_frame_top_left.place (relx = 0, rely = 0., relwidth= 0.2, relheight = 1)
+                
+                new_frame_bottom_left.place (relx = 0, rely = 0., relwidth = 0.2, relheight= 1)
+                new_frame_bottom_right.place (relx = 0.8, rely = 0, relwidth = 0.2, relheight= 1)
+                new_frame_bottom_center.place (relx = 0.2, rely = 0, relwidth = 0.6, relheight= 1)
+                
+                #Labels
+                new_label_center = tk.Label(new_frame_center, text = "Ingrese los datos", font= ("Segoe Script", 30, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                new_label_top_right = tk.Label(new_frame_top_left, text="TC", bd=3, font=("Segoe Script", 60, "bold"), fg=colors["text"], bg=colors["background"])
+                label_nombre = tk.Label(new_frame_bottom_center, text = "Nombre", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+                label_capacidad = tk.Label(new_frame_bottom_center, text = "Capacidad", font= ("Century", 15, "bold"), fg = "white", bd = 3, bg=colors["background"])
+
+                
+                #Ubicaciones
+                new_label_center.place (relx = 0.5, rely = 0.5, relwidth = 1, anchor="center")
+                new_label_top_right.place(relx=0.0, rely=0.5, relwidth=1, anchor='w')
+                label_nombre.place (relx=0.2, rely = 0.3, relwidth= 0.3, relheight=0.1)
+                label_capacidad.place (relx=0.2, rely = 0.45, relwidth= 0.3, relheight=0.1)
+
+
+                #Entrys
+
+                entry_nombre = tk.Entry(new_frame_bottom_center, font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+                entry_capacidad = tk.Entry(new_frame_bottom_center, font = ("Segoe Script", 20, "bold"), bg = "gray", fg = "white", justify= "center")
+
+
+                #Emplacement
+
+                entry_nombre.place (relx = 0.5, rely = 0.3, relwidth= 0.3, relheight= 0.1)
+                entry_capacidad.place (relx = 0.5, rely = 0.45, relwidth= 0.3, relheight= 0.1)
+
+                #button
+                cambiarBoton = tk.Button(new_frame_bottom_center, text="Cambiar", font= "Century", command= lambda: cambiar(transportadora))
+
+                #Emplacement
+                cambiarBoton.place(relx=0.33333, rely = 0.6, relwidth=0.33333, relheight=0.1)
+
+                def cambiar(transportadora):
+
+                    try:
+
+                        nombre = entry_nombre.get()
+                        capacidad = int(entry_capacidad.get())
+
+                        Taller(transportadora, None, nombre, capacidad)
+                        messagebox.showinfo(title="Taller cambiado", message="El taller fue cambiado correctamente")
+                        ventanaInicial(transportadora)
+
+                    
+                    except ValueError:
+
+                        messagebox.showerror(title="No es posible cambiar el taller", message="Capacidad debe ser un numero entero positivo")
+
+            
+            if transportadora.getTaller() != None:
+
+                if (len(transportadora.getTaller().getVehiculosEnReparacion()) > 0 or len(transportadora.getTaller().getVehiculosEnVenta())):
+
+                    messagebox.showerror(title="No es posible cambiar el taller", message="No es posible cambiar el taller pues hay tareas pendientes")
+                else:
+
+                    answer = messagebox.askyesno (title="Cambiar taller",message= "Al cambiar de taller perdera todos los mecanicos. Cambiar?")
+
+                    if answer:
+
+                        cambio(transportadora)
+
+            else:
+
+                cambio(transportadora)
+
+            
+
+
+
+
+        terminal = Terminal("term", 1000000000, 10, None, None, None, None, 0, None)
+        transportadora1 = Transportadora("trans", 1000000000, None, None, [None, None, None], None, None, Destino.ANGELOPOLIS , terminal, None, None, None, 3  )
+        #taller1 = Taller(transportadora1, Destino.ANGELOPOLIS,"Taller1", 10 )
+        #mecanico1 = Mecanico(123,21,"juan","M",[], 10, 1000.0, [], taller1, 100, 20)
+        vehiculo1 = Vehiculo("ABC123", "ModeloA", 12500.00, 120.0, TipoVehiculo.BUS, transportadora1)
+        vehiculo2 = Vehiculo("DEF456", "ModeloB", 13500.00, 130.0, TipoVehiculo.ESCALERA, transportadora1)
+        vehiculo3 = Vehiculo("GHI789", "ModeloC", 14500.00, 125.0, TipoVehiculo.VANS, transportadora1)
+        vehiculo4 = Vehiculo("JKL012", "ModeloD", 15500.00, 140.0, TipoVehiculo.TAXI, transportadora1)
+        vehiculo5 = Vehiculo("MNO345", "ModeloE", 16500.00, 135.0, TipoVehiculo.BUS, transportadora1)
+        vehiculo6 = Vehiculo("HYU485", "ModeloF", 18500.00, 132.0, TipoVehiculo.ESCALERA, transportadora1)
+        vehiculo7 = Vehiculo("OIU328", "ModeloG", 14500.00, 121.0, TipoVehiculo.VANS, transportadora1)
+        vehiculo8 = Vehiculo("PQK748", "ModeloH", 17500.00, 139.0, TipoVehiculo.TAXI, transportadora1)
+
+        def ventanaInicial(transportadora):
+            #label_top_center.configure(text="Talleres y Mecanicos")
+            #label_top_left.destroy()
+            #label_bottom_left_bt.destroy()
+            #label_bottom_left_extra.destroy()
+            #label_bottom_left_tp.destroy()
+            #label_bottom_right_bt.destroy()
+            #label_bottom_right_extra.destroy()
+            #label_bottom_right_tp.destroy()
+
+            #Destruccion de los frames
+            frame_top.destroy()
+            frame_bottom.destroy()
+
+            #Creacion de los nuevos frames
+            new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+            new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+            new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+            new_frame_top_center = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+            new_frame_top_left = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+            new_frame_bottom_left = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+            new_frame_bottom_right = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+            new_frame_bottom_center = tk.Frame(new_frame_bottom, bd = 3, bg = colors["background"])
+
+            #Ubicacion de los frames
+            new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+            new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+            new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+            new_frame_top_center.place (relx=0.2, rely=0.15, relwidth = 0.6, relheight=1)
+            new_frame_top_left.place (relx = 0, rely = 0., relwidth= 0.2, relheight = 1)
+            
+            new_frame_bottom_left.place (relx = 0, rely = 0., relwidth = 0.2, relheight= 1)
+            new_frame_bottom_right.place (relx = 0.8, rely = 0, relwidth = 0.2, relheight= 1)
+            new_frame_bottom_center.place (relx = 0.2, rely = 0, relwidth = 0.6, relheight= 1)
+            
+            
+
+            #Creacion de los labels
+            new_label_top_center = tk.Label(new_frame_top_center, text= "Talleres y Mecanicos", font=("Segoe Script", 30, "bold"), fg=colors["amarillo"], bd=3, bg=colors["background"], relief="ridge")
+            new_label_top_right = tk.Label(new_frame_top_left, text="TC", bd=3, font=("Segoe Script", 60, "bold"), fg=colors["text"], bg=colors["background"])
+            
+            new_label_center = tk.Label(new_frame_center, text = "Elija la accion que desea realizar", font= ("Segoe Script", 30, "bold"), fg = "white", bd = 3, bg=colors["background"])
+
+            #Ubicacion de los labels
+            new_label_top_center.place(relx=0.5,rely=0.4, anchor="center")
+            new_label_top_right.place(relx=0.0, rely=0.5, relwidth=1, anchor='w')
+            new_label_center.place (relx = 0.5, rely = 0.5, relwidth = 1, anchor="center")
+
+            #Buttons
+
+            botonAgregarVehiculo = tk.Button(new_frame_bottom_center, text = "Agregar un nuevo vehiculo",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: agregarVehiculo(transportadora))
+            botonAdministrarVehiculos = tk.Button(new_frame_bottom_center, text = "Administrar vehiculos",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: administrarVehiculos (transportadora))
+            botonAdministrarMecanicos = tk.Button(new_frame_bottom_center, text = "Administrar mecanicos",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: administrarMecanicos(transportadora))
+            botonCambiarTaller = tk.Button(new_frame_bottom_center, text = "Cambiar taller",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: cambiarTaller(transportadora))
+            botonIrAtras = tk.Button(new_frame_bottom_center, text = "Ir atras",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command = lambda: interfazPrincipal(ventanaInicio))
+
+            botonAgregarVehiculo.place (relx = 0.33333, rely = 0.15, relwidth= 0.3333, relheight= 0.1)
+            botonAdministrarVehiculos.place (relx = 0.33333, rely= 0.30, relwidth=0.3333, relheight=0.1 )
+            botonAdministrarMecanicos.place (relx= 0.33333, rely= 0.45, relwidth= 0.3333, relheight= 0.1)
+            botonCambiarTaller.place (relx = 0.33333, rely = 0.60, relwidth=0.3333, relheight=0.1)
+            botonIrAtras.place (relx = 0.33333, rely = 0.75, relwidth=0.3333, relheight=0.1)
+
+        
+        def seleccionTransportadora ():
+
+            if Terminal.getTransportadoras() == None or len(Terminal.getTransportadoras()) == 0:
+
+                messagebox.showerror(title="No cuenta con transportadoras", message="Cree una transportadora antes de continuar")
+            
+            else:
+
+                #Creacion de los nuevos frames
+                new_frame_top = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_center = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                new_frame_top_center = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+                new_frame_top_left = tk.Frame(new_frame_top, bd = 3, bg = colors["background"])
+                new_frame_bottom_left = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+                new_frame_bottom_right = tk.Frame(new_frame_bottom, bd = 3, bg = colors["grisOscuro"])
+                new_frame_bottom_center = tk.Frame(new_frame_bottom, bd = 3, bg = colors["background"])
+
+                #Ubicacion de los frames
+                new_frame_top.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+                new_frame_center.place(relx=0, rely=0.15, relwidth=1, relheight=0.1)
+                new_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+                new_frame_top_center.place (relx=0.2, rely=0.15, relwidth = 0.6, relheight=1)
+                new_frame_top_left.place (relx = 0, rely = 0., relwidth= 0.2, relheight = 1)
+                
+                new_frame_bottom_left.place (relx = 0, rely = 0., relwidth = 0.2, relheight= 1)
+                new_frame_bottom_right.place (relx = 0.8, rely = 0, relwidth = 0.2, relheight= 1)
+                new_frame_bottom_center.place (relx = 0.2, rely = 0, relwidth = 0.6, relheight= 1)
+
+                #listBox
+
+                                
+
+                lb = tk.Listbox(new_frame_bottom_center)
+                lb.place(relx= 0.2, rely = 0.1, relwidth=0.6, relheight=0.7)
+                
+                i = 0
+                for transportadora in Terminal.getTransportadoras():
+
+                    lb.insert(i, f"{i+1}. Nombre: {transportadora.getNombre()}")
+                    i += 1
+                
+                #ScrollBar
+
+                sb = ttk.Scrollbar(new_frame_bottom_center, orient=tk.VERTICAL)
+                sb.config(command=lb.yview)
+                sb.place(relx=0.8, rely= 0.1, relwidth=0.02, relheight=0.7)
+               
+                def elegirTrans():
+
+                    transportadora = Terminal.getTransportadoras()[lb.curselection()[0]]
+
+                    if transportadora.getTaller() == None:
+
+                        messagebox.showinfo(title="No cuenta con taller", message="La transportadora no tiene taller, cree uno")
+
+                        cambiarTaller(transportadora)
+
+                    else:
+
+                        ventanaInicial(transportadora)
+
+                #button
+                elegirBoton = tk.Button(new_frame_bottom_center, text= "elegir", font= "Century", command= elegirTrans)
+                #Emplacement
+                elegirBoton.place(relx= 0.33333, rely = 0.85, relwidth=0.333333, relheight=0.1)
+
+
+            
+            
+
+            #Creacion de los labels
+            new_label_top_center = tk.Label(new_frame_top_center, text= "Talleres y Mecanicos", font=("Segoe Script", 30, "bold"), fg=colors["amarillo"], bd=3, bg=colors["background"], relief="ridge")
+            new_label_top_right = tk.Label(new_frame_top_left, text="TC", bd=3, font=("Segoe Script", 60, "bold"), fg=colors["text"], bg=colors["background"])
+            
+            new_label_center = tk.Label(new_frame_center, text = "Elija una transportadora", font= ("Segoe Script", 30, "bold"), fg = "white", bd = 3, bg=colors["background"])
+
+            #Ubicacion de los labels
+            new_label_top_center.place(relx=0.5,rely=0.4, anchor="center")
+            new_label_top_right.place(relx=0.0, rely=0.5, relwidth=1, anchor='w')
+            new_label_center.place (relx = 0.5, rely = 0.5, relwidth = 1, anchor="center")
+
+
+        seleccionTransportadora()
+
+
+
             
 
     def funcionalidad5():

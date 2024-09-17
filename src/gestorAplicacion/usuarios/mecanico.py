@@ -111,7 +111,7 @@ class Mecanico (Persona, Incentivo):
     
     def getNombre (self):
 
-        return(self._nombre)
+        return(self.nombre)
     
     @classmethod
     def setMecanicos (cls, mecanicos):

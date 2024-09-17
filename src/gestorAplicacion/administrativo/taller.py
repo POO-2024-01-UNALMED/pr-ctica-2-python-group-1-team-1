@@ -7,6 +7,7 @@ sys.path.append(os.path.abspath("src"))
 import math
 import random
 from gestorAplicacion.administrativo.transportadora import Transportadora
+from src.gestorAplicacion.tiempo.tiempo import Tiempo
 
 class Taller ():
 
@@ -44,12 +45,40 @@ class Taller ():
             if i.getEstado ():
 
                 i.agregarVehiculoCola(vehiculo)
-                vehiculo.setFechaHoraReparacion ()
+                vehiculo.setFechaHoraReparacion (Tiempo.fechaHora + 700 - round(i.getExperiencia() * 7))
+                vehiculo.setMecanicoAsociado (i)
+                self._vehiculosEnReparacion.append(vehiculo)
+                vehiculo.setEstado(False)
+                vehiculo.setReparando(True)
+                vehiculo.getMecanicoAsociado().setEstado(False)
+                i.setEstado(False)
+                return
+            
+        for i in range (0, len(self._mecanicos), 1):
+
+            if i == 0:
+
+                mecanico = self._mecanicos[i]
+
+            if self._mecanicos[i].getVehiculosReparando()[-1].getFechaHoraReparacion() <= mecanico.getVehiculosReparando()[-1].getFechaHoraReparacion():
+
+                mecanico = self._mecanicos[i]
+
+        mecanico.agregarVehiculoCola(vehiculo)
+        vehiculo.setFechaHoraReparacion(mecanico.getVehiculosReparando()[-1].getFechaHoraReparacion() + 700 - round(mecanico.getExperiencia() * 7))
+        vehiculo.setMecanicoAsociado(mecanico)
+        self._vehiculosEnReparacion.append(vehiculo)
+        vehiculo.setEstado(False)
+        vehiculo.setReparando(True)
+        vehiculo.getMecanicosAsociado().setEstado(False)
+        mecanico.setEstado(False)
+        return
         
     def removerVehiculoReparacion (self, vehiculo):
 
         self._vehiculosEnReparacion.remove (vehiculo)
 
+        
         
     def generarCotizacion (self, vehiculo):
 
@@ -63,9 +92,9 @@ class Taller ():
             if i.getEstado():
 
                 mecanico = i
-                tiempo = 1440 - math.round(i.getExperiencia()*1440/100)
+                tiempo = 1440 - round(i.getExperiencia()*1440/100)
 
-            count = False
+                count = False
 
         if count:
 
@@ -80,19 +109,27 @@ class Taller ():
                     mecanico = self._mecanicos [i]
 
 
-            tiempo = (mecanico.getVehiculosReparando[-1].getFechaHoraReparacion() + 1440 - math.round(mecanico.getExperiencia()*1440/100)) - Tiempo.getFechaHora()
+            tiempo = (mecanico.getVehiculosReparando()[-1].getFechaHoraReparacion() + 1440 - round(mecanico.getExperiencia()*1440/100)) - Tiempo.fechaHora
 
-        precio = math.round((vehiculo.getPrecio() - (vehiculo.getPrecio()*vehiculo.getIntegridad()/100))/2)
-        precioFinal = math.round(precio + (vehiculo.getMecanicoAsociado().getExperiencia() * precio / 200))
+        precio = round((vehiculo.getPrecio() - (vehiculo.getPrecio()*vehiculo.getIntegridad()/100))/2)
+        precioFinal = round(precio + (mecanico.getExperiencia() * precio / 200))
+  
+        cotizacion = [precioFinal, tiempo]
+        return (cotizacion)
+    
+    def aplicarGastos (self, vehiculo):
+
+        precio = round((vehiculo.getPrecio() - (vehiculo.getPrecio()*vehiculo.getIntegridad()/100))/2)
+        precioFinal = round (precio + (vehiculo.getMecanicoAsociado().getExperiencia()*precio/200))
         vehiculo.getTransportadora().reducirDinero(precioFinal)
-        vehiculo.getMecanicoAsociado().aumentarDinero(math.round(precioFinal*0.3))
+        vehiculo.getMecanicoAsociado().aumentarDinero(round(precioFinal*0.3))
 
         
     def agregarVehiculoVenta (self, vehiculo):
 
         self._vehiculosEnVenta.append (vehiculo)
         vehiculo.setPrecio (self.calcularValor(vehiculo))
-        vehiculo.setFechaHoraReparacion (math.round(Tiempo.getFechaHora() + (1440 + random.randint())))
+        vehiculo.setFechaHoraReparacion (round(Tiempo.getFechaHora() + (1440 + random.randint())))
         vehiculo.setReparando (True)
 
     def venderVehiculo (self, vehiculo):
@@ -104,7 +141,7 @@ class Taller ():
 
     def calcularValor (self, vehiculo):
 
-        return(math.round((vehiculo.getPrecio() - (vehiculo.getPrecio() * 0.3)) * vehiculo.getIntegridad()/100))
+        return(round((vehiculo.getPrecio() - (vehiculo.getPrecio() * 0.3)) * vehiculo.getIntegridad()/100))
 
     #Getters and setters
 

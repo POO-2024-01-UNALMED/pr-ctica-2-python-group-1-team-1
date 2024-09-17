@@ -1,6 +1,12 @@
 import math
 import random
 
+import sys
+import os
+sys.path.append(os.path.join(os.path.abspath("src"), ".."))
+
+from src.gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
+
 class Vehiculo ():
 
     _listaVehiculos = []
@@ -21,6 +27,8 @@ class Vehiculo ():
         self._tipo = tipo
         self._capacidad = tipo.getCapacidad()
         self._transportadora = transportadora
+        transportadora.agregarVehiculo(self)
+        transportadora.getTerminal().calcularCantidadVehiculos()
         Vehiculo._listaVehiculos.append(self)
 
     def viaje (self, kilometros):
