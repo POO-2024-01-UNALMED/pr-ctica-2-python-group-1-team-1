@@ -26,6 +26,7 @@ from src.gestorAplicacion.constantes.destino import Destino
 from src.gestorAplicacion.administrativo.taller import Taller
 from src.gestorAplicacion.usuarios.mecanico import Mecanico
 from src.excepciones.exceptionInput import ExceptionInput
+from src.excepciones.notFoundException import NotFoundException
 
 class Variables ():
 
@@ -624,8 +625,7 @@ def interfazPrincipal(ventanaInicio):
                                         #messagebox.showinfo("Incompativilidad", "Ingrese un valor entero en edad")
                                         raise ExceptionInput("entero","edad")
                                         pedirInformacion()
-                            else:
-                                print("Datos incompletos para crear el pasajero.")
+
                         except ExceptionInput:
                             pedirInformacion()
                     else:

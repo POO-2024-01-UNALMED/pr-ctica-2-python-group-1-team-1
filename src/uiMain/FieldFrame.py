@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 
 
+
 def alertWarn(title, message):
     messagebox.showwarning(title, message)
 
@@ -105,6 +106,7 @@ class FieldFrame(tk.Frame):
 
         if camposVacios:
             alertWarn("Entradas Vacías", f"Error, por favor completa todos los campos: {', '.join(camposVacios)}")
+            
             return False
 
         if devolucionLlamado is not None:
