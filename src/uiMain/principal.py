@@ -3,6 +3,7 @@ import random
 from tkinter import messagebox
 from FieldFrame import FieldFrame
 from TablasFieldFrame import TablaFrame, TablaFrameDinamica, ResultadosOperacion
+from tkinter import ttk
 
 import sys
 import os
