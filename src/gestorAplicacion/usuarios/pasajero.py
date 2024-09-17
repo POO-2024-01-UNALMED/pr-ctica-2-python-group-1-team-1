@@ -6,8 +6,10 @@ sys.path.append(os.path.abspath("src"))
 
 from gestorAplicacion.usuarios.persona import Persona 
 from gestorAplicacion.constantes.incentivo import Incentivo
+from gestorAplicacion.constantes.tipoPasajero import TipoPasajero
+
 class Pasajero(Persona, Incentivo):
-    def __init__(self,tipo, id, edad, nombre):
+    def __init__(self,tipo: TipoPasajero, id: int, edad: int , nombre: str):
         self._tipoPasajero = tipo
         self._viaje = None
         super().__init__(id, edad, nombre)

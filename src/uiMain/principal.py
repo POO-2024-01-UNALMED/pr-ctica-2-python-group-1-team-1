@@ -167,41 +167,48 @@ def interfazPrincipal(ventanaInicio):
     # FUNCIONALIDADES
     def funcionalidad1():
         from src.gestorAplicacion.administrativo.transportadora import Transportadora
+        from src.gestorAplicacion.usuarios.pasajero import Pasajero
+        from src.excepciones.noViajesErrorDestino import NoViajesErrorDestino
+        from src.excepciones.noViajesErrorTipoPasajero import NoViajesErrorTipoPasajero
+        from src.excepciones.noViajesErrorModalidad import NoViajesErrorModalidad
         #VARIABLES PARA LA FUNCIONALIDAD
         #print(len(Terminal.getPasajeros()))
         #for viaje in Terminal.getViajes():
-         #   print(len(viaje.getPasajeros()))
+        #   print(len(viaje.getPasajeros()))
 
-        lista = estructura_frames("Venta Viajes", "sasaasdada")
+        lista = estructura_frames("Venta Viajes", "Esta página está destinada al administrador para gestionar la oferta de viajes.\n" + 
+                                "Permite definir detalles clave como el destino, el tipo de pasajero, la modalidad de viaje,\n" + 
+                                "el tipo de vehículo y la transportadora. Facilita una administración eficiente, asegurando\n" +
+                                "que las opciones de viaje se ajusten adecuadamente a las necesidades del usuario. 🚍")
         frame_bottom = lista[0]
         label_top_center = lista[1]
         label_center_center = lista[2]
-
-        label_top_center.configure(text="Venta de Viajes")
+        label_top_center.configure(text="🚎Venta de Viajes🚌")
 
         def elegirDestino(): # 1
             def devolucionLlamado(formularioDatos):
                 global destinoDeseado
                 global viajesDisponibles
 
-                # Suponiendo que 'formularioDatos' es un diccionario y contiene un único destino
-                destino_nombre = list(formularioDatos.values())[0]
-                
-                destinoDeseado = Destino[destino_nombre]  # Convertir el nombre del destino a un Enum
-                print(destinoDeseado)
-                print(type(destinoDeseado))
+                try:
+                    # Suponiendo que 'formularioDatos' es un diccionario y contiene un único destino
+                    destino_nombre = list(formularioDatos.values())[0]
+                    
+                    # Convertir el nombre del destino a un Enum
+                    destinoDeseado = Destino[destino_nombre] 
+                    viajesDisponibles = Terminal.viajesDestino(destinoDeseado)
 
-                viajesDisponibles = Terminal.viajesDestino(destinoDeseado)
-                for viaje in viajesDisponibles:
-                    print(viaje.getVehiculo().getTipo().name)
+                    for viaje in viajesDisponibles:
+                        print(viaje.getVehiculo().getTipo().name)
 
-                if len(viajesDisponibles) == 0:
-                    messagebox.showinfo("Sin viajes disponibles", "No hay viajes disponibles para este destino")
-                    elegirDestino()
-                  
-                else:
-                    print(f"viajesDisponibles{viajesDisponibles}")
-                    elegirTipoPasajero()
+                    if len(viajesDisponibles) == 0:
+                        raise NoViajesErrorDestino(destinoDeseado)
+                    
+                    else:
+                        elegirTipoPasajero()
+
+                except NoViajesErrorDestino:
+                    pass
                 
                 # Llamar al siguiente método
                 
@@ -216,7 +223,7 @@ def interfazPrincipal(ventanaInicio):
                 tituloCriterios="Opciones",
                 criterios=criterios,
                 tituloValores="Selección",
-                valores=destinos,
+                valores=destinos[1:],
                 habilitado=habilitado,
                 devolucionLlamado= devolucionLlamado
                 )
@@ -232,20 +239,24 @@ def interfazPrincipal(ventanaInicio):
             def devolucionLlamado(formularioDatos):
                 global tipoPasajero
                 global viajesDisponibles
+                global cantidad
                 tipoPasajero = list(formularioDatos.values())[0]
                 tipoPasajero = TipoPasajero[tipoPasajero]
 
                 if tipoPasajero == TipoPasajero.ESTUDIANTE:
-                    viajesDisponibles = Terminal.viajesParaEstudiantes(viajesDisponibles)
-                    if len(viajesDisponibles) != 0:
-                        elegirTipoVehiculoEstudiante()
+                    try:
+                        viajesDisponibles2 = Terminal.viajesParaEstudiantes(viajesDisponibles)
+                        if len(viajesDisponibles2) != 0:
+                            viajesDisponibles = viajesDisponibles2
+                            cantidad = 1
+                            elegirTipoVehiculoEstudiante()
+                                    
+                        elif len(viajesDisponibles2)==0:
 
-                                
-                    elif len(viajesDisponibles)==0:
-
-                        messagebox.showinfo("Sin viajes disponibles", "No hay viajes disponibles para este tipo de pasajero")
-                        elegirTipoPasajero()
-
+                            raise NoViajesErrorTipoPasajero(tipoPasajero)
+                    
+                    except NoViajesErrorTipoPasajero:
+                        pass
 
                 else:
                     separarPasajeros1()
@@ -272,30 +283,22 @@ def interfazPrincipal(ventanaInicio):
             frame_bottom.grid_columnconfigure(0, weight=1)
 
         def elegirTipoVehiculoEstudiante():#3.1
+
             def devolucionLlamado(formularioDatos):
+
                 global viajesDisponibles
                 global tipoVehiculo
                 tipoVehiculo = formularioDatos
-                print(tipoVehiculo)
                 tipo = list(formularioDatos.values())[0]
                 tipoVehiculo = TipoVehiculo[tipo]
-                print(viajesDisponibles)
                 viajesDisponibles2 = Terminal.viajesParaEstudiantes(viajesDisponibles,tipo)
-                print(viajesDisponibles2)
 
                 if len(viajesDisponibles2) == 0:
-                    def mostrar():
-                        for viaje in viajesDisponibles:
-                            lista = []
-                            if not viaje.getVehiculo().getTipo().name in lista:
-                                lista.append(viaje.getVehiculo().getTipo().name)
-                        return lista
-                    messagebox.showinfo("Sin viajes disponibles", f"No hay viajes disponibles para este tipo de vehiculo {mostrar()}")
+
                     elegirTipoVehiculoEstudiante()
                 else:
                     viajesDisponibles = viajesDisponibles2
-                    elegirTranportadora()
-                    print("si hay")
+                    elegirTransportadora()
 
             criterios = ["Tipo vehiculo"]
             lista = []
@@ -325,18 +328,95 @@ def interfazPrincipal(ventanaInicio):
             frame_bottom.grid_rowconfigure(0, weight=1)
             frame_bottom.grid_columnconfigure(0, weight=1)
         
+        def elegirTransportadora():#estudiante 4.0 
+
+            """Elegir el primer viaje que encuentre de la transportadora"""
+                    
+            def devolucionLlamado(formularioDatos):
+
+                global viajeSeleccionado
+                global tipoPasajero
+                global viajesDisponibles
+                indice = int(formularioDatos.split(" ")[-1])
+                transportadora = transportadoras[indice-1]
+                
+                #for viaje in transportadora.getViajesAsignados():
+                for viaje in viajesDisponibles:
+                    if viaje.getVehiculo().getTransportadora() == transportadora:
+                        viajeSeleccionado = viaje
+                        break
+
+                mostrarInformacionViaje()
+                    
+            global transportadoras
+
+            transportadoras =Terminal.transportadorasViaje(viajesDisponibles)
+
+            # Create the FieldFrame widget
+            field_frame = TablaFrame(["Opcion","Transportadora"],
+                                    ["Nombre"],
+                                    frame_bottom,
+                                    transportadoras, 
+                                    [False],
+                                    devolucionLlamado=devolucionLlamado)
+
+            # UBICACIÓN DEL FIELD FRAME
+
+            # Si es necesario, asegúrate de configurar las filas y columnas para que se expandan
+            field_frame.grid(row=0, column=0, sticky="nsew")
+            frame_bottom.grid_rowconfigure(0, weight=1)
+            frame_bottom.grid_columnconfigure(0, weight=1)
+                        
+        
         def elegirModalidad():
+
             def devolucionLlamado(formularioDatos):
                 global viajesDisponibles
-                tipoPasajero = list(formularioDatos.values())[0]
-                tipoPasajero = TipoPasajero[tipoPasajero]
+                global viajeSeleccionado
+                print(formularioDatos)
 
+                 
+                if formularioDatos['Modalidad'] == "Mayor velocidad":
+                    try:
+                        viajeSeleccionado = Terminal.masRapido(viajesDisponibles)
+                        if not viajeSeleccionado:
+                             
+                            raise NoViajesErrorModalidad(modalidad[0])
+                        else:
+                            mostrarInformacionViaje()
+                    except NoViajesErrorModalidad:
+                        pass           
 
+                elif formularioDatos['Modalidad'] == "Más económico":
+                    try:
+                        viajeSeleccionado = Terminal.masEconomico(viajesDisponibles)
+                        if not viajeSeleccionado:
+                            raise NoViajesErrorModalidad(modalidad[1])
+                        else:
+                            mostrarInformacionViaje()
+
+                    except NoViajesErrorModalidad:
+                        pass 
+                
+                elif formularioDatos['Modalidad'] == "Transportadora":
+                    elegirTransportadora()
+
+                elif formularioDatos['Modalidad'] == "Salida con mayor antelación":
+                    viajeSeleccionado = Terminal.obtenerViajeMasProximo(viajesDisponibles)
+                    try:
+                        if not viajeSeleccionado:
+                            raise NoViajesErrorModalidad(modalidad[3])
+                        else:
+                            mostrarInformacionViaje()
+                    except NoViajesErrorModalidad:
+                        pass
+                        
+                    
             criterios = ["Modalidad"]
-            tiposPasajeros= ["Mayor velocidad",
-                             "Salida con mayor antelación",
-                             "Más económico",
-                             "Transportadora"]
+            modalidad= ["Mayor velocidad",
+                            "Salida con mayor antelación",
+                            "Más económico",
+                            "Transportadora"]
             habilitado = [False, False, False]
 
             # Create the FieldFrame widget
@@ -345,7 +425,7 @@ def interfazPrincipal(ventanaInicio):
                 tituloCriterios="Opciones",
                 criterios=criterios,
                 tituloValores="Selección",
-                valores=tiposPasajeros,
+                valores=modalidad,
                 habilitado=habilitado,
                 devolucionLlamado= devolucionLlamado
                 )
@@ -355,65 +435,64 @@ def interfazPrincipal(ventanaInicio):
             field_frame.grid(row=0, column=0, sticky="nsew")
             frame_bottom.grid_rowconfigure(0, weight=1)
             frame_bottom.grid_columnconfigure(0, weight=1)
-        
-        def elegirTranportadora():#estudiante 4.0 
-
-            """Elegir el primer viaje que encuentre de la transportadora"""
-                    
-            def devolucionLlamado(formularioDatos):
-                global viajeSeleccionado
-                global tipoPasajero
-                global viajesDisponibles
-                print(type(formularioDatos))
-                indice = int(formularioDatos.split(" ")[-1])
-                print(type(indice))
-                transportadora = transportadoras[indice-1]
-                print(transportadora.getNombre())
-                
-                #for viaje in transportadora.getViajesAsignados():
-                for viaje in viajesDisponibles:
-                    if viaje.getVehiculo().getTransportadora() == transportadora:
-                        viajeSeleccionado = viaje
-                        break
-
-                print(viajeSeleccionado.getVehiculo().getTipo().name)
-                    
-            global transportadoras
-            transportadoras =Terminal.transportadorasViaje(viajesDisponibles)
-
-            frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
-            frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
-
-            # Create the FieldFrame widget
-            field_frame = TablaFrame(["Opcion","Transportadora"],
-                                     ["Nombre"],
-                                     frame_bottom,
-                                     transportadoras, 
-                                     [False],
-                                     devolucionLlamado=devolucionLlamado)
-
-            # UBICACIÓN DEL FIELD FRAME
-
-            # Si es necesario, asegúrate de configurar las filas y columnas para que se expandan
-            field_frame.grid(row=0, column=0, sticky="nsew")
-            frame_bottom.grid_rowconfigure(0, weight=1)
-            frame_bottom.grid_columnconfigure(0, weight=1)
-                        
 
         def elegirCantidad():
+            global tipoPasajero
             def devolucionLlamado(formularioDatos):
                 global cantidad
+                global viajesDisponibles
+                #on_submit(formularioDatos)
+                #if formilario["cantidad"]==None:
+                #   print()
                 if isinstance(formularioDatos, dict):
-            # Convierte los valores del diccionario en una lista
-                    lista = list(formularioDatos.values())
-                    print(f"Lista de valores: {lista}")
+                # Convierte los valores del diccionario en una lista
+                    lista = sacarValores(formularioDatos)
+                    print(lista)
                     
                     if len(lista) > 2:
-                        cantidad = lista[2]
-                        if cantidad>15:
+                        cantidad = int(lista[2])
+                        if cantidad > 15:
                                 messagebox.showinfo("Sin viajes disponibles", "No se vende una cantidad superior a 15")
-                        print(cantidad)
-                        elegirModalidad()
+                                elegirCantidad()
+                        else:
+
+                            if tipoPasajero == TipoPasajero.DISCAPACITADO or tipoPasajero == TipoPasajero.REGULAR:
+                                viajesDisponibles2 = Terminal.viajesParaRegularesYDiscapacitados(cantidad, viajesDisponibles)
+                                if len(viajesDisponibles2) == 0:
+
+                                    mayorCantidad = 0
+                                    
+                                    for viaje in viajesDisponibles:
+                                        asientos = viaje.verificarAsientos()
+                                        if asientos > mayorCantidad:
+                                            mayorCantidad = asientos
+
+                                    messagebox.showinfo("Sin viajes disponibles", f"Insuficiencia de cupos, máximo de cupos en este caso {mayorCantidad}")
+                                    elegirTipoPasajero()
+
+                                else:
+                                    viajesDisponibles = viajesDisponibles2
+
+                                    elegirModalidad()
+
+                            elif tipoPasajero == TipoPasajero.VIP:
+                                viajesDisponibles2 = Terminal.viajesParaVips(cantidad, viajesDisponibles)
+                                if len(viajesDisponibles2) == 0:
+
+                                    mayorCantidad = 0
+                                    
+                                    for viaje in viajesDisponibles:
+                                        asientos = viaje.verificarAsientos()
+                                        if asientos > mayorCantidad:
+                                            mayorCantidad = asientos
+
+                                    if mayorCantidad > 0: 
+                                        messagebox.showinfo("Sin viajes disponibles", f"Insuficiencia de cupos, máximo de cupos en este caso {mayorCantidad}")
+                                        elegirTipoPasajero()
+                                else:
+                                    viajesDisponibles = viajesDisponibles2
+
+                                    elegirModalidad()
                     else:
                         print("La lista no contiene suficientes elementos.")
                 else:
@@ -429,58 +508,118 @@ def interfazPrincipal(ventanaInicio):
             tituloValores="Valor",
             valores=[destinoDeseado.name, tipoPasajero.name],
             habilitado=habilitado,
+            devolucionLlamado= devolucionLlamado  # Aquí se usa 'devolucionLlamado'
+            )
+            field_frame.grid(row=0, column=0, sticky="nsew")
+            frame_bottom.grid_rowconfigure(0, weight=1)
+            frame_bottom.grid_columnconfigure(0, weight=1)
+
+        def sacarValores(dic):
+            lista = list(dic.values())
+            return lista
+        
+        def separarPasajeros1():
+            global viajesDisponibles
+
+            if tipoPasajero == TipoPasajero.VIP:
+                viajesDisponibles2 = Terminal.viajesParaVips(viajesDisponibles)
+
+                if len(viajesDisponibles2)==0:
+                    messagebox.showinfo("Sin viajes disponibles", "No hay viajes disponibles para este tipo de pasajero")
+                    elegirTipoPasajero()
+                else:
+                    viajesDisponibles = viajesDisponibles2
+                    elegirCantidad()
+            
+            else:
+                elegirCantidad()
+        
+        def mostrarInformacionViaje():
+            global viajeSeleccionado
+
+            def metodo1():
+                elegirTipoPasajero()
+            def metodo2():
+                pedirInformacion()
+
+            atributos = ["ID","Hora salida","Fecha salida","Tipo vehiculo","Transportadora", "Tarifa"]
+            rutas = ["getId","getHora", "getFecha", "getVehiculo.getTipo","getVehiculo.getTransportadora.getNombre", "getTarifa" ]
+
+            label_top_center.configure(text=f"Detalles del Viaje con ID = {viajeSeleccionado.getId()}")
+
+            nombreMetodos = ["Cambiar tipo pasajero", "Solicitar información"]
+
+            resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del viaje", objeto=viajeSeleccionado, criterios=atributos, valores=rutas, parent= frame_bottom, nombreMetodos=nombreMetodos, metodo1= metodo1, metodo2= metodo2)
+
+            resultadosOperacion.grid(row=0, column=0, sticky="nsew")
+            frame_bottom.grid_rowconfigure(0, weight=1)
+            frame_bottom.grid_columnconfigure(0, weight=1)
+        
+        def pedirInformacion():
+            global cantidad
+            print(cantidad)
+
+            valorAPagar = cantidad*(viajeSeleccionado.getTarifa())
+
+            def devolucionLlamado(formularioDatos):
+                global tipoPasajero
+                global tipoVehiculo
+                global viajesDisponibles
+                global viajeSeleccionado
+
+                if isinstance(formularioDatos, dict):
+                    lista = list(formularioDatos.values())
+                    if len(lista) >= 7:
+                        nombre = str(lista[0])
+                        tipo = TipoPasajero[lista[1]]
+                        id = int(lista[2])
+                        edad = int(lista[3])
+                        cantidad = float(lista[4])  # Corrección aquí
+                        valorAPagar = float(lista[5])
+                        valorPagado = float(lista[6])
+
+
+                        # Solo crea el pasajero si todas las variables están inicializadas
+                        if nombre and tipo and id and edad:
+                            pasajero = Pasajero(tipo, id, edad, nombre)
+                            print(pasajero)
+                            print(f"Pasajero creado: Nombre: {nombre}, Tipo: {tipo}, ID: {id}, Edad: {edad}")
+                            compararValores(valorAPagar, valorPagado)
+
+                        else:
+                            print("Datos incompletos para crear el pasajero.")
+                    else:
+                        print("Datos insuficientes en el formulario.")
+                else:
+                    print("El formulario no es un diccionario.")
+
+                                
+            criterios = ["Nombre", "Tipo pasajero", "Id", "Edad", "Cantidad", "Valor a pagar", "Valor pagado"]
+            habilitado = [True, False, True, True, False, False, True]
+
+            field_frame = FieldFrame(
+            parent=frame_bottom,
+            tituloCriterios="Criterio",
+            criterios=criterios,
+            tituloValores="Información",
+            valores=["", tipoPasajero.name, "","", cantidad, valorAPagar, ""],
+            habilitado=habilitado,
             devolucionLlamado=devolucionLlamado  # Aquí se usa 'devolucionLlamado'
             )
 
             field_frame.grid(row=0, column=0, sticky="nsew")
             frame_bottom.grid_rowconfigure(0, weight=1)
             frame_bottom.grid_columnconfigure(0, weight=1)
-        
-        def verificarCantidad():
-            global cantidad
-            global viajesDisponibles
-            global tipoPasajero
 
-            if tipoPasajero == TipoPasajero.VIP:
-                viajesDisponibles = Terminal.viajesParaVips(cantidad, viajesDisponibles)
-                if len(viajesDisponibles) == 0:
-                    messagebox.showinfo("Sin viajes disponibles", "No hay viajes disponbles para esa cantidad de puestos")
-                    elegirTipoPasajero()
-                else:
-                    elegirModalidad()
-            
-                if tipoPasajero == TipoPasajero.DISCAPACITADO or tipoPasajero == TipoPasajero.REGULAR:
-                    viajesDisponibles = Terminal.viajesParaRegularesYDiscapacitados(cantidad, viajesDisponibles)
-                    if len(viajesDisponibles) == 0:
-                        messagebox.showinfo("Sin viajes disponibles", "No hay viajes disponbles para esa cantidad de puestos")
-                        elegirTipoPasajero()
-                    else:
-                        elegirModalidad()
-        
-        def separarPasajeros1():
-            global viajesDisponibles
-            global cantidad
-
-            print("Tipo de Pasajero:", tipoPasajero)
-
-            if tipoPasajero == TipoPasajero.VIP:
-                viajesDisponibles = Terminal.viajesParaVips(cantidad, viajesDisponibles)
-                if len(viajesDisponibles)==0:
-                    messagebox.showinfo("Sin viajes disponibles", "No hay viajes disponibles para este tipo de pasajero")
-                    elegirTipoPasajero()
-                else:
-                    elegirCantidad()
-            
+        def compararValores(cantidadEsperada, cantidadDada):
+            if cantidadDada >= cantidadEsperada:
+                print("compra exitosa")
             else:
-                viajesDisponibles = Terminal.viajesParaRegularesYDiscapacitados(cantidad, viajesDisponibles)
-                if len(viajesDisponibles)==0:
-                    messagebox.showinfo("Sin viajes disponibles", "No hay viajes disponibles para este tipo de pasajero")
-                    elegirTipoPasajero()
-                
-                else:
-                    elegirCantidad()
-
+                messagebox.showinfo("Sin viajes disponibles", "No hay cantidad suficiente")
+                elegirDestino()
+        
         elegirDestino()
+
 
     def funcionalidad2():
         from src.gestorAplicacion.administrativo.transportadora import Transportadora

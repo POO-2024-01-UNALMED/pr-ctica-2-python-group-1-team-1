@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, Canvas, Scrollbar# SOLO PARA UTILIZAR EL COMBOBOX
 from enum import Enum
+from tkinter import messagebox
 
 # PALETA DE COLORES
 colors = {
@@ -75,6 +76,7 @@ class TablaFrame(tk.Frame):
                 self.devolucionLlamado(f"Índice seleccionado: {indice_seleccionado}")
         else:
             print("Ningún índice seleccionado")
+            messagebox.showinfo("Error", "Espacio sin seleccionar")
 
     def obtenerDatos(self): # EN CASO DE QUERER TODOS LOS DATOS
         datos_actualizados = {}

@@ -161,7 +161,7 @@ class Viaje:
         total = 0
         
         # Establecer el costo por minuto según el tipo de vehículo
-        tipoVehiculo = self._vehiculo.getTipo()
+        tipoVehiculo = self._vehiculo.getTipo().name
         
         if tipoVehiculo == "TAXI":
             costoPorMinuto = 200
