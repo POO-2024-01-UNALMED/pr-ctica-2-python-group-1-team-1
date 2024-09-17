@@ -5,6 +5,7 @@ from FieldFrame import FieldFrame
 from TablasFieldFrame import TablaFrame, TablaFrameDinamica, ResultadosOperacion
 from tkinter import ttk
 
+
 import sys
 import os
 sys.path.append(os.path.join(os.path.abspath("src"), ".."))
@@ -24,6 +25,7 @@ from src.gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
 from src.gestorAplicacion.constantes.destino import Destino
 from src.gestorAplicacion.administrativo.taller import Taller
 from src.gestorAplicacion.usuarios.mecanico import Mecanico
+from src.excepciones.exceptionInput import ExceptionInput
 
 class Variables ():
 
@@ -596,31 +598,36 @@ def interfazPrincipal(ventanaInicio):
                         valorAPagar = lista[5]
                         valorPagado = lista[6]
 
-
+                        try:
                         # Solo crea el pasajero si todas las variables están inicializadas
-                        if nombre and tipo and id and edad:
-                                if se_puede_convertir_en_entero(edad):
-                                    edad = int(edad)
-                                    if type(float(valorAPagar)) == float:
-                                        if se_puede_convertir_en_float(valorPagado):
+                            if nombre and tipo and id and edad:
+                                    if se_puede_convertir_en_entero(edad):
+                                        edad = int(edad)
+                                        if type(float(valorAPagar)) == float:
+                                            if se_puede_convertir_en_float(valorPagado):
 
-                                            pasajero = Pasajero(tipo, int(id), int(edad), str(nombre))
-                                            print(pasajero)
-                                            print(f"Pasajero creado: Nombre: {nombre}, Tipo: {type(tipo)}, ID: {id}, Edad: {edad}")
-                                            compararValores(float(valorAPagar), float(valorPagado), pasajero)
+                                                pasajero = Pasajero(tipo, int(id), int(edad), str(nombre))
+                                                print(pasajero)
+                                                print(f"Pasajero creado: Nombre: {nombre}, Tipo: {type(tipo)}, ID: {id}, Edad: {edad}")
+                                                compararValores(float(valorAPagar), float(valorPagado), pasajero)
+                                            else:
+                                                #messagebox.showinfo("Incompativilidad", "Ingrese un valor float en valor pagado")
+                                                raise ExceptionInput("float","valor pagado.")
+                                                pedirInformacion()
                                         else:
-                                            messagebox.showinfo("Incompativilidad", "Ingrese un valor float en valor pagado")
+                                            
+                                            #messagebox.showinfo("Incompativilidad", "Ingrese un valor float en valor a pagar")
+                                            raise ExceptionInput("float","valor a pagar.")
                                             pedirInformacion()
                                     else:
                                         
-                                        messagebox.showinfo("Incompativilidad", "Ingrese un valor float en valor a pagar")
+                                        #messagebox.showinfo("Incompativilidad", "Ingrese un valor entero en edad")
+                                        raise ExceptionInput("entero","edad")
                                         pedirInformacion()
-                                else:
-                                    
-                                    messagebox.showinfo("Incompativilidad", "Ingrese un valor entero en edad")
-                                    pedirInformacion()
-                        else:
-                            print("Datos incompletos para crear el pasajero.")
+                            else:
+                                print("Datos incompletos para crear el pasajero.")
+                        except ExceptionInput:
+                            pedirInformacion()
                     else:
                         print("Datos insuficientes en el formulario.")
                 else:
@@ -1003,7 +1010,7 @@ def interfazPrincipal(ventanaInicio):
                                             
 
 
-        
+                                        
 
                                         viajes_disponibles_tabla_2 = TablaFrameDinamica(["Opcion","Destino","Fecha"], ["getLlegada","getFecha"], new6_frame_bottom, conductor.getHorario(), [False,False,False], devolucionLlamado=devolucion_desvincular_vincular)
                                         viajes_disponibles_tabla_2.place(relx=0.5,rely=0.5,anchor="center")                                                                              
@@ -1535,7 +1542,9 @@ def interfazPrincipal(ventanaInicio):
                     i = 0
                     for vehiculo in vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion():
 
-                        lb1.insert(i, f"{i+1}. Placa: {vehiculo.getPlaca()} Modelo: {vehiculo.getModelo()} ")
+                        #print (vehiculo.getFechaHoraReparacion() - Tiempo.tiempos[0].getFechaHora())
+
+                        lb1.insert(i, f"{i+1}. Placa: {vehiculo.getPlaca()} Modelo: {vehiculo.getModelo()}")
                         i += 1
 
 
@@ -1544,7 +1553,7 @@ def interfazPrincipal(ventanaInicio):
 
                        
 
-                        lb2.insert(i, f"{i+1}. Placa: {vehiculo.getPlaca()} Modelo: {vehiculo.getModelo()}")
+                        lb2.insert(i, f"{i+1}. Placa: {vehiculo.getPlaca()} Modelo: {vehiculo.getModelo()} ")
                         i += 1
                         
                     #ScrollBar
