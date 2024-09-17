@@ -91,7 +91,7 @@ class FieldFrame(tk.Frame):
         """
         return self.datos[criterio]["value"]
     
-    def guardarDatos(self, devolucionLlamado): # AGREGAR EL ERROR SUGERIDO
+    def guardarDatos(self, devolucionLlamado): 
         camposVacios = []
 
         for criterio in self.criterios:
@@ -99,18 +99,18 @@ class FieldFrame(tk.Frame):
             self.datos[criterio]["value"] = value
             self.formularioDatos[criterio] = value
 
-            if (value == ""): # VERIFICAR SI HAY CAMPOS VACIOS 
-                camposVacios.append(criterio) # ALMACENA PARA INFORMAR CUAL CRITERIO FALTA
+            # Verifica si el campo está vacío
+            if not value.strip():
+                camposVacios.append(criterio)
 
-            # Try
-            if (devolucionLlamado != None):
-                devolucionLlamado(self.formularioDatos)
-        
-        if (camposVacios):
-            alertWarn("Entradas Vacias", f"Error, por favor completa todos los espacios. Faltan:{', '.join(camposVacios)}")
+        if camposVacios:
+            alertWarn("Entradas Vacías", f"Error, por favor completa todos los campos: {', '.join(camposVacios)}")
             return False
-        
-    
+
+        if devolucionLlamado is not None:
+            devolucionLlamado(self.formularioDatos)
+        return True
+
     def limpiarCasillas(self):
         """
             Limpia todos los datos del formulario
