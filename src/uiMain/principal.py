@@ -16,6 +16,18 @@ from src.gestorAplicacion.tiempo.tiempo import Tiempo
 from src.gestorAplicacion.administrativo.viaje import Viaje
 from src.excepciones.notEnoughExperienceException import NotEnoughExperienceException
 from src.excepciones.notLicenceException import notLicenceException
+from src.gestorAplicacion.administrativo.transportadora import Transportadora
+from src.gestorAplicacion.administrativo.terminal import Terminal
+from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
+from src.gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
+from src.gestorAplicacion.constantes.destino import Destino
+from src.gestorAplicacion.administrativo.taller import Taller
+from src.gestorAplicacion.usuarios.mecanico import Mecanico
+
+class Variables ():
+
+    vehiculo = None
+
 
 def alertWarn(title, message):
     messagebox.showwarning(title, message)
