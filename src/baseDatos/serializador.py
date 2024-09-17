@@ -80,7 +80,7 @@ class Serializador():
     def crearObjetos():
 
         #TERMINAL
-        terminal = Terminal("Terminal del norte", 99999999, 500, 1, [], [], [], 0, Destino.MEDELLIN)
+        terminal = Terminal("Terminal del norte", 99999999, 500, [], [], [], [], 0, Destino.MEDELLIN)
 
         #TRANSPORTADORAS
         transportadoraRapida = Transportadora("Transportadora Rapida", 196000.0, [], [], [], [], [], terminal, None, [], [], None, 4.5)
