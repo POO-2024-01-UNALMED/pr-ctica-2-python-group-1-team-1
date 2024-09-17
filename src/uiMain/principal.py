@@ -1361,10 +1361,10 @@ def interfazPrincipal(ventanaInicio):
 # MÉTODOS PARA EL MENÚ 
 
 def mensajeEmergente():
-    messagebox.showinfo("Información básica", "Nuestra aplicación permite la gestion de una Terminal de Transporte...")
+    messagebox.showinfo("Información básica", "Nuestra aplicación permite la gestion de una Terminal de Transporte, permitiendo funcionalidades que optimizan las tareas y procesos realizados. Ademas ofrece un interfaz muy intuitiva de facil comprensión. ")
 
 def mensajeAcerdade():
-    messagebox.showinfo("Quienes somos", " Santiago Ochoa Cardona \n Johan Ramirez Marin \n Jaime Luis Osorio Gomez \n Juan Camilo Marin Valencia \n Jonathan David Osorio Restrepo")
+    messagebox.showinfo("Quienes somos", "Estudiantes Universidad Nacional \n \nSantiago Ochoa Cardona -- sochoaca@unal.edu.co \n Johan Ramirez Marin -- joramirezma@unal.edu.co \n Jaime Luis Osorio Gomez -- jaosoriogo@unal.edu.co \n Juan Camilo Marin Valencia -- jumarinv@unal.edu.co \n Jonathan David Osorio Restrepo -- joosoriore@unal.edu.co")
 
 def salir(ventanaPrincipal, ventanaInicio):
     ventanaPrincipal.destroy()

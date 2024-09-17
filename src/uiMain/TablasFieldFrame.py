@@ -41,8 +41,8 @@ class TablaFrame(tk.Frame):
                     valor = metodo_get()
 
                 # Si es un valor enum, obtener el .name
-                    if isinstance(valor, Enum):  # Verifica si es una instancia de Enum
-                        valor = valor.name  # Obtine el nombre del valor enum
+                if isinstance(valor, Enum):  # Verifica si es una instancia de Enum
+                    valor = valor.name  # Obtine el nombre del valor enum
 
                 else:
                     valor = "noReconoce"
@@ -242,7 +242,7 @@ class ResultadosOperacion(tk.Frame):
             valor = self.obtener_valor_encadenado(objeto, valor_ruta)
 
             # Crea la etiqueta para el criterio
-            elementoKey = tk.Label(marco, text=criterio, font=("Century", 13), bg=colors["azul"])
+            elementoKey = tk.Label(marco, text=criterio, font=("Small fonts", 13, "bold"), fg= colors["text"], bg=colors["naranja"])
             elementoKey.grid(row=index+1, column=0, padx=5, pady=5)
             marco.grid_rowconfigure(index+1, weight=1)
             marco.grid_columnconfigure(0, weight=1)
@@ -255,7 +255,7 @@ class ResultadosOperacion(tk.Frame):
         
         self.nextFreeRow = index + 2
         # Agregar los botones para ejecutar los métodos
-        boton1 = tk.Button(marco, text=nombreMetodos[0], command=metodo1, bg=colors["naranja"])
+        boton1 = tk.Button(marco, text=nombreMetodos[0], command=metodo1, bg=colors["amarillo"])
         boton1.grid(row=self.nextFreeRow, column=0, padx=5, pady=10, sticky="ew")
         
         boton2 = tk.Button(marco, text=nombreMetodos[1], command=metodo2, bg=colors["azul"])

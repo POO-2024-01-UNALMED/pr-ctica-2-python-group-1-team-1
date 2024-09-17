@@ -67,8 +67,8 @@ menu_opciones.add_command(label= "Salir", background = colors["text"], command=s
 
 # IMAGENES
 # VARIABLES PARA CAMBIAR LAS DESCRIPCIONES DE LAS HOJAS DE VIDA E IMAGENES.
-valores = ["Hoja Vida 1 = Santiago", "Hoja Vida 2 = Jaime", "Hoja Vida 3 = Juan Camilo", "Hoja Vida 4 = Jhonatan", "Hoja Vida 5 = Johan"]
-imagenes = ["src/imagenes/developers/foto1.png", "src/imagenes/developers/foto2.png", "src/imagenes/developers/foto3.png", "src/imagenes/developers/foto4.png", "src/imagenes/developers/foto1.png"]
+valores = ["Juan Camilo Marin Valencia\n Estudiante Ingeniería de Sistemas en la UNAL", "Santiago Ochoa Cardona\nEstudiante de Ingeniería de Sistemas en la UNAL\nTécnico en programación de Software \nMe interesa el desarrollo de IA, CiberSeguridad \ny la programación Competitiva.", "Jaime Luis Osorio Gómez, Edad: 18 años, \n Fecha de Nacimiento: 5/06/2006 \n Soy Estudiante de Ingeniería de Sistemas, \n me gusta mucho jugar fútbol, voleibol, \n hacer ejercicio, leer y comer.", "Johan Ramirez Marin \nTengo habilidades en Java, Python. Me gusta mucho el\ninglés y me gustaria aprender a programar IAs.", "Soy Jonathan David Osorio\nestudiante de Ingeniería de Sistemas Informática. Me interesa el \n desarrollo de tecnologías innovadoras y disfruto de actividades \n como escuchar música, jugar videojuegos y\nhacer deporte."]
+imagenes = ["src/imagenes/developers/foto1.png", "src/imagenes/developers/foto2.png", "src/imagenes/developers/foto3.png", "src/imagenes/developers/foto4.png", "src/imagenes/developers/foto5.png", "src/imagenes/developers/foto6.png", "src/imagenes/developers/foto7.png", "src/imagenes/developers/foto8.png", "src/imagenes/developers/foto9.png", "src/imagenes/developers/foto10.png", "src/imagenes/developers/foto11.png", "src/imagenes/developers/foto12.png", "src/imagenes/developers/foto13.png", "src/imagenes/developers/foto14.png", "src/imagenes/developers/foto15.png", "src/imagenes/developers/foto16.png", "src/imagenes/developers/foto17.png", "src/imagenes/developers/foto18.png", "src/imagenes/developers/foto19.png", "src/imagenes/developers/foto20.png"]
 photoImagenes = [tk.PhotoImage(file = imagen) for imagen in imagenes] # GUARDAR LAS IMAGENES COMO OBJETOS DE PhotoImage
 
 indice_valor = 0 # Todo se indexa desde 0
@@ -80,14 +80,18 @@ def cambiarDescripcionImagen():
     # VAMOS A CAMBIAR EL TEXTO (HOJA DE VIDA) FRAME SUPERIOR DERECHO
     boton_right_top.config(text = valores[indice_valor], font= ("Century", 15))
 
+    # Calcular el índice base para las imágenes
+    indice_imagen = (indice_valor * 4) % len(photoImagenes)
+
+    # CAMBIAR LAS IMAGENES DE CADA SUB-FRAME DENTRO DE P6
+    label_rb_tl.config(image = photoImagenes[indice_imagen])
+    label_rb_br.config(image = photoImagenes[(indice_imagen+1) % len(photoImagenes)])
+    label_rb_bl.config(image = photoImagenes[(indice_imagen+2) % len(photoImagenes)])
+    label_rb_tr.config(image = photoImagenes[(indice_imagen+3) % len(photoImagenes)])
+
     # AUMENTAR EL SIGUIENTE VALOR DE LA LISTA
     indice_valor = (indice_valor + 1) % len(valores)
 
-    # CAMBIAR LAS IMAGENES DE CADA SUB-FRAME DENTRO DE P6
-    label_rb_tl.config(image = photoImagenes[indice_valor])
-    label_rb_br.config(image = photoImagenes[(indice_valor+1) % len(photoImagenes)])
-    label_rb_bl.config(image = photoImagenes[(indice_valor+2) % len(photoImagenes)])
-    label_rb_tr.config(image = photoImagenes[(indice_valor+3) % len(photoImagenes)])
 
 def cambiarImagen():
     """
@@ -136,7 +140,7 @@ label_frame_top = tk.Label(frame_left_top, bd = 5, bg= colors["accent"], relief=
 label_frame_top.pack(expand=True, fill="both", padx=2, pady=2)
 
 # BOTON PARA CAMBIAR LAS HOJAS DE VIDA
-boton_right_top = tk.Button(frame_right_top,bd = 15, bg= colors["amarillo"], text = "Hojas de Vida de los Desarrolladores", fg = "black" ,font= ("Century", 24),activebackground = colors["azul"], command=cambiarDescripcionImagen)
+boton_right_top = tk.Button(frame_right_top,bd = 15, bg= colors["amarillo"], text = "Hojas de Vida de los Desarrolladores", fg = "black" ,font= ("Small fonts", 20, "bold"),activebackground = colors["azul"], command=cambiarDescripcionImagen)
 boton_right_top.pack(expand=True, fill="both", padx=20, pady=20)
 
 # BOTONES ASOCIADO AL INGRESO AL SISTEMA
@@ -168,16 +172,16 @@ frame_rb_bl.grid(row = 1, column = 0, padx=15, pady=15, sticky="nsew")
 frame_rb_br.grid(row = 1, column = 1, padx=15, pady=15, sticky="nsew")
 
 # LABELS ASOCIADOS A LOS FRAME PARA AJUSTAR LAS IMAGENES DE LOS DESARROLLADORES
-label_rb_tl = tk.Label(frame_rb_tl, width= 230, height=230,relief="solid", image = photoImagenes[0])
+label_rb_tl = tk.Label(frame_rb_tl, width= 230, height=230,relief="solid", image = photoImagenes[16])
 label_rb_tl.pack(expand=True, fill="both", padx=2, pady=2)
 
-label_rb_tr = tk.Label(frame_rb_tr, width= 230, height=230,relief="solid", image = photoImagenes[1])
+label_rb_tr = tk.Label(frame_rb_tr, width= 230, height=230,relief="solid", image = photoImagenes[4])
 label_rb_tr.pack(expand=True, fill="both", padx=2, pady=2)
 
-label_rb_bl = tk.Label(frame_rb_bl, width= 230, height=230,relief="solid", image = photoImagenes[2])
+label_rb_bl = tk.Label(frame_rb_bl, width= 230, height=230,relief="solid", image = photoImagenes[12])
 label_rb_bl.pack(expand=True, fill="both", padx=2, pady=2)
 
-label_rb_br = tk.Label(frame_rb_br, width= 230, height=230,relief="solid", image = photoImagenes[3])
+label_rb_br = tk.Label(frame_rb_br, width= 230, height=230,relief="solid", image = photoImagenes[9])
 label_rb_br.pack(expand=True, fill="both", padx=2, pady=2)
 
 root.protocol("WM_DELETE_WINDOW", salir)
