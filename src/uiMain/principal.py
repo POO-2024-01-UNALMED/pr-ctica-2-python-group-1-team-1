@@ -667,11 +667,14 @@ def interfazPrincipal(ventanaInicio):
 
         def compararValores(cantidadEsperada, cantidadDada, pasajero):
             global viajeSeleccionado
+            global cantidad
             if cantidadDada >= cantidadEsperada:
                 pasajero.setDinero(cantidadEsperada)
                 print(pasajero.getDinero())
                 pasajero.setViaje(viajeSeleccionado)
-                viajeSeleccionado.getPasajeros().append(pasajero)
+                for i in range(cantidad):
+
+                    viajeSeleccionado.getPasajeros().append(pasajero)
                 print(pasajero.getViaje())
                 print(viajeSeleccionado.getPasajeros())
                 messagebox.showinfo("Buen viaje", "Venta realizada con éxito. Regresando")
