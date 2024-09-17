@@ -45,7 +45,7 @@ class Taller ():
             if i.getEstado ():
 
                 i.agregarVehiculoCola(vehiculo)
-                vehiculo.setFechaHoraReparacion (Tiempo.fechaHora + 700 - round(i.getExperiencia() * 7))
+                vehiculo.setFechaHoraReparacion (Tiempo.tiempos[0].getFechaHora() + 700 - round(i.getExperiencia() * 7))
                 vehiculo.setMecanicoAsociado (i)
                 self._vehiculosEnReparacion.append(vehiculo)
                 vehiculo.setEstado(False)
@@ -109,7 +109,7 @@ class Taller ():
                     mecanico = self._mecanicos [i]
 
 
-            tiempo = (mecanico.getVehiculosReparando()[-1].getFechaHoraReparacion() + 1440 - round(mecanico.getExperiencia()*1440/100)) - Tiempo.fechaHora
+            tiempo = (mecanico.getVehiculosReparando()[-1].getFechaHoraReparacion() + 1440 - round(mecanico.getExperiencia()*1440/100)) - Tiempo.tiempos[0].getFechaHora()
 
         precio = round((vehiculo.getPrecio() - (vehiculo.getPrecio()*vehiculo.getIntegridad()/100))/2)
         precioFinal = round(precio + (mecanico.getExperiencia() * precio / 200))
@@ -129,14 +129,14 @@ class Taller ():
 
         self._vehiculosEnVenta.append (vehiculo)
         vehiculo.setPrecio (self.calcularValor(vehiculo))
-        vehiculo.setFechaHoraReparacion (round(Tiempo.fechaHora + (1440 * (random.randint(0,10))/10)))
+        vehiculo.setFechaHoraReparacion (round(Tiempo.tiempos[0].getFechaHora() + (1440 * (random.randint(0,10))/10)))
         vehiculo.setReparando (True)
 
     def venderVehiculo (self, vehiculo):
 
         self._transportadora.aumentarDinero (vehiculo.getPrecio())
         self._vehiculosEnVenta.remove (vehiculo)
-        self._transportadroa.removerVehiculo (vehiculo)
+        self._transportadora.removerVehiculo (vehiculo)
         vehiculo.setReparando (False)
 
     def calcularValor (self, vehiculo):

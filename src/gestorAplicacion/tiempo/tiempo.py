@@ -21,7 +21,6 @@ class Tiempo:
     dia = ""
     # Lista para la Serializacón
     tiempos = []
-    fechaHora = 0
 
     # Inicializador
     def __init__(self, intervalo_ms=1000):
@@ -50,7 +49,6 @@ class Tiempo:
         self.calcularSalidaHora() # Define el formato de salida de la hora sirve para hacer validaciones.
         self.calcularSalidaFecha() # Define el formato de salida de la fecha sirve para hacer validaciones.
         self.modificarDia()
-        self.getFechaHora()
         #print(self.mostrarTiempo()) # Pruebas 
         
         # MÉTODOS PARA ADMINISTRAR LOS VIAJES
@@ -58,6 +56,9 @@ class Tiempo:
         self.comprobarViajesEnCurso()
 
         # MÉTODOS PARA ADMINISTRAR EL TALLER
+        self.mecanicosDisponibles()
+        self.verificarVehiculos()
+        self.verificarVehiculosVenta()
 
         # Necesario para reiniciar
         self.ejecutarPeriodicamente() # Reiniciar el temporizador
@@ -76,12 +77,13 @@ class Tiempo:
         self.ejecutando = False
         print("Tiempo detenido.")
 
+    def getFechaHora(self):
+
+        return((525600 * self.año) + (43800 * self.meses) + (10950 * self.semana) + (1440 + self.dias) + (60 * self.horas)) 
     
     # Métodos Repetitivos
 
-    def getFechaHora(self):
 
-        Tiempo.FechaHora = ((525600 * self.año) + (43800 * self.meses) + (10950 * self.semana) + (1440 + self.dias) + (60 * self.horas)) 
 
     """
         Actualiza la hora, los minutos, los días, los meses y los años de acuerdo con el paso del tiempo.
@@ -189,6 +191,7 @@ class Tiempo:
 
     def mecanicosDisponibles (self):
         from src.gestorAplicacion.usuarios.mecanico import Mecanico
+        
 
         for i in Mecanico.getMecanicos():
 
@@ -209,7 +212,8 @@ class Tiempo:
 
             for vehiculo in copiaVehiculos:
 
-                if (vehiculo.getFechaHoraReparacion() <= Tiempo.getFechaHora()):
+                if (vehiculo.getFechaHoraReparacion() <= self.getFechaHora()):
+                    print ("Vehiculo reparado")
 
                     vehiculo.getMecanicoAsociado().repararVehiculo(vehiculo)
                 
@@ -226,7 +230,9 @@ class Tiempo:
 
             for vehiculo in vehiculosEnVenta:
 
-                if (vehiculo.getFechaHoraReparacion() <= Tiempo.getFechaHora()):
+                if (vehiculo.getFechaHoraReparacion() <= Tiempo.tiempos[0].getFechaHora()):
+                    
+                    print ("Vehiculo vendido")
 
                     vehiculo.getTransportadora().getTaller().venderVehiculo(vehiculo)
                     vehiculo.setReparando(False)

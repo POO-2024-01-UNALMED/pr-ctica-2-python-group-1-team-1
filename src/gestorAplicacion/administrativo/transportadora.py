@@ -51,6 +51,10 @@ class Transportadora (Incentivo):
             
             terminal.agregarTransportadora(self)
 
+    def aumentarDinero(self,dinero):
+
+        self._dinero += dinero
+
     def agregarVehiculo (self, vehiculo):
 
         self._vehiculos.append (vehiculo)
