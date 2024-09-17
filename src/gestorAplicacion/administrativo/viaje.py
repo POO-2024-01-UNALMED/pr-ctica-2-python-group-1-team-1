@@ -33,8 +33,9 @@ class Viaje:
         self._tarifa = self.calcularTarifa()
         self._asientosDisponibles = None # Replantear la forma de calcularlos
         Terminal.getViajes().append(self)
-        #self._conductor.getTransportadora().getViajesAsignados().append(self)
+        self._conductor.getTransportadora().getViajesAsignados().append(self)
         self._conductor.getHorario().append(self)
+        #self.asignarPasajerosAViaje(Terminal.getPasajeros())
         Viaje._totalViajes += 1
     
     # Metodos necesarios para inicializar
