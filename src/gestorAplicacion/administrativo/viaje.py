@@ -163,13 +163,13 @@ class Viaje:
         # Establecer el costo por minuto según el tipo de vehículo
         tipoVehiculo = self._vehiculo.getTipo().name
         
-        if tipoVehiculo == "TAXI":
+        if tipoVehiculo == 'TAXI':
             costoPorMinuto = 300
-        elif tipoVehiculo == "VANS":
+        elif tipoVehiculo == 'VANS':
             costoPorMinuto = 250
-        elif tipoVehiculo == "ESCALERA":
+        elif tipoVehiculo == 'ESCALERA':
             costoPorMinuto = 200
-        elif tipoVehiculo == "BUS":
+        elif tipoVehiculo == 'BUS':
             costoPorMinuto = 100
         else:
             return -1  # Valor de retorno inválido

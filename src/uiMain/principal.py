@@ -1,4 +1,5 @@
 import tkinter as tk
+import random
 from tkinter import messagebox
 from FieldFrame import FieldFrame
 from TablasFieldFrame import TablaFrame, TablaFrameDinamica, ResultadosOperacion
@@ -450,49 +451,53 @@ def interfazPrincipal(ventanaInicio):
                     print(lista)
                     
                     if len(lista) > 2:
-                        cantidad = int(lista[2])
-                        if cantidad > 15:
-                                messagebox.showinfo("Sin viajes disponibles", "No se vende una cantidad superior a 15")
-                                elegirCantidad()
-                        else:
+                        if se_puede_convertir_en_entero(lista[2]):
+                            cantidad = int(lista[2])
+                            if cantidad > 15:
+                                    messagebox.showinfo("Sin viajes disponibles", "No se vende una cantidad superior a 15")
+                                    elegirCantidad()
+                            else:
 
-                            if tipoPasajero == TipoPasajero.DISCAPACITADO or tipoPasajero == TipoPasajero.REGULAR:
-                                viajesDisponibles2 = Terminal.viajesParaRegularesYDiscapacitados(cantidad, viajesDisponibles)
-                                if len(viajesDisponibles2) == 0:
+                                if tipoPasajero == TipoPasajero.DISCAPACITADO or tipoPasajero == TipoPasajero.REGULAR:
+                                    viajesDisponibles2 = Terminal.viajesParaRegularesYDiscapacitados(cantidad, viajesDisponibles)
+                                    if len(viajesDisponibles2) == 0:
 
-                                    mayorCantidad = 0
-                                    
-                                    for viaje in viajesDisponibles:
-                                        asientos = viaje.verificarAsientos()
-                                        if asientos > mayorCantidad:
-                                            mayorCantidad = asientos
+                                        mayorCantidad = 0
+                                        
+                                        for viaje in viajesDisponibles:
+                                            asientos = viaje.verificarAsientos()
+                                            if asientos > mayorCantidad:
+                                                mayorCantidad = asientos
 
-                                    messagebox.showinfo("Sin viajes disponibles", f"Insuficiencia de cupos, máximo de cupos en este caso {mayorCantidad}")
-                                    elegirTipoPasajero()
-
-                                else:
-                                    viajesDisponibles = viajesDisponibles2
-
-                                    elegirModalidad()
-
-                            elif tipoPasajero == TipoPasajero.VIP:
-                                viajesDisponibles2 = Terminal.viajesParaVips(cantidad, viajesDisponibles)
-                                if len(viajesDisponibles2) == 0:
-
-                                    mayorCantidad = 0
-                                    
-                                    for viaje in viajesDisponibles:
-                                        asientos = viaje.verificarAsientos()
-                                        if asientos > mayorCantidad:
-                                            mayorCantidad = asientos
-
-                                    if mayorCantidad > 0: 
                                         messagebox.showinfo("Sin viajes disponibles", f"Insuficiencia de cupos, máximo de cupos en este caso {mayorCantidad}")
                                         elegirTipoPasajero()
-                                else:
-                                    viajesDisponibles = viajesDisponibles2
 
-                                    elegirModalidad()
+                                    else:
+                                        viajesDisponibles = viajesDisponibles2
+
+                                        elegirModalidad()
+
+                                elif tipoPasajero == TipoPasajero.VIP:
+                                    viajesDisponibles2 = Terminal.viajesParaVips(cantidad, viajesDisponibles)
+                                    if len(viajesDisponibles2) == 0:
+
+                                        mayorCantidad = 0
+                                        
+                                        for viaje in viajesDisponibles:
+                                            asientos = viaje.verificarAsientos()
+                                            if asientos > mayorCantidad:
+                                                mayorCantidad = asientos
+
+                                        if mayorCantidad > 0: 
+                                            messagebox.showinfo("Sin viajes disponibles", f"Insuficiencia de cupos, máximo de cupos en este caso {mayorCantidad}")
+                                            elegirTipoPasajero()
+                                    else:
+                                        viajesDisponibles = viajesDisponibles2
+
+                                        elegirModalidad()
+                        else:
+                            messagebox.showinfo("Incompatibilidad", f"Ingrese un valor entero")
+                            elegirCantidad()
                     else:
                         print("La lista no contiene suficientes elementos.")
                 else:
@@ -570,22 +575,37 @@ def interfazPrincipal(ventanaInicio):
                 if isinstance(formularioDatos, dict):
                     lista = list(formularioDatos.values())
                     if len(lista) >= 7:
-                        nombre = str(lista[0])
+                        nombre = lista[0]
                         tipo = TipoPasajero[lista[1]]
-                        id = int(lista[2])
-                        edad = int(lista[3])
-                        cantidad = float(lista[4])  # Corrección aquí
-                        valorAPagar = float(lista[5])
-                        valorPagado = float(lista[6])
+                        id = lista[2]
+                        edad = lista[3]
+                        cantidad = lista[4]  # Corrección aquí
+                        valorAPagar = lista[5]
+                        valorPagado = lista[6]
 
 
                         # Solo crea el pasajero si todas las variables están inicializadas
                         if nombre and tipo and id and edad:
-                            pasajero = Pasajero(tipo, id, edad, nombre)
-                            print(pasajero)
-                            print(f"Pasajero creado: Nombre: {nombre}, Tipo: {tipo}, ID: {id}, Edad: {edad}")
-                            compararValores(valorAPagar, valorPagado, pasajero)
+                                if se_puede_convertir_en_entero(edad):
+                                    edad = int(edad)
+                                    if type(float(valorAPagar)) == float:
+                                        if se_puede_convertir_en_float(valorPagado):
 
+                                            pasajero = Pasajero(tipo, int(id), int(edad), str(nombre))
+                                            print(pasajero)
+                                            print(f"Pasajero creado: Nombre: {nombre}, Tipo: {type(tipo)}, ID: {id}, Edad: {edad}")
+                                            compararValores(float(valorAPagar), float(valorPagado), pasajero)
+                                        else:
+                                            messagebox.showinfo("Incompativilidad", "Ingrese un valor float en valor pagado")
+                                            pedirInformacion()
+                                    else:
+                                        
+                                        messagebox.showinfo("Incompativilidad", "Ingrese un valor float en valor a pagar")
+                                        pedirInformacion()
+                                else:
+                                    
+                                    messagebox.showinfo("Incompativilidad", "Ingrese un valor entero en edad")
+                                    pedirInformacion()
                         else:
                             print("Datos incompletos para crear el pasajero.")
                     else:
@@ -595,14 +615,14 @@ def interfazPrincipal(ventanaInicio):
 
                                 
             criterios = ["Nombre", "Tipo pasajero", "Id", "Edad", "Cantidad", "Valor a pagar", "Valor pagado"]
-            habilitado = [True, False, True, True, False, False, True]
+            habilitado = [True, False, False, True, False, False, True]
 
             field_frame = FieldFrame(
             parent=frame_bottom,
             tituloCriterios="Criterio",
             criterios=criterios,
             tituloValores="Información",
-            valores=["", tipoPasajero.name, "","", cantidad, valorAPagar, ""],
+            valores=["", tipoPasajero.name, random.randint(100000, 999999),"", cantidad, valorAPagar, ""],
             habilitado=habilitado,
             devolucionLlamado=devolucionLlamado  # Aquí se usa 'devolucionLlamado'
             )
@@ -611,14 +631,31 @@ def interfazPrincipal(ventanaInicio):
             frame_bottom.grid_rowconfigure(0, weight=1)
             frame_bottom.grid_columnconfigure(0, weight=1)
 
+        def se_puede_convertir_en_entero(valor):
+            try:
+                int(valor)
+                return True
+            except (ValueError, TypeError):
+                return False
+            
+        def se_puede_convertir_en_float(valor):
+            try:
+                float(valor)
+                return True
+            except (ValueError, TypeError):
+                return False
+
         def compararValores(cantidadEsperada, cantidadDada, pasajero):
+            global viajeSeleccionado
             if cantidadDada >= cantidadEsperada:
                 pasajero.setDinero(cantidadEsperada)
                 print(pasajero.getDinero())
                 pasajero.setViaje(viajeSeleccionado)
+                viajeSeleccionado.getPasajeros().append(pasajero)
                 print(pasajero.getViaje())
+                print(viajeSeleccionado.getPasajeros())
                 messagebox.showinfo("Buen viaje", "Venta realizada con éxito. Regresando")
-                funcionalidad1()
+                elegirDestino()
             else:
                 messagebox.showinfo("Dinero insuficiente", "Cantidad de dinero insuficiente. Regresando")
                 elegirDestino()

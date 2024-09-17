@@ -6,6 +6,8 @@ sys.path.append(os.path.abspath("src"))
 
 # Importaciones:
 from multimethod import multimethod
+from typing import List, Optional
+from datetime import datetime
 from src.gestorAplicacion.constantes.tipoVehiculo import TipoVehiculo
 from src.gestorAplicacion.constantes.destino import Destino
 from src.gestorAplicacion.usuarios.conductor import Conductor
@@ -125,8 +127,22 @@ class Terminal:
 
         return viajeMasRapido
             
-    def obtenerViajeMasProximo():
-        pass
+    def obtenerViajeMasProximo(listaViajes):
+        if not listaViajes:
+            return None
+
+        viajeMasProximo = listaViajes[0]
+
+        for viaje in listaViajes:
+            # Convertir las fechas y horas a objetos datetime para comparación
+            fechaHoraViajeActual = datetime.strptime(f"{viaje.getFecha()} {viaje.getHora()}", "%d/%m/%Y %H:%M")
+            fechaHoraViajeProximo = datetime.strptime(f"{viajeMasProximo.getFecha()} {viajeMasProximo.getHora()}", "%d/%m/%Y %H:%M")
+            
+            # Si el viaje actual es antes que el viaje más próximo, actualizar el más próximo
+            if fechaHoraViajeActual < fechaHoraViajeProximo:
+                viajeMasProximo = viaje
+
+        return viajeMasProximo
 
     @staticmethod
     def masEconomico(viajes):
@@ -138,7 +154,7 @@ class Terminal:
 
         for viaje in viajes:
             if viaje.getVehiculo().getTipo()==TipoVehiculo.BUS:
-                if viaje is None or viaje.getTarifa() < viajeMasBarato.getTarifa():
+                if viajeMasBarato is None or viaje.getTarifa() < viajeMasBarato.getTarifa():
                     viajeMasBarato = viaje
         
         return viajeMasBarato
