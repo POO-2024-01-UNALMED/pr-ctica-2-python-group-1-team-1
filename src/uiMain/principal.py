@@ -1535,8 +1535,6 @@ def interfazPrincipal(ventanaInicio):
                     i = 0
                     for vehiculo in vehiculo.getTransportadora().getTaller().getVehiculosEnReparacion():
 
-                        print (vehiculo.getFechaHoraReparacion() - Tiempo.tiempos[0].getFechaHora())
-
                         lb1.insert(i, f"{i+1}. Placa: {vehiculo.getPlaca()} Modelo: {vehiculo.getModelo()} ")
                         i += 1
 
