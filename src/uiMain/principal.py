@@ -2243,7 +2243,7 @@ def interfazPrincipal(ventanaInicio):
             botonAdministrarVehiculos = tk.Button(new_frame_bottom_center, text = "Administrar vehiculos",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: administrarVehiculos (transportadora))
             botonAdministrarMecanicos = tk.Button(new_frame_bottom_center, text = "Administrar mecanicos",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: administrarMecanicos(transportadora))
             botonCambiarTaller = tk.Button(new_frame_bottom_center, text = "Cambiar taller",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command= lambda: cambiarTaller(transportadora))
-            botonIrAtras = tk.Button(new_frame_bottom_center, text = "Ir atras",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command = lambda: interfazPrincipal(ventanaInicio))
+            botonIrAtras = tk.Button(new_frame_bottom_center, text = "Ir atras",font = "Century", bg = colors["grisClaro"], fg = "black", activebackground= colors["grisOscuro"], activeforeground= "white", command = lambda: salir(ventanaPrincipal, ventanaInicio))
 
             botonAgregarVehiculo.place (relx = 0.33333, rely = 0.15, relwidth= 0.3333, relheight= 0.1)
             botonAdministrarVehiculos.place (relx = 0.33333, rely= 0.30, relwidth=0.3333, relheight=0.1 )

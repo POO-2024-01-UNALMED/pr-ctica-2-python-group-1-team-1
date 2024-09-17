@@ -129,7 +129,7 @@ class Taller ():
 
         self._vehiculosEnVenta.append (vehiculo)
         vehiculo.setPrecio (self.calcularValor(vehiculo))
-        vehiculo.setFechaHoraReparacion (round(Tiempo.getFechaHora() + (1440 + random.randint())))
+        vehiculo.setFechaHoraReparacion (round(Tiempo.fechaHora + (1440 * (random.randint(0,10))/10)))
         vehiculo.setReparando (True)
 
     def venderVehiculo (self, vehiculo):
