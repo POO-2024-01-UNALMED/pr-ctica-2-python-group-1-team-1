@@ -270,7 +270,7 @@ def interfazPrincipal(ventanaInicio):
                                     
                         elif len(viajesDisponibles2)==0:
 
-                            raise NoViajesErrorTipoPasajero(tipoPasajero)
+                            raise NoViajesErrorTipoPasajero(tipoPasajero.name)
                     
                     except NoViajesErrorTipoPasajero:
                         pass
