@@ -51,6 +51,7 @@ class Persona(ABC, Incentivo):
         self.edad = edad
         self.nombre = nombre
         Persona.listapersonas.append(self)
+        self.dinero = 200
 
     def aumentarDinero(self, dinero):
         

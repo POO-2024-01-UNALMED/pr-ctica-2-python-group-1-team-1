@@ -153,11 +153,8 @@ class Tiempo:
                 viaje = viajes[i]
                 if (viaje.getFecha() == Tiempo.salidaFecha):
                     if not (viaje.getPasajeros()):
-                        #viaje.asignarPasajerosAViaje(Terminal.getPasajeros())
                         pass
                     if (viaje.getHora() == Tiempo.salidaHora):
-                        print(f"Salio: {viaje.getId()}")
-                        print(f"Lista Pasajeros: {viaje.getPasajeros()}")
                         viaje.validacion()
 
     def comprobarViajesEnCurso(self):
@@ -251,6 +248,7 @@ class Tiempo:
     def setTiempos(nuevos_tiempos):
         Tiempo.tiempos = nuevos_tiempos  # Setea la lista tiempos con nuevos datos
 
+    # SOLUCIÓN SINCRONIZACIÓN 
 
     @staticmethod
     def listahistorial():
@@ -297,17 +295,3 @@ class Tiempo:
             return Dia.SAB
         if self.dia=="DOM":
             return Dia.DOM
-    
-
-#PRUEBAS
-
-#contador = Tiempo(intervalo_ms=1)  # Intervalo de 1000 ms (1 segundo)
-
-#try:
-#    while True:
-#        pass  # Aquí puedes continuar con tu lógica principal del programa
-
-#except KeyboardInterrupt:
-#    # Manejo de interrupción del teclado para detener el temporizador
-#    contador.detener()
-#    print("Programa terminado por el usuario.")

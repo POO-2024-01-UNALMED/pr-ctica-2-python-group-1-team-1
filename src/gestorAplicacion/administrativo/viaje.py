@@ -31,11 +31,11 @@ class Viaje:
         self._fechaLlegada = "" # Lo calcula el metodo inferior
         self._horaLlegada = self.calcularHoraLlegada()
         self._tarifa = self.calcularTarifa()
-        self._asientosDisponibles = None # Replantear la forma de calcularlos
+        self._asientosDisponibles = self.verificarAsientos() # Replantear la forma de calcularlos
         Terminal.getViajes().append(self)
         self._conductor.getTransportadora().getViajesAsignados().append(self)
         self._conductor.getHorario().append(self)
-        #self.asignarPasajerosAViaje(Terminal.getPasajeros())
+        self.asignarPasajerosAViaje(Terminal.getPasajeros())
         Viaje._totalViajes += 1
     
     # Metodos necesarios para inicializar
@@ -55,7 +55,7 @@ class Viaje:
         # Calcular la distancia
         distancia = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
-        return distancia
+        return round(distancia)
 
     def asignarPasajerosAViaje(self, pasajeros):
         """
@@ -73,7 +73,7 @@ class Viaje:
             self.getPasajeros().append(pasajero)
             pasajeros.remove(pasajero) # ELIMINARLO DE LA LISTA PARA NO REPETIR
             
-            dineroTotal += self.getTarifa() * pasajero.getTipo().getDescuento()
+            dineroTotal += self.getTarifa() * pasajero.getTipoPasajero().getDescuento()
         
         transportadora = self.getVehiculo().getTransportadora()
         transportadora.setDinero(transportadora.getDinero() + dineroTotal)
@@ -92,7 +92,7 @@ class Viaje:
             factorReduccion = 0.9
             tiempo *= factorReduccion
         
-        return tiempo
+        return round(tiempo)
     
     """
     Calcula la hora estimada de llegada de un viaje.
@@ -164,13 +164,13 @@ class Viaje:
         tipoVehiculo = self._vehiculo.getTipo().name
         
         if tipoVehiculo == "TAXI":
-            costoPorMinuto = 200
+            costoPorMinuto = 300
         elif tipoVehiculo == "VANS":
-            costoPorMinuto = 170
+            costoPorMinuto = 250
         elif tipoVehiculo == "ESCALERA":
-            costoPorMinuto = 66
+            costoPorMinuto = 200
         elif tipoVehiculo == "BUS":
-            costoPorMinuto = 88
+            costoPorMinuto = 100
         else:
             return -1  # Valor de retorno inválido
         
@@ -180,7 +180,7 @@ class Viaje:
         
         total *= costoPorMinuto * (self._duracion * 60)
         
-        return total
+        return round(total)
     
     """
     Valida el estado del viaje actual. Si el viaje no está en la lista de viajes en curso,

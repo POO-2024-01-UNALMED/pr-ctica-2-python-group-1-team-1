@@ -117,35 +117,3 @@ class FieldFrame(tk.Frame):
         """
         for criterio in self.criterios:
             self.datos[criterio]["elementos"][1].delete(0,"end")
-
-# EJEMPLO DE USO --- CORRER ESTA CLASE PARA VER EL EJEMPLO
-
-def main():
-    root = tk.Tk()
-    root.title("FieldFrame Example")
-
-    # Define some example criteria and initial values
-    criterios = ["Nombre", "Edad", "Email", "Destino", "Vehiculo"]
-    valores_iniciales = ["Juan Pérez", "30", "juan.perez@example.com"]
-    habilitado = [True, True, False]  # Email field is disabled
-
-    # Create the FieldFrame widget
-    field_frame = FieldFrame(
-        parent=root,
-        tituloCriterios="Criterio",
-        criterios=criterios,
-        tituloValores="Valor",
-        valores=valores_iniciales,
-        habilitado=habilitado,
-        enviado=on_submit
-    )
-
-    field_frame.grid(row=0, column=0, sticky="nsew")
-
-    root.grid_rowconfigure(0, weight=1)
-    root.grid_columnconfigure(0, weight=1)
-
-    root.mainloop()
-
-if __name__ == "__main__":
-    main()

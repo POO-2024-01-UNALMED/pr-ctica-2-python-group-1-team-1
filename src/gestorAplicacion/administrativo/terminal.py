@@ -246,9 +246,8 @@ class Terminal:
         return viajesDisponibles
         
     # Programación por Vehiculo ()
-    @multimethod
-    #@classmethod
-    def programarViaje(cls, llegada: Destino, tipoVehiculo: TipoVehiculo, fecha: str, hora: str, salida: Destino):
+    @classmethod
+    def programarViajeV(cls, llegada: Destino, tipoVehiculo: TipoVehiculo, fecha: str, hora: str, salida: Destino):
         from src.gestorAplicacion.administrativo.viaje import Viaje
         from src.gestorAplicacion.administrativo.transportadora import Transportadora
         from src.gestorAplicacion.administrativo.vehiculo import Vehiculo
@@ -271,9 +270,8 @@ class Terminal:
         return None
 
     # Programación por Conductor ()
-    @multimethod
-    #@classmethod
-    def programarViaje(cls, llegada: Destino, conductor = Conductor, tipoVehiculo = TipoVehiculo, fecha = str, hora = str, salida = Destino):
+    @classmethod
+    def programarViajeC(cls, llegada: Destino, conductor = Conductor, tipoVehiculo = TipoVehiculo, fecha = str, hora = str, salida = Destino):
         from src.gestorAplicacion.administrativo.viaje import Viaje
         from src.gestorAplicacion.administrativo.transportadora import Transportadora
         from src.gestorAplicacion.administrativo.vehiculo import Vehiculo

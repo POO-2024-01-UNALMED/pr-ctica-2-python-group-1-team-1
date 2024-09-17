@@ -145,12 +145,17 @@ class TablaFrameDinamica(tk.Frame):
         self.grid_columnconfigure(0, weight=1)
 
         # COMBOBOX PARA SELECCIONAR EL INDICE
-        self.combobox = ttk.Combobox(self, values=[f"Opción {i+1}" for i in range(len(lista))], font=("Century", 12), state="readonly")
-        self.combobox.grid(row=len(lista)+1, column=0, padx=10, pady=5)
+        if (tituloCriterios[0] != "N°"):
+            self.combobox = ttk.Combobox(self, values=[f"Opción {i+1}" for i in range(len(lista))], font=("Century", 12), state="readonly")
+            self.combobox.grid(row=len(lista)+1, column=0, padx=10, pady=5)
 
-        # BOTÓN PARA CONFIRMAR LA SELECCIÓN
-        botonSeleccionar = tk.Button(self, text="Seleccionar", font=("Century", 12), bg=colors["azul"], fg=colors["text"], relief="ridge", bd=3, command=self.seleccionarIndice)
-        botonSeleccionar.grid(row=len(lista)+1, column=1, padx=5, pady=5, sticky="nsew")
+        if (tituloCriterios[0] != "N°"):
+            # BOTÓN PARA CONFIRMAR LA SELECCIÓN
+            botonSeleccionar = tk.Button(self, text="Seleccionar", font=("Century", 12), bg=colors["azul"], fg=colors["text"], relief="ridge", bd=3, command=self.seleccionarIndice)
+            botonSeleccionar.grid(row=len(lista)+1, column=1, padx=5, pady=5, sticky="nsew")
+        else:
+            botonRegresar = tk.Button(self, text="Regresar", font=("Century", 12), bg=colors["naranja"], fg=colors["text"], relief="ridge", bd=3, command=devolucionLlamado)
+            botonRegresar.grid(row=len(lista)+1, column=1, padx=5, pady=5, sticky="nsew")
 
     def obtener_valor_encadenado(self, obj, atributo_encadenado):
         """
