@@ -82,13 +82,15 @@ class Serializador():
         #TERMINAL
         terminal = Terminal("Terminal del norte", 99999999, 500, [], [], [], [], 0, Destino.MEDELLIN)
 
+  
+
         #TRANSPORTADORAS
-        transportadoraRapida = Transportadora("Transportadora Rapida", 196000.0, [], [], [], [], [], terminal, None, [], [], None, 4.5)
-        transportadoraEficiente = Transportadora("Transportadora Eficiente", 189000.0, [], [], [], [], [], terminal, None, [], [], None, 4.0)
-        transportadoraExpress = Transportadora("Transportadora Express", 223000.0, [], [], [], [], [], terminal, None, [], [], None, 3.5)
-        transportadoraSegura = Transportadora("Transportadora Segura", 204000.0, [], [], [], [], [], terminal, None, [], [], None, 5.0)
-        transportadoraGlobal = Transportadora("Transportadora Global", 305000.0, [], [], [], [], [], terminal, None, [], [], None, 2.5)
-        transportadoraLocal = Transportadora("Transportadora Local", 250000.0, [], [], [], [], [], terminal, None, [], [], None, 4.7)
+        transportadoraRapida = Transportadora("Transportadora Rapida", 196000.0, [], [], [], [], [], Destino.MEDELLIN,terminal, None, [], None, 4.5)
+        transportadoraEficiente = Transportadora("Transportadora Eficiente", 189000.0, [], [], [], [], [], Destino.MEDELLIN,terminal, None, [], None, 4.0)
+        transportadoraExpress = Transportadora("Transportadora Express", 223000.0, [], [], [], [], [], Destino.MEDELLIN,terminal, None, [], None, 3.5)
+        transportadoraSegura = Transportadora("Transportadora Segura", 204000.0, [], [], [], [], [], Destino.MEDELLIN,terminal, None, [], None, 5.0)
+        transportadoraGlobal = Transportadora("Transportadora Global", 305000.0, [], [], [], [], [], Destino.MEDELLIN,terminal, None, [], None, 2.5)
+        transportadoraLocal = Transportadora("Transportadora Local", 250000.0, [], [], [], [], [], Destino.MEDELLIN,terminal, None, [],  None, 4.7)
         # Crear lista de transportadoras
         transportadoras = [
             transportadoraRapida,
@@ -191,7 +193,7 @@ class Serializador():
         # Transportadora6
         # tallerLocal = Taller(transportadoraLocal, transportadoraLocal.getDestinoAsignado(), "Taller Local", 10)
 
-        """# MECANICOS
+        # MECANICOS
         mecanicos1 = []
         mecanicos2 = []
         mecanicos3 = []
@@ -200,56 +202,56 @@ class Serializador():
         mecanicos6 = []
 
         # Mecánicos que se asignarán a la transportadora1
-        mecanico121 = Mecanico(121, 34, "Alejandro Vargas", 'M', [], 5, 1600.0, [], tallerRapido, None, True, 15, 200)
-        mecanico122 = Mecanico(122, 28, "Sergio Morales", 'M', [], 4, 1450.0, [], tallerEficiente, None, True, 12, 180)
-        mecanico123 = Mecanico(123, 37, "Ricardo López", 'M', [], 7, 1750.0, [], tallerExpress, None, True, 20, 220)
+        mecanico121 = Mecanico(121, 34, "Alejandro Vargas", 'M', [], 5, 1600.0, [], tallerRapido,  15, 200)
+        mecanico122 = Mecanico(122, 28, "Sergio Morales", 'M', [], 4, 1450.0, [], tallerEficiente, 12, 180)
+        mecanico123 = Mecanico(123, 37, "Ricardo López", 'M', [], 7, 1750.0, [], tallerExpress,  20, 220)
 
         mecanicos1.append(mecanico121)
         mecanicos1.append(mecanico122)
         mecanicos1.append(mecanico123)
 
         # Mecánicos que se asignarán a la transportadora2
-        mecanico124 = Mecanico(124, 31, "Carlos Martínez", 'M', [], 6, 1650.0, [], tallerSegura, None, True, 14, 210)
-        mecanico125 = Mecanico(125, 40, "Javier Ramírez", 'M', [], 8, 1800.0, [], tallerGlobal, None, True, 18, 230)
-        mecanico126 = Mecanico(126, 29, "Fernando Pérez", 'M', [], 5, 1550.0, [], tallerRapido, None, True, 13, 200)
+        mecanico124 = Mecanico(124, 31, "Carlos Martínez", 'M', [], 6, 1650.0, [], tallerSegura,  14, 210)
+        mecanico125 = Mecanico(125, 40, "Javier Ramírez", 'M', [], 8, 1800.0, [], tallerGlobal,  18, 230)
+        mecanico126 = Mecanico(126, 29, "Fernando Pérez", 'M', [], 5, 1550.0, [], tallerRapido,  13, 200)
 
         mecanicos2.append(mecanico124)
         mecanicos2.append(mecanico125)
         mecanicos2.append(mecanico126)
 
         # Mecánicos que se asignarán a la transportadora3
-        mecanico127 = Mecanico(127, 33, "Héctor Jiménez", 'M', [], 6, 1600.0, [], tallerEficiente, None, True, 17, 220)
-        mecanico128 = Mecanico(128, 35, "Luis Rodríguez", 'M', [], 7, 1700.0, [], tallerExpress, None, True, 16, 230)
-        mecanico129 = Mecanico(129, 30, "Manuel García", 'M', [], 5, 1500.0, [], tallerSegura, None, True, 15, 200)
+        mecanico127 = Mecanico(127, 33, "Héctor Jiménez", 'M', [], 6, 1600.0, [], tallerEficiente,  17, 220)
+        mecanico128 = Mecanico(128, 35, "Luis Rodríguez", 'M', [], 7, 1700.0, [], tallerExpress,  16, 230)
+        mecanico129 = Mecanico(129, 30, "Manuel García", 'M', [], 5, 1500.0, [], tallerSegura,  15, 200)
 
         mecanicos3.append(mecanico127)
         mecanicos3.append(mecanico128)
         mecanicos3.append(mecanico129)
 
         # Mecánicos que se asignarán a la transportadora4
-        mecanico130 = Mecanico(130, 38, "Tomás Fernández", 'M', [], 7, 1750.0, [], tallerGlobal, None, True, 19, 220)
-        mecanico131 = Mecanico(131, 32, "Óscar López", 'M', [], 6, 1600.0, [], tallerRapido, None, True, 14, 210)
-        mecanico132 = Mecanico(132, 31, "David Martínez", 'M', [], 5, 1550.0, [], tallerEficiente, None, True, 13, 200)
+        mecanico130 = Mecanico(130, 38, "Tomás Fernández", 'M', [], 7, 1750.0, [], tallerGlobal,  19, 220)
+        mecanico131 = Mecanico(131, 32, "Óscar López", 'M', [], 6, 1600.0, [], tallerRapido,  14, 210)
+        mecanico132 = Mecanico(132, 31, "David Martínez", 'M', [], 5, 1550.0, [], tallerEficiente, 13, 200)
 
         mecanicos4.append(mecanico130)
         mecanicos4.append(mecanico131)
         mecanicos4.append(mecanico132)
 
         # Mecánicos que se asignarán a la transportadora5
-        mecanico133 = Mecanico(133, 36, "Gabriel Silva", 'M', [], 8, 1800.0, [], tallerExpress, None, True, 20, 230)
-        mecanico134 = Mecanico(134, 29, "Ricardo Vargas", 'M', [], 5, 1500.0, [], tallerSegura, None, True, 12, 180)
-        mecanico135 = Mecanico(135, 34, "Adrián Rodríguez", 'M', [], 7, 1650.0, [], tallerGlobal, None, True, 18, 220)
+        mecanico133 = Mecanico(133, 36, "Gabriel Silva", 'M', [], 8, 1800.0, [], tallerExpress,  20, 230)
+        mecanico134 = Mecanico(134, 29, "Ricardo Vargas", 'M', [], 5, 1500.0, [], tallerSegura,  12, 180)
+        mecanico135 = Mecanico(135, 34, "Adrián Rodríguez", 'M', [], 7, 1650.0, [], tallerGlobal,  18, 220)
 
         mecanicos5.append(mecanico133)
         mecanicos5.append(mecanico134)
         mecanicos5.append(mecanico135)
 
         # Mecánicos que se asignarán a la transportadora6
-        mecanico136 = Mecanico(136, 40, "Héctor Hernández", 'M', [], 9, 1750.0, [], tallerRapido, None, True, 22, 240)
-        mecanico137 = Mecanico(137, 33, "Eduardo Díaz", 'M', [], 6, 1600.0, [], tallerEficiente, None, True, 15, 210)
+        mecanico136 = Mecanico(136, 40, "Héctor Hernández", 'M', [], 9, 1750.0, [], tallerRapido,  22, 240)
+        mecanico137 = Mecanico(137, 33, "Eduardo Díaz", 'M', [], 6, 1600.0, [], tallerEficiente, 15, 210)
 
         mecanicos6.append(mecanico136)
-        mecanicos6.append(mecanico137)"""
+        mecanicos6.append(mecanico137)
 
         #VEHICULOS
         # Crear listas de vehículos para cada transportadora

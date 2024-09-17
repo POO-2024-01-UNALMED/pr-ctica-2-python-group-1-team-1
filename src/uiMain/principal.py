@@ -142,7 +142,7 @@ def interfazPrincipal(ventanaInicio):
 
     # AGREGAR LOS LABELS SUPERIORES
     label_top_center = tk.Label(frame_top, text="Hola Admin de Terminal Creations", font=("Segoe Script", 35, "bold"), fg=colors["amarillo"], bd=3, bg=colors["background"])
-    label_top_left = tk.Label(frame_top, text="Descripción", font=("Segoe Script", 10, "bold"), fg=colors["text"], bd=3, bg=colors["background"])
+    label_top_left = tk.Label(frame_top, text="", font=("Segoe Script", 10, "bold"), fg=colors["text"], bd=3, bg=colors["background"])
     label_top_right = tk.Label(frame_top, text="TC", bd=3, font=("Segoe Script", 60, "bold"), fg=colors["text"], bg=colors["background"])
 
     # Posicionando los labels superiores con .place()
@@ -2176,7 +2176,7 @@ def interfazPrincipal(ventanaInicio):
 
 
 
-        terminal = Terminal("term", 1000000000, 10, None, None, None, None, 0, None)
+        """terminal = Terminal("term", 1000000000, 10, None, None, None, None, 0, None)
         transportadora1 = Transportadora("trans", 1000000000, None, None, [None, None, None], None, None, Destino.ANGELOPOLIS , terminal, None, None, None, 3  )
         #taller1 = Taller(transportadora1, Destino.ANGELOPOLIS,"Taller1", 10 )
         #mecanico1 = Mecanico(123,21,"juan","M",[], 10, 1000.0, [], taller1, 100, 20)
@@ -2187,7 +2187,7 @@ def interfazPrincipal(ventanaInicio):
         vehiculo5 = Vehiculo("MNO345", "ModeloE", 16500.00, 135.0, TipoVehiculo.BUS, transportadora1)
         vehiculo6 = Vehiculo("HYU485", "ModeloF", 18500.00, 132.0, TipoVehiculo.ESCALERA, transportadora1)
         vehiculo7 = Vehiculo("OIU328", "ModeloG", 14500.00, 121.0, TipoVehiculo.VANS, transportadora1)
-        vehiculo8 = Vehiculo("PQK748", "ModeloH", 17500.00, 139.0, TipoVehiculo.TAXI, transportadora1)
+        vehiculo8 = Vehiculo("PQK748", "ModeloH", 17500.00, 139.0, TipoVehiculo.TAXI, transportadora1)"""
 
         def ventanaInicial(transportadora):
             #label_top_center.configure(text="Talleres y Mecanicos")
