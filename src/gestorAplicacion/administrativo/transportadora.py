@@ -21,6 +21,7 @@ class Transportadora (Incentivo):
         self._conductores = conductores
         self._conductoresRegistrados = conductoresRegistrados
         self._pasajeros = pasajeros
+        self._estadoPago = self.calcularEstadoPago()
         self._vehiculos = vehiculos
         self._viajesAsignados = viajesAsignados
         self._destinoAsignado = destinoAsignado
@@ -252,7 +253,13 @@ class Transportadora (Incentivo):
         
         return conductoresDis
 
-
+    def calcularEstadoPago(self):
+        
+        if (self.getDinero() > 200000):
+            
+            return True
+        
+        return False
 
     # Métodos get
 
@@ -377,3 +384,11 @@ class Transportadora (Incentivo):
     def setTransportadoras(cls, transportadoras):
         """Establece la lista de instancias de Transportadora."""
         cls._transportadoras = transportadoras
+    
+    def getEstadoPago(self):
+        
+        return self._estadoPago
+    
+    def getCantViajesAsignados(self):
+        
+        return len(self._viajesAsignados)

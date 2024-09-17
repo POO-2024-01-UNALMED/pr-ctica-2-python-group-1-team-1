@@ -1,12 +1,12 @@
 from errorAplicacion import ErrorAplicacion
 
-class exceptionError2(ErrorAplicacion):
+class ExceptionError2(ErrorAplicacion):
     
     msg = "error2"
     
     def __init__(self):
         
-        super().__init__(exceptionError2.msg)
+        super().__init__(ExceptionError2.msg)
         
 
     def mensaje(self):
@@ -16,9 +16,9 @@ class exceptionError2(ErrorAplicacion):
 if __name__ == "__main__":
     
     try:
-        raise exceptionError2()
+        raise ExceptionError2()
     
-    except exceptionError2 as f:
+    except ExceptionError2 as f:
         
         f.mensaje()
     

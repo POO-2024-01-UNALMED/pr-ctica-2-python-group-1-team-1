@@ -806,23 +806,201 @@ def interfazPrincipal(ventanaInicio):
 
         tabla_frame = TablaFrame(["Opcion","Transportadora"], ["Nombre"], new_frame_bottom, Transportadora.getTransportadoras(), [False], devolucionLlamado=devolucion_transportadora)
         tabla_frame.place(relx=0.5, rely=0.5, anchor="center")
-        
 
-
-
-    
-
-      
-    
-
-
-            
-
-       
-            
 
     def funcionalidad3():
-        label_top_center.configure(text="Facturacion y Finanzas")
+        
+        lista = estructura_frames("Gestion de conductores","Esta funcionalidad le permitirá ver las distintas estadísticas de la terminal, se podrá consultar las transportadoras que han pagado, \n se podrá ver el dinero que tienen las transportadoras, sus conductores principales, los viajes realizados, las tarifas de los respectivos viajes de cada transportadora")
+        frame_bottom = lista[0]
+        label_top_center = lista[1]
+        label_center_center = lista[2]
+
+        label_top_center.configure(text="Facturación y finanzas", relief= "sunken")
+        
+        def devolucionLlamado(formularioDatos):
+            
+            if (formularioDatos[criterios[0]] == "1. Tarifas viajes"): 
+
+                verTarifas() 
+                
+            elif (formularioDatos[criterios[0]] == "2. Transportadoras que han cancelado monto"):
+                
+                transportadorasQueHanCanceladoMonto()
+            
+            elif(formularioDatos[criterios[0]] == "3. Ver estadisticas generales"):
+                
+                estadisticasGenerales()
+
+        criterios = ["Tipo de opciones en facturación y finanzas"] 
+        valores_iniciales = ["1. Tarifas viajes", "2. Transportadoras que han cancelado monto", "3. Ver estadisticas generales"] 
+        habilitado = [False, False, False] 
+        
+    # Create the FieldFrame widget
+        field_frame = FieldFrame( parent=frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado) 
+        # UBICACIÓN DEL FIELD FRAME
+        field_frame.grid(row=0, column=0, sticky="nsew")
+        frame_bottom.grid_rowconfigure(0, weight=1)
+        frame_bottom.grid_columnconfigure(0, weight=1)
+        
+        def verTarifas():
+            
+            label_top_center.configure(text="Tarifas viajes")
+            
+            criterios = ["Transportadoras"]
+            valores_iniciales = [t.getNombre() for t in Terminal.getTransportadoras()]
+            valores = Terminal.getTransportadoras()
+            habilitado = [False, False, False, False, False, False]
+            
+            def devolucionLlamado(formularioDatos):
+                
+                for i in range(0, len(valores_iniciales)):
+                    
+                    if (formularioDatos[criterios[0]] == valores_iniciales[i]):
+                        
+                        transport = valores[i]
+                        mostrarTarifasViajes(transport)
+                        
+            field_frame = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado= devolucionLlamado)
+
+            # UBICACIÓN DEL FIELD FRAME
+            field_frame.grid(row=0, column=0, sticky="nsew")
+            frame_bottom.grid_rowconfigure(0, weight=1)
+            frame_bottom.grid_columnconfigure(0, weight=1)
+
+            def mostrarTarifasViajes(trans):
+                
+                label_top_center.configure(text=f"Mostrando tarifas de {trans.getNombre()}", font=(("Segoe Script", 25, "bold")))
+
+                def devolucionLlamado(selection):
+                    
+                    for i in range(0, len(trans.getViajesAsignados())):
+                        
+                        if (tabla_tarifas.combobox.get() == f"Opción {i+1}"):
+                        
+                            label = tk.Label(field_frame, text=f"El viaje tiene {len(trans.getViajesAsignados()[i].getPasajeros())}, pasajeros", font= (("Segoe Script", 15, "bold")), background="Red")
+
+                            
+                    label.grid(row=3, column=0)
+                        #if selection[criterios[0]] == i:
+                            
+                        # label = tk.Label(tabla_tarifas, text = "hi")
+                            #label.grid(row=1, column=1)
+                            
+                    
+                        
+                #if (len(trans.getViajesAsignados()) != 0):
+                #frame_bottom_new = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                #frame_bottom_new.grid_rowconfigure(0, weight=1)
+                #frame_bottom_new.grid_columnconfigure(0, weight=1)
+                #frame_bottom_new.place(relx=0, rely=0.2, relwidth=1, relheight=0.8)
+                tabla_tarifas = TablaFrame(["No.","Salida","Llegada","Tarifa"], ["Salida","Llegada","Tarifa"], field_frame, trans.getViajesAsignados(), [False,False,False], devolucionLlamado=devolucionLlamado)
+                tabla_tarifas.grid(row=0, column=0, sticky="ns")
+
+                #else:
+                    
+                    #print("Mistake")
+
+            
+        def estadisticasGenerales():
+            
+            label_top_center.configure(text="Estadisticas generales")
+            
+            criterios = ["Transportadoras"]
+            valores_iniciales = ["Viajes realizados por transportadora", "Ver estadísticas"]
+            habilitado = [False, False]
+            
+            def devolucionLlamado(formularioDatos):
+                
+                if(formularioDatos[criterios[0]] == "Viajes realizados por transportadora"):
+                    
+                    mostrarViajesRealizados()
+                
+                if(formularioDatos[criterios[0]] == "Ver estadísticas"):
+                    
+                    verEstadisticasTransportadoras()
+                    
+            field_frame = FieldFrame(parent = frame_bottom, tituloCriterios="Opciones", criterios=criterios, tituloValores="Selección", valores=valores_iniciales, habilitado=habilitado, devolucionLlamado = devolucionLlamado)
+
+            # UBICACIÓN DEL FIELD FRAME
+            field_frame.grid(row=0, column=0, sticky="nsew")
+            frame_bottom.grid_rowconfigure(0, weight=1)
+            frame_bottom.grid_columnconfigure(0, weight=1)
+            
+            def mostrarViajesRealizados():
+                
+                
+                def devolucionLlamado(select):
+            
+                    for i in range(0, len(Terminal.getTransportadoras())):
+                        
+                        if (tabla_viajes.combobox.get() == f"Opción {i+1}"):
+                            
+                            label = tk.Label(field_frame, text=f"La transportadora tiene como conductor principal a {Terminal.getTransportadoras()[i].getConductores()[i].getNombre()}", font= (("Segoe Script", 15, "bold")), background="Red")
+                            
+                            label.grid(row=3, column=0)
+                            
+                #frame_bottom= tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                #frame_bottom.grid_rowconfigure(0, weight=1)
+                #frame_bottom.grid_columnconfigure(0, weight=1)
+                #frame_bottom.place(relx=0, rely=0.2, relwidth=1, relheight=0.8)
+                tabla_viajes = TablaFrame(["No.", "Transportadora"," No. Viajes Realizados"], ["Nombre","CantViajesAsignados"], field_frame, Terminal.getTransportadoras(), [False,False,False,False,False,False], devolucionLlamado=devolucionLlamado)
+                tabla_viajes.grid(row=0, column=0, sticky="ns")
+            
+            def verEstadisticasTransportadoras():
+                
+                def devolucionLlamado(select):
+            
+                    for i in range(0, len(Terminal.getTransportadoras())):
+                        
+                        if (tabla_viajes.combobox.get() == f"Opción {i+1}"):
+                            
+                            label = tk.Label(field_frame, text=f"La transportadora tiene una cantidad de estrellas de {Terminal.getTransportadoras()[i].getEstrellas()}", font= (("Segoe Script", 15, "bold")), background="Red")
+                            
+                            label.grid(row=3, column=0)
+                            
+                #frame_bottom= tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                #frame_bottom.grid_rowconfigure(0, weight=1)
+                #frame_bottom.grid_columnconfigure(0, weight=1)
+                #frame_bottom.place(relx=0, rely=0.2, relwidth=1, relheight=0.8)
+                tabla_viajes = TablaFrame(["No.","Nombre", "Dinero", "Estrellas"], ["Nombre","Dinero","Estrellas"], field_frame, Terminal.getTransportadoras(), [False,False,False], devolucionLlamado=devolucionLlamado)
+                tabla_viajes.grid(row=0, column=0, sticky="ns")
+            
+                
+            
+            
+            
+            
+            
+            
+            
+            
+        
+        def transportadorasQueHanCanceladoMonto():
+            
+            def devolucionLlamado(select):
+            
+                    for i in range(0, len(Terminal.getTransportadoras())):
+                        
+                        if (tabla_viajes.combobox.get() == f"Opción {i+1}"):
+                            
+                            label = tk.Label(field_frame, text=f"Si ve un 0(False), significa que no ha pagado, y 1 (True) es por que pagó", font= (("Segoe Script", 15, "bold")), background="Red")
+                            
+                            label.grid(row=3, column=0)
+                            
+                #frame_bottom= tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                #frame_bottom.grid_rowconfigure(0, weight=1)
+                #frame_bottom.grid_columnconfigure(0, weight=1)
+                #frame_bottom.place(relx=0, rely=0.2, relwidth=1, relheight=0.8)
+            tabla_viajes = TablaFrame(["No.","Nombre", "Estado de pago"], ["Nombre","EstadoPago"], field_frame, Terminal.getTransportadoras(), [False,False], devolucionLlamado=devolucionLlamado)
+            tabla_viajes.grid(row=0, column=0, sticky="ns")
+                
+            
+            
+
+
+            
+            
+
             
 
     def funcionalidad4():
