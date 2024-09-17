@@ -281,6 +281,22 @@ class Tiempo:
         self.ejecutando = True
         self.ejecutarPeriodicamente()
         print("serializo")
+
+    def tener_dia(self):
+        if self.dia=="LUN":
+            return Dia.LUN
+        if self.dia=="MAR":
+            return Dia.MAR
+        if self.dia=="MIER":
+            return Dia.MIER
+        if self.dia=="JUE":
+            return Dia.JUE
+        if self.dia=="VIE":
+            return Dia.VIE
+        if self.dia=="SAB":
+            return Dia.SAB
+        if self.dia=="DOM":
+            return Dia.DOM
     
 
 #PRUEBAS

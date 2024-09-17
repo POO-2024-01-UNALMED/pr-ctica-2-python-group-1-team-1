@@ -1,4 +1,4 @@
-from errorAplicacion import ErrorAplicacion
+from src.excepciones.errorAplicacion import ErrorAplicacion
 
 class ExceptionError2(ErrorAplicacion):
     
