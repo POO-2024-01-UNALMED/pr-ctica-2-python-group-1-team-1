@@ -32,8 +32,8 @@ def mostrarDescripcion():
 
 # FUNCIÓN PARA SALIR DE LA APLICACIÓN Y APAGAR EL TIEMPO
 if __name__ == "__main__":
-    Serializador.crearObjetos()
-    #Deserializador.deserializarListas()
+    #Serializador.crearObjetos()
+    Deserializador.deserializarListas()
 
 tiempo = Tiempo.tiempos[0] # 
 
