@@ -584,7 +584,7 @@ def interfazPrincipal(ventanaInicio):
                             pasajero = Pasajero(tipo, id, edad, nombre)
                             print(pasajero)
                             print(f"Pasajero creado: Nombre: {nombre}, Tipo: {tipo}, ID: {id}, Edad: {edad}")
-                            compararValores(valorAPagar, valorPagado)
+                            compararValores(valorAPagar, valorPagado, pasajero)
 
                         else:
                             print("Datos incompletos para crear el pasajero.")
@@ -611,11 +611,16 @@ def interfazPrincipal(ventanaInicio):
             frame_bottom.grid_rowconfigure(0, weight=1)
             frame_bottom.grid_columnconfigure(0, weight=1)
 
-        def compararValores(cantidadEsperada, cantidadDada):
+        def compararValores(cantidadEsperada, cantidadDada, pasajero):
             if cantidadDada >= cantidadEsperada:
-                print("compra exitosa")
+                pasajero.setDinero(cantidadEsperada)
+                print(pasajero.getDinero())
+                pasajero.setViaje(viajeSeleccionado)
+                print(pasajero.getViaje())
+                messagebox.showinfo("Buen viaje", "Venta realizada con éxito. Regresando")
+                funcionalidad1()
             else:
-                messagebox.showinfo("Sin viajes disponibles", "No hay cantidad suficiente")
+                messagebox.showinfo("Dinero insuficiente", "Cantidad de dinero insuficiente. Regresando")
                 elegirDestino()
         
         elegirDestino()
