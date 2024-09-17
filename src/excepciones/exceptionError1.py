@@ -1,12 +1,11 @@
 from src.excepciones.errorAplicacion import ErrorAplicacion
+from tkinter import messagebox
 
 class ExceptionError1(ErrorAplicacion):
-
-    msg = "error1"
     
-    def __init__(self):
-        
-        super().__init__(ExceptionError1.msg)
+    def __init__(self,mensaje):
+        msg= "Error de verificacion de atributos: " + mensaje
+        super().__init__(msg)
         
 
     def mensaje(self):
