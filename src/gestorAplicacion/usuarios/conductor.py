@@ -31,7 +31,7 @@ class Conductor(Persona, Incentivo):
         """Metodo para asociar un conductor al vehiculo que
 	    va de parametro si el vehiculo tiene menos de 3 conductores."""
 
-        if (len(vehiculo.getConductores) < 3):
+        if (len(vehiculo.getConductores()) < 3):
             vehiculo.asociarConductor(self)
             self._vehiculo = vehiculo
 

@@ -629,7 +629,7 @@ def interfazPrincipal(ventanaInicio):
     def funcionalidad2():
         from src.gestorAplicacion.administrativo.transportadora import Transportadora
 
-        lista = estructura_frames("Gestion de conductores","Elija la transportadora a la cual le administrara los conductores")
+        lista = estructura_frames("Elegir transportadora","Esta funcionalidad permite gestionar la administración de los conductores asignados a las transportadoras. A través de esta función,\n se pueden realizar acciones como despedir, contratar y modificar conductores. Facilita la asignación y desvinculación de viajes y vehículos a los conductores,\n según su disponibilidad.También permite modificar aspectos específicos del conductor, como sus viajes programados o el vehículo asociado, \nseleccionando la transportadora correspondiente para una gestión organizada del personal.")
         new_frame_bottom = lista[0]
         label_top_center = lista[1]
         label_center_center = lista[2]
@@ -659,7 +659,7 @@ def interfazPrincipal(ventanaInicio):
 
             new_frame_bottom.destroy()
 
-            label_center_center.config(text="Seleccione una opcion")
+            label_top_center.config(text="Seleccione una opcion")
             new2_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
             new2_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
 
@@ -686,7 +686,7 @@ def interfazPrincipal(ventanaInicio):
                     
                     driver = transportadora.getConductoresRegistrados()[true_value-1]
 
-                    label_top_center.config("Contratando")
+                    label_top_center.config(text="Contratando...")
 
                     try:
                         if driver.getExperiencia() >= 5:
@@ -703,8 +703,8 @@ def interfazPrincipal(ventanaInicio):
 
                                 resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del conductor contratado", objeto=driver, criterios=mostrar, valores=valores, parent= new7_frame_bottom, nombreMetodos=nombreMetodos, metodo1= lambda:salir(ventanaPrincipal, ventanaInicio), metodo2= funcionalidad2)
                                 resultadosOperacion.grid(row=0, column=0, sticky="nsew")
-                                frame_bottom.grid_rowconfigure(0, weight=1)
-                                frame_bottom.grid_columnconfigure(0, weight=1)
+                                new7_frame_bottom.grid_rowconfigure(0, weight=1)
+                                new7_frame_bottom.grid_columnconfigure(0, weight=1)
                                 messagebox.showinfo("Contratacion exitosa","Se contrato al conductor " + driver.getNombre() + " exitosamente.")
                             else:
                                 raise notLicenceException(driver.getNombre())
@@ -724,7 +724,7 @@ def interfazPrincipal(ventanaInicio):
                 def devolucion_despedir(valor):
                     true_value = int(valor.split(" ")[2])
                     driver = transportadora.getConductores()[true_value-1]
-                    label_top_center.config("Despidiendo...")
+                    label_top_center.config(text="Despidiendo...")
 
                     if len(driver.getHorario()) == 0:
                         if len(driver.getVehiculo().getConductores()) >= 2:
@@ -741,8 +741,8 @@ def interfazPrincipal(ventanaInicio):
 
                             resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del conductor despedido", objeto=driver, criterios=mostrar, valores=valores, parent= new7_frame_bottom, nombreMetodos=nombreMetodos, metodo1= lambda:salir(ventanaPrincipal, ventanaInicio), metodo2= funcionalidad2)
                             resultadosOperacion.grid(row=0, column=0, sticky="nsew")
-                            frame_bottom.grid_rowconfigure(0, weight=1)
-                            frame_bottom.grid_columnconfigure(0, weight=1)
+                            new7_frame_bottom.grid_rowconfigure(0, weight=1)
+                            new7_frame_bottom.grid_columnconfigure(0, weight=1)
                             messagebox.showinfo("Despido exitoso","Se despidio al conductor " + driver.getNombre() + " exitosamente.")
                         else:
                             messagebox.showerror("No se puede despedir","No se puede despedir el conductor " + driver.getNombre() + " porque el vehiculo al que esta asociado no tiene mas conductores vinculados")
@@ -760,14 +760,14 @@ def interfazPrincipal(ventanaInicio):
 
                     new3_frame_bottom.destroy()
 
-                    label_center_center.config(text="Seleccione que desea modificarle al conductor")
+                    label_top_center.config(text="Modificar conductor")
 
                     new4_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
                     new4_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
 
                     criterios = ["Modificaciones"]
-                    valores_iniciales = ["Viaje","Vehiculo","Modificar conductor"]
-                    habilitado = [False, False, False]
+                    valores_iniciales = ["Viaje","Vehiculo"]
+                    habilitado = [False, False]
 
                     def devolucion_viaje(valor):
                         
@@ -787,38 +787,41 @@ def interfazPrincipal(ventanaInicio):
 
                                 def devolucion_asignar_viaje(valor):
                                     
-                                    new5_frame_bottom.destroy()
+
 
                                     if conductor.getVehiculo() is not None:
 
-                                        if transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor) != 0:
-
+                                        if len(transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor)) != 0:
+                                            new5_frame_bottom.destroy()
                                             new6_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
                                             new6_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
 
-                                            def devolucion_tomar_viaje(retorno):
-                                                retorno =  transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor)[retorno-1]
+                                            def devolucion_tomar_viaje(a):
+                                                true_value = int(a.split(" ")[2])
+                                                retorno =  transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor)[true_value-1]
                                                 new7_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
                                                 new7_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
 
+                                                label_top_center.config(text="Reasignacion viaje")
 
-
-                                                mostrar = ["ID", "Conductor","Placa vehiculo", "Destino"] # ASIENTOS -- P1
-                                                valores = ["getId", "getConductor.getNombre", "getVehiculo.getPlaca", "getLlegada.getName"]
+                                                mostrar = ["ID", "Conductor","Placa vehiculo", "Destino","Fecha"] # ASIENTOS -- P1
+                                                valores = ["getId", "getConductor.getNombre", "getVehiculo.getPlaca", "getLlegada.getName","getFecha"]
                                                 nombreMetodos = ["Salir de la aplicacion", "Gestionar conductores"]
 
 
                                                 resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del viaje reasignado", objeto=retorno, criterios=mostrar, valores=valores, parent= new7_frame_bottom, nombreMetodos=nombreMetodos, metodo1= lambda:salir(ventanaPrincipal, ventanaInicio), metodo2= funcionalidad2)
                                                 resultadosOperacion.grid(row=0, column=0, sticky="nsew")
-                                                frame_bottom.grid_rowconfigure(0, weight=1)
-                                                frame_bottom.grid_columnconfigure(0, weight=1)
+                                                new7_frame_bottom.grid_rowconfigure(0, weight=1)
+                                                new7_frame_bottom.grid_columnconfigure(0, weight=1)
+                                                messagebox.showinfo("Asignacion exitosa","Se ha reasignado el viaje al conductor " + conductor.getNombre())
+
 
 
                                             viajes_disponibles_tabla = TablaFrame(["Opcion","Destino","Fecha","Hora llegada"], ["Llegada","Fecha","Hora"], new6_frame_bottom, transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor), [False,False,False], devolucionLlamado=devolucion_tomar_viaje)
                                             viajes_disponibles_tabla.place(relx=0.5,rely=0.5,anchor="center")
                                         else:
                                             messagebox.showerror("No es posible","No se le puede asignar viajes al conductor " + conductor.getNombre() + " porque no hay viajes disponibles.")
-                                        
+                                            funcionalidad2()
                                     else:
                                         messagebox.showerror("No es posible","No se le puede asignar viajes al conductor" + conductor.getNombre() + " porque no tiene vehiculo asociado.")
                                         funcionalidad2()
@@ -846,7 +849,7 @@ def interfazPrincipal(ventanaInicio):
 
                                     
                                     if valor["Modificar viaje"] == "Asignar viaje":
-                                        new5_frame_bottom.destroy()
+                                        """new5_frame_bottom.destroy()
 
                                         new6_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
                                         new6_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
@@ -855,14 +858,50 @@ def interfazPrincipal(ventanaInicio):
 
                                         def prueba(valor):
                                             pass
-                                        if transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor) != 0:
+                                        if len(transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor)) != 0:
         
 
-                                            viajes_disponibles_tabla_2 = TablaFrameDinamica(["Opcion","Destino","Fecha","Hora llegada"], ["Llegada","Fecha","Hora"], new6_frame_bottom, transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor), [False,False,False], devolucionLlamado=prueba )
+                                            viajes_disponibles_tabla_2 = TablaFrameDinamica(["Opcion","Destino","Fecha","Hora llegada"], ["getLlegada","getFecha","getHora"], new6_frame_bottom, transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor), [False,False,False], devolucionLlamado=prueba )
                                             viajes_disponibles_tabla_2.place(relx=0.5,rely=0.5,anchor="center")
                                         
                                         else:
-                                            messagebox.showerror("No es posible","No se le puede asignar viajes al conductor " + conductor.getNombre() + " porque no hay viajes disponibles.")
+                                            messagebox.showerror("No es posible","No se le puede asignar viajes al conductor " + conductor.getNombre() + " porque no hay viajes disponibles.")"""
+                                        if conductor.getVehiculo() is not None:
+
+                                            if len(transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor)) != 0:
+                                                new5_frame_bottom.destroy()
+                                                new6_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                                                new6_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+
+                                                def devolucion_tomar_viaje(a):
+                                                    true_value = int(a.split(" ")[2])
+                                                    retorno =  transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor)[true_value-1]
+                                                    new7_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                                                    new7_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+
+                                                    label_top_center.config(text="Reasignacion viaje")
+
+                                                    mostrar = ["ID", "Conductor","Placa vehiculo", "Destino","Fecha"] # ASIENTOS -- P1
+                                                    valores = ["getId", "getConductor.getNombre", "getVehiculo.getPlaca", "getLlegada.getName","getFecha"]
+                                                    nombreMetodos = ["Salir de la aplicacion", "Gestionar conductores"]
+
+
+                                                    resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del viaje reasignado", objeto=retorno, criterios=mostrar, valores=valores, parent= new7_frame_bottom, nombreMetodos=nombreMetodos, metodo1= lambda:salir(ventanaPrincipal, ventanaInicio), metodo2= funcionalidad2)
+                                                    resultadosOperacion.grid(row=0, column=0, sticky="nsew")
+                                                    new7_frame_bottom.grid_rowconfigure(0, weight=1)
+                                                    new7_frame_bottom.grid_columnconfigure(0, weight=1)
+                                                    messagebox.showinfo("Reasignacion exitosa","Se ha reasignado el viaje al conductor " + conductor.getNombre())
+
+
+                                                viajes_disponibles_tabla = TablaFrame(["Opcion","Destino","Fecha","Hora llegada"], ["Llegada","Fecha","Hora"], new6_frame_bottom, transportadora.mostrarViajesDisponibles(Tiempo.getTiempos()[0].tener_dia().getValue(), conductor.getVehiculo().getTipo(), conductor), [False,False,False], devolucionLlamado=devolucion_tomar_viaje)
+                                                viajes_disponibles_tabla.place(relx=0.5,rely=0.5,anchor="center")
+                                            else:
+                                                messagebox.showerror("No es posible","No se le puede asignar viajes al conductor " + conductor.getNombre() + " porque no hay viajes disponibles.")
+                                                funcionalidad2()
+                                            
+                                        else:
+                                            messagebox.showerror("No es posible","No se le puede asignar viajes al conductor" + conductor.getNombre() + " porque no tiene vehiculo asociado.")
+                                            funcionalidad2()
 
 
                                     if valor["Modificar viaje"] == "Desvincular viaje":
@@ -871,11 +910,52 @@ def interfazPrincipal(ventanaInicio):
                                         new6_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
                                         new6_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
 
-                                        def prueba(valor):
-                                            pass                                        
+                                        def devolucion_desvincular_vincular(valor):
+                                            value = int(valor.split(" ")[2])  
+                                            trip = conductor.getHorario()[value-1]      
+                                            
+                                            new6_frame_bottom.destroy()
+                                            
+                                            new7_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                                            new7_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)  
+
+                                            if len(transportadora.conductoresDisponiblesViaje(trip)) != 0:
+
+                                                def devolucion_desvincular_paso_final(lom):
+                                                    other_value = int(lom.split(" ")[2]) 
+
+                                                    other_conductor = transportadora.conductoresDisponiblesViaje(trip)[other_value-1]
+                                                    new7_frame_bottom.destroy()
+
+                                                    conductor.desvincularYVincular(other_conductor,trip)
+                                                    
+                                                    mostrar = ["ID", "Conductor","Placa vehiculo", "Destino","Fecha"] # ASIENTOS -- P1
+                                                    valores = ["getId", "getConductor.getNombre", "getVehiculo.getPlaca", "getLlegada.getName","getFecha"]
+                                                    nombreMetodos = ["Salir de la aplicacion", "Gestionar conductores"]
+
+                                                    label_top_center.config(text="Desvinculacion viaje")
+
+                                                    new8_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                                                    new8_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)  
+
+                                                    resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del viaje reasignado", objeto=trip, criterios=mostrar, valores=valores, parent= new8_frame_bottom, nombreMetodos=nombreMetodos, metodo1= lambda:salir(ventanaPrincipal, ventanaInicio), metodo2= funcionalidad2)
+                                                    resultadosOperacion.grid(row=0, column=0, sticky="nsew")
+                                                    new8_frame_bottom.grid_rowconfigure(0, weight=1)
+                                                    new8_frame_bottom.grid_columnconfigure(0, weight=1)
+                                                    messagebox.showinfo("Reasignacion correcta","Se le ha asignado el viaje a " + other_conductor.getNombre())
+
+
+                                                tabla_vehiculo_asociado = TablaFrame(["Opcion","Nombre","Id","Experiencia"], ["Nombre","Id","Experiencia"], new7_frame_bottom, transportadora.conductoresDisponiblesViaje(trip), [False,False,False], devolucionLlamado=devolucion_desvincular_paso_final)
+                                                tabla_vehiculo_asociado.place(relx=0.5,rely=0.5,anchor="center") 
+                                            else:
+                                                messagebox.showerror("No es posible","No se puede desvincular el viaje al conductor " + conductor.getNombre() + " porque no hay conductores disponibles que puedan tomar el viaje")
+                                                funcionalidad2()
+                                            
+
+
         
 
-                                        viajes_disponibles_tabla_2 = TablaFrameDinamica(["Opcion","Destino","Fecha","Hora llegada"], ["Llegada","Fecha","Hora"], new6_frame_bottom, conductor.getHorario(), [False,False,False], devolucionLlamado=prueba)
+                                        viajes_disponibles_tabla_2 = TablaFrameDinamica(["Opcion","Destino","Fecha"], ["getLlegada","getFecha"], new6_frame_bottom, conductor.getHorario(), [False,False,False], devolucionLlamado=devolucion_desvincular_vincular)
                                         viajes_disponibles_tabla_2.place(relx=0.5,rely=0.5,anchor="center")                                                                              
 
 
@@ -904,23 +984,43 @@ def interfazPrincipal(ventanaInicio):
 
                                     new5_frame_bottom.destroy()
 
-                                    label_center_center.config(text="Seleccione el vehiculo que desea desvincular del conductor")
+                                    label_top_center.config(text="Vehiculo a desvincular...")
 
                                     new6_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
                                     new6_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
 
                                     def devolucion_desvincular_verificacion(valor):
 
-                                        if conductor.getHorario() == 0:
+                                        if len(conductor.getHorario()) == 0:
                                             if len(conductor.getVehiculo().getConductores()) >= 2:
-                                                pass
-                                                #Desvincular vehiculo del conductor
+                                                
+                                                vehicle = conductor.getVehiculo()
+                                                new7_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                                                new7_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+
+                                                mostrar = ["Precio", "Placa","Transportadora"] # ASIENTOS -- P1
+                                                valores = ["getPrecio", "getPlaca", "getTransportadora.getNombre"]
+                                                nombreMetodos = ["Salir de la aplicacion", "Gestionar conductores"]
+
+                                                label_top_center.config(text="Desvinculacion vehiculo")
+
+                                                resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del vehiculo desvinculado", objeto=vehicle, criterios=mostrar, valores=valores, parent= new7_frame_bottom, nombreMetodos=nombreMetodos, metodo1= lambda:salir(ventanaPrincipal, ventanaInicio), metodo2= funcionalidad2)
+                                                resultadosOperacion.grid(row=0, column=0, sticky="nsew")
+                                                new7_frame_bottom.grid_rowconfigure(0, weight=1)
+                                                new7_frame_bottom.grid_columnconfigure(0, weight=1)   
+
+                                                messagebox.showinfo("Desvinculacion exitosa","Se le ha desvinculado el vehiculo a " + conductor.getNombre())                                                 
                                             else:
-                                                pass
+                                                messagebox.showerror("No es posible","No se puede desvincular el vehiculo a " + conductor.getNombre() + " porque no hay mas conductores aociados al vehiculo.")
+                                                funcionalidad2()
                                             #No se puede porque no hay mas conductores asociados al vehiculo
+                                            
                                         else:
                                             pass
+                                            print(conductor.getHorario())
+                                            messagebox.showerror("No es posible","No se puede desvincular el vehiculo a " + conductor.getNombre() + " porque tiene viajes programados.")
                                             #No se puede porque el conductor tiene viajes programados
+                                            funcionalidad2()
 
                                     tabla_vehiculo_asociado = TablaFrame(["Opcion","Placa","Modelo"], ["Placa","Modelo"], new6_frame_bottom, [conductor.getVehiculo()], [False,False], devolucionLlamado=devolucion_desvincular_verificacion)
                                     tabla_vehiculo_asociado.place(relx=0.5,rely=0.5,anchor="center")
@@ -946,25 +1046,43 @@ def interfazPrincipal(ventanaInicio):
                                 habilitado = [False]
 
                                 def devolucion_vincular_vehiculo(valor):
-                                    new5_frame_bottom.destroy()
 
-                                    new6_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
-                                    new6_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
+                                    if (len(transportadora.mostrarVehiculosDisponibles())) != 0:
+                                        new5_frame_bottom.destroy()
 
-                                    def  devolucion_vincular_vehiculo_verificacion(valor):
-                                        true_value = int(valor.split(" ")[2])
+                                        new6_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                                        new6_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
 
-                                        conductor.tomarVehiculo(transportadora.mostrarVehiculosDisponibles()[true_value-1])
+                                        def  devolucion_vincular_vehiculo_verificacion(valor):
+                                            true_value = int(valor.split(" ")[2])
 
-                                        #Mostrar que se vinculo el vehiculo exitosamente al conductor
+                                            vehicle = transportadora.mostrarVehiculosDisponibles()[true_value-1]
+                                            new7_frame_bottom = tk.Frame(ventanaPrincipal, bd = 3, bg = colors["background"])
+                                            new7_frame_bottom.place(relx=0, rely=0.25, relwidth=1, relheight=0.75)
 
-                                    if (len(transportadora.mostrarVehiculosDisponibles()) == 0):
-                                        label_center_center.config(text="No hay vehiculos disponibles")
-                                        #Por si no hay vehiculos disponibles para mostrar
+                                            conductor.tomarVehiculo(transportadora.mostrarVehiculosDisponibles()[true_value-1])
+
+                                            mostrar = ["Precio", "Placa","Transportadora"] # ASIENTOS -- P1
+                                            valores = ["getPrecio", "getPlaca", "getTransportadora.getNombre"]
+                                            nombreMetodos = ["Salir de la aplicacion", "Gestionar conductores"]
+
+                                            label_top_center.config(text="Vinculacion vehiculo")
+
+                                            resultadosOperacion = ResultadosOperacion(tituloResultados="Detalles del vehiculo vinculado", objeto=vehicle, criterios=mostrar, valores=valores, parent= new7_frame_bottom, nombreMetodos=nombreMetodos, metodo1= lambda:salir(ventanaPrincipal, ventanaInicio), metodo2= funcionalidad2)
+                                            resultadosOperacion.grid(row=0, column=0, sticky="nsew")
+                                            new7_frame_bottom.grid_rowconfigure(0, weight=1)
+                                            new7_frame_bottom.grid_columnconfigure(0, weight=1)   
+                                            messagebox.showinfo("Vinculacion exitosa","Se ha vinculado el vehiculo al conductor " + conductor.getNombre())
 
 
-                                    tabla_vehiculo_asociado = TablaFrame(["Opcion","Placa","Modelo"], ["Placa","Modelo"], new6_frame_bottom, transportadora.mostrarVehiculosDisponibles(), [False,False], devolucionLlamado=devolucion_vincular_vehiculo_verificacion)
-                                    tabla_vehiculo_asociado.place(relx=0.5,rely=0.5,anchor="center")
+
+
+
+                                        tabla_vehiculo_asociado = TablaFrame(["Opcion","Placa","Modelo"], ["Placa","Modelo"], new6_frame_bottom, transportadora.mostrarVehiculosDisponibles(), [False,False], devolucionLlamado=devolucion_vincular_vehiculo_verificacion)
+                                        tabla_vehiculo_asociado.place(relx=0.5,rely=0.5,anchor="center")
+                                    else:
+                                        messagebox.showerror("No es posible","No hay vehiculos disponibles que el conductor pueda tomar.")
+                                        funcionalidad2()
 
 
                                 opciones_de_modificar = FieldFrame(
@@ -998,19 +1116,19 @@ def interfazPrincipal(ventanaInicio):
 
 
                 if datos["Opciones de conductor"] == "Despedir conductor":
-                    label_center_center.config(text="Seleccione el conductor que desea despedir")
+                    label_top_center.config(text="Despidiendo...")
 
                     fire_tabla = TablaFrameDinamica(["Opcion","Nombre","Experiencia  "], ["getNombre","getExperiencia"], new3_frame_bottom, transportadora.getConductores(), [False,False], devolucionLlamado=devolucion_despedir)
                     fire_tabla.place(relx=0.5,rely=0.5,anchor="center")
 
                 if datos["Opciones de conductor"] == "Contratar conductor":
-                    label_center_center.config(text="Seleccione el conductor que desea contratar")
+                    label_top_center.config(text="Contratando...")
 
                     hire_tabla = TablaFrame(["Opcion","Nombre","Experiencia","Licencia"], ["Nombre","Experiencia","Licencia"], new3_frame_bottom, transportadora.getConductoresRegistrados(), [False,False,False], devolucionLlamado=devolucion_contratar)
                     hire_tabla.place(relx=0.5,rely=0.5,anchor="center")
 
                 if datos["Opciones de conductor"] == "Modificar conductor":
-                    label_center_center.config(text="Seleccione el conductor que desea modificar")
+                    label_top_center.config(text="Modificando...")
                     
                     modify_tabla = TablaFrameDinamica(["Opcion","Nombre","Experiencia  "], ["getNombre","getExperiencia"], new3_frame_bottom, transportadora.getConductores(), [False,False], devolucionLlamado=devolucion_modificar)
                     modify_tabla.place(relx=0.5,rely=0.5,anchor="center")

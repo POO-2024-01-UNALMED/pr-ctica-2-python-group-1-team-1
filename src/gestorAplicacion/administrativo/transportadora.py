@@ -188,7 +188,7 @@ class Transportadora (Incentivo):
         viajesDisponibles = []
 
         for viaje in self.getViajesAsignados():
-            if ((abs(int(viaje.getFechaSalida().split("/")[0]) - digitoDia) >= 1) and (viaje.getVehiculo().getTipo == tipoVehiculo)):
+            if (viaje.getVehiculo().getTipo().name == tipoVehiculo.name):
                 if viaje in conductor.getHorario():
                     continue
                 viajesDisponibles.append(viaje)
@@ -196,7 +196,7 @@ class Transportadora (Incentivo):
         
         return viajesDisponibles
     
-    def conductoresDisponibles(self, viaje):
+    def conductoresDisponiblesViaje(self, viaje):
         """ Metodo que muestra los conductores disponibles de la terminal
 	    que no tengan un viaje asignado el mismo dia del viaje pasado como
 	    parametro y que los otros conductores asociados al vehiculo de cada
@@ -218,13 +218,6 @@ class Transportadora (Incentivo):
                         conductoresLibres.append(driver)
                         continue
                     
-                    for viaje in driver.getHorario():
-
-                        if ((viaje.getDia().getValue() - viaje.getDia().getValue) == 0):
-                            valor = False
-                            break
-                        else:
-                            valor=True
 
                     if valor:
                         conductoresLibres.append(driver)
@@ -232,7 +225,7 @@ class Transportadora (Incentivo):
         for conductor in conductoresLibres:
             mensaje += "Nombre: " + conductor.getNombre()+ "  #ID: " + str(conductor.getId()) + "\n"
         
-        return mensaje
+        return conductoresLibres
     
     def tiposVehiculosDisponible(self):
         tipos_disponibles = []  # Lista para almacenar los tipos de vehículos disponibles
